@@ -56,17 +56,17 @@ for t in range(env.max_episode_steps):
     ## that we really only need to plan once
     if t == 0:
         cond[0] = observation
-
-        action, samples = policy(cond, batch_size=args.batch_size)
-        # print(f"Initial action definition: {action}, Type of variable: {type(action)}")
+        action, samples = policy(cond, batch_size=args.batch_size) # Process defined actions/policy actions
         actions = samples.actions[0]
-        # print(f"Actions from samples.action[0]: {actions}")
         sequence = samples.observations[0]
     # pdb.set_trace()
 
     # ####
     if t < len(sequence) - 1:
         next_waypoint = sequence[t+1]
+    
+    ## If we want to use calculated actions:
+    # --------------------------------------------------------------------------------------
     # else:
     #     next_waypoint = sequence[-1].copy()
     #     next_waypoint[2:] = 0
@@ -74,11 +74,13 @@ for t in range(env.max_episode_steps):
 
     ## can use actions or define a simple controller based on state predictions
 
-    # action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
+    # action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
+    # --------------------------------------------------------------------------------------
     # pdb.set_trace()
     ####
 
     # Use actions defined in the process, instead of using next_waypoint
+    # --------------------------------------------------------------------------------------
     else:
         actions = actions[1:]
         if len(actions) > 1:
@@ -87,6 +89,7 @@ for t in range(env.max_episode_steps):
             # action = np.zeros(2)
             action = -state[2:]
             # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
+    #--------------------------------------------------------------------------------------
 
     next_observation, reward, terminal, _ = env.step(action)
     total_reward += reward
