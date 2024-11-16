@@ -73,7 +73,7 @@ def plot2img(fig, remove_margins=True):
     canvas = FigureCanvasAgg(fig)
     canvas.draw()
     img_as_string, (width, height) = canvas.print_to_buffer()
-    return np.fromstring(img_as_string, dtype='uint8').reshape((height, width, 4))
+    return np.frombuffer(img_as_string, dtype='uint8').reshape((height, width, 4))
 
 #-----------------------------------------------------------------------------#
 #---------------------------------- renderers --------------------------------#
