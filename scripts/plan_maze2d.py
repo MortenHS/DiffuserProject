@@ -23,6 +23,7 @@ env = datasets.load_environment(args.dataset)
 #---------------------------------- loading ----------------------------------#
 
 diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
+print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
@@ -67,28 +68,28 @@ for t in range(env.max_episode_steps):
     
     ## If we want to use calculated actions:
     # --------------------------------------------------------------------------------------
-    # else:
-    #     next_waypoint = sequence[-1].copy()
-    #     next_waypoint[2:] = 0
-    #     # pdb.set_trace()
+    else:
+        next_waypoint = sequence[-1].copy()
+        next_waypoint[2:] = 0
+        # pdb.set_trace()
 
-    ## can use actions or define a simple controller based on state predictions
+    # can use actions or define a simple controller based on state predictions
 
-    # action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
+    action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
     # --------------------------------------------------------------------------------------
     # pdb.set_trace()
     ####
 
     # Use actions defined in the process, instead of using next_waypoint
     # --------------------------------------------------------------------------------------
-    else:
-        actions = actions[1:]
-        if len(actions) > 1:
-            action = actions[0]
-        else:
-            # action = np.zeros(2)
-            action = -state[2:]
-            # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
+    # else:
+    #     actions = actions[1:]
+    #     if len(actions) > 1:
+    #         action = actions[0]
+    #     else:
+    #         # action = np.zeros(2)
+    #         action = -state[2:]
+    #         # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
     #--------------------------------------------------------------------------------------
 
     next_observation, reward, terminal, _ = env.step(action)
