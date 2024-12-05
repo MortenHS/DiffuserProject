@@ -7,7 +7,7 @@ import pandas as pd
 dataset_name = "D4RL/pointmaze/large-v2"
 dataset = minari.load_dataset(dataset_name)
 
-sampled_episodes = dataset.sample_episodes(10)
+sampled_episodes = dataset.sample_episodes(10) # Samples 10 random episodes
 observations = sampled_episodes[1].observations
 
 achieved_goal = observations['achieved_goal']

@@ -84,7 +84,7 @@ base = {
         'normalizer': 'LimitsNormalizer',
 
         ## serialization
-        'vis_freq': 10,
+        'vis_freq': 10, #10
         'logbase': 'logs',
         'prefix': 'plans/release',
         'exp_name': watch(plan_args_to_watch),

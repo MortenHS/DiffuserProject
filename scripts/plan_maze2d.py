@@ -47,7 +47,6 @@ cond = {
 
 ## observations for rendering
 rollout = [observation.copy()]
-
 total_reward = 0
 for t in range(env.max_episode_steps):
 
@@ -68,28 +67,30 @@ for t in range(env.max_episode_steps):
     
     ## If we want to use calculated actions:
     # --------------------------------------------------------------------------------------
-    # else:
-    #     next_waypoint = sequence[-1].copy()
-    #     next_waypoint[2:] = 0
-    #     # pdb.set_trace()
-
-    # # can use actions or define a simple controller based on state predictions
-
-    # action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
+    else:
+        next_waypoint = sequence[-1].copy()
+        next_waypoint[2:] = 0
+        # pdb.set_trace()
+        if t == env.max_episode_steps - 3:
+            print(f"\nNext_waypoint: {next_waypoint}\n")
+            print(f"Sequence: {sequence}\n")
+            
+    # can use actions or define a simple controller based on state predictions
+    action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
     # --------------------------------------------------------------------------------------
     # pdb.set_trace()
     ####
 
     # Use actions defined in the process, instead of using next_waypoint
     # --------------------------------------------------------------------------------------
-    else:
-        actions = actions[1:]
-        if len(actions) > 1:
-            action = actions[0]
-        else:
-            # action = np.zeros(2)
-            action = -state[2:]
-            # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
+    # else:
+    #     actions = actions[1:]
+    #     if len(actions) > 1:
+    #         action = actions[0]
+    #     else:
+    #         # action = np.zeros(2)
+    #         action = -state[2:]
+    #         # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
     #--------------------------------------------------------------------------------------
 
     next_observation, reward, terminal, _ = env.step(action)
@@ -120,7 +121,8 @@ for t in range(env.max_episode_steps):
         # renderer.render_plan(join(args.savepath, f'{t}_plan.mp4'), samples.actions, samples.observations, state)
 
         ## save rollout thus far
-        renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
+        # renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
+        renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
 
         # renderer.render_rollout(join(args.savepath, f'rollout.mp4'), rollout, fps=80)
 
