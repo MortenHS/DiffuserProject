@@ -111,7 +111,6 @@ for t in range(env.max_episode_steps):
     rollout.append(next_observation.copy())
 
     # logger.log(score=score, step=t)
-
     if t % args.vis_freq == 0 or terminal:
         fullpath = join(args.savepath, f'{t}.png')
 
