@@ -23,6 +23,9 @@ desired_y = [point[1] for point in desired_goal]
 observation_x = [point[0] for point in observation]
 observation_y = [point[1] for point in observation]
 
+#-----------------------------------------------------------------------------------------------
+#---------------------------------- Achieved goal vs desired goal ------------------------------
+#-----------------------------------------------------------------------------------------------
 plt.figure(figsize=(8, 6))  # Set figure size for better visibility
 plt.plot(achieved_x, achieved_y, marker='o', linestyle='-',linewidth=3,alpha=0.7, color='b', label='Achieved Goal')
 plt.plot(desired_x, desired_y, marker='s', linestyle='--', color='r', label='Desired Goal')
