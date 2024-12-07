@@ -49,6 +49,7 @@ cond = {
 ## observations for rendering
 rollout = [observation.copy()]
 used_actions = []
+observations = []
 total_reward = 0
 for t in range(env.max_episode_steps):
 
@@ -60,7 +61,7 @@ for t in range(env.max_episode_steps):
         cond[0] = observation
         action, samples = policy(cond, batch_size=args.batch_size) # Process defined actions/policy actions
         actions = samples.actions[0]
-        sequence = samples.observations[0]
+        sequence = samples.observations[0] # 384 elements
     # pdb.set_trace()
 
     # ####
@@ -100,17 +101,17 @@ for t in range(env.max_episode_steps):
     used_actions.append(action)
     total_reward += reward
     score = env.get_normalized_score(total_reward)
-    print(
-        f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
-        f'{action}'
-    )
+    # print(
+    #     f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
+    #     f'{action}'
+    # )
 
-    if 'maze2d' in args.dataset:
-        xy = next_observation[:2]
-        goal = env.unwrapped._target
-        print(
-            f'maze | pos: {xy} | goal: {goal}'
-        )
+    # if 'maze2d' in args.dataset:
+    #     xy = next_observation[:2]
+    #     goal = env.unwrapped._target
+    #     print(
+    #         f'maze | pos: {xy} | goal: {goal}'
+    #     )
 
     ## update rollout observations
     rollout.append(next_observation.copy())
@@ -126,7 +127,7 @@ for t in range(env.max_episode_steps):
 
         ## save rollout thus far
         # renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
-        renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
+        # renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
 
         # renderer.render_rollout(join(args.savepath, f'rollout.mp4'), rollout, fps=80)
 
@@ -136,26 +137,43 @@ for t in range(env.max_episode_steps):
         break
 
     observation = next_observation
+    observations.append(observation)
+# Length of used actions = 800.
 
 # logger.finish(t, env.max_episode_steps, score=score, value=0)
 
-def plot_actions_vs_actions(actions_to_plot, max_timesteps=400):
-    actions_to_plot = actions_to_plot[:max_timesteps]
-    actions_x = [point[0] for point in actions_to_plot]
-    actions_y = [point[1] for point in actions_to_plot]
+def plot_observation_points(observations_to_plot):
+    observation_x = [point[0] for point in observations_to_plot]
+    observation_y = [point[1] for point in observations_to_plot]
     plt.figure(figsize=(8, 6))
-    plt.plot(actions_x, actions_y, label="Actions", color='red', linewidth=0.5)
+    plt.plot(observation_x, observation_y, label="Observations", color='red', linewidth=1)
     # Mark the first and last actions with points
-    plt.scatter(actions_x[0], actions_y[0], color='blue', label='First Action', zorder=5)
-    plt.scatter(actions_x[-1], actions_y[-1], color='green', label='Last Action', zorder=5)
+    plt.scatter(observation_x[0], observation_y[0], color='blue', label='Starting point', zorder=5)
+    plt.scatter(observation_x[-1], observation_y[-1], color='green', label='Target point', zorder=5)
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-    plt.title('Actions', fontsize=14)
-    plt.xlabel('Actions_x', fontsize=12)
-    plt.ylabel('Actions_y', fontsize=12)
+    plt.title('Observation points', fontsize=14)
+    plt.xlabel('Observations_x', fontsize=12)
+    plt.ylabel('Observations_y', fontsize=12)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("plotted_actions_vs_actions.jpeg", format='jpeg', dpi=300)
-    plt.show()
+    plt.savefig("plotted_observation_points.jpeg", format='jpeg', dpi=300)
+
+def plot_observation_vels(observations_to_plot):
+    observation_x = [point[2] for point in observations_to_plot]
+    observation_y = [point[3] for point in observations_to_plot]
+    plt.figure(figsize=(8, 6))
+    plt.plot(observation_x, observation_y, label="Observations", color='red', linewidth=1)
+    # Mark the first and last actions with points
+    plt.scatter(observation_x[0], observation_y[0], color='blue', label='Starting point', zorder=5)
+    plt.scatter(observation_x[-1], observation_y[-1], color='green', label='Target point', zorder=5)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.title('Observation velocities', fontsize=14)
+    plt.xlabel('Observations_x', fontsize=12)
+    plt.ylabel('Observations_y', fontsize=12)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig("plotted_observation_vels.jpeg", format='jpeg', dpi=300)
+
 
 def plot_actions_vs_time(actions_to_plot, max_timesteps=400):
     actions_to_plot = actions_to_plot[:max_timesteps]
@@ -227,12 +245,13 @@ def plot_actions_with_vectors(actions_to_plot, max_timesteps=400,window_size=10)
     plt.savefig("smoothed_vectorized_actions.jpeg", format='jpeg', dpi=300)
     plt.show()
 
-# plot_actions_vs_actions(used_actions)
+plot_observation_points(observations)
+plot_observation_vels(observations)
 # plot_actions_vs_time(used_actions)
-plot_actions_with_vectors(used_actions)
+# plot_actions_with_vectors(used_actions)
 
 ## save result as a json file
-json_path = join(args.savepath, 'rollout.json')
-json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch}
-json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+# json_path = join(args.savepath, 'rollout.json')
+# json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
+#     'epoch_diffusion': diffusion_experiment.epoch}
+# json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
