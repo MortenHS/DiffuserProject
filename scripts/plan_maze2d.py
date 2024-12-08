@@ -126,8 +126,8 @@ for t in range(env.max_episode_steps):
         # renderer.render_plan(join(args.savepath, f'{t}_plan.mp4'), samples.actions, samples.observations, state)
 
         ## save rollout thus far
-        # renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
-        renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
+        renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
+        # renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
 
         # renderer.render_rollout(join(args.savepath, f'rollout.mp4'), rollout, fps=80)
 
@@ -139,6 +139,14 @@ for t in range(env.max_episode_steps):
     observation = next_observation
     observations.append(observation)
 # Length of used actions = 800.
+
+# save result as a json file
+json_path = join(args.savepath, 'rollout.json')
+json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
+    'epoch_diffusion': diffusion_experiment.epoch}
+json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+
+
 
 # logger.finish(t, env.max_episode_steps, score=score, value=0)
 
@@ -251,8 +259,4 @@ plot_observation_points(actions,target)
 # plot_actions_vs_time(used_actions)
 # plot_actions_with_vectors(used_actions)
 
-# save result as a json file
-json_path = join(args.savepath, 'rollout.json')
-json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch}
-json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+
