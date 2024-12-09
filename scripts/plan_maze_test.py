@@ -38,7 +38,7 @@ with open(csv_path, mode='w', newline='') as f:
     writer.writerow(['run', 'score', 'total_reward', 'steps', 'terminal', 'epoch_diffusion'])
 
 # Main Loop for Multiple Runs
-num_runs = 100  # Increase the number of runs to 100
+num_runs = 100 
 for run in range(num_runs):
     run_savepath = join(args.savepath, f'run_{run}')
     os.makedirs(run_savepath, exist_ok=True)
@@ -66,9 +66,9 @@ for run in range(num_runs):
             actions = samples.actions[0]
             sequence = samples.observations[0]
 
-            # Save the initial image (runX_0.png)
-            initial_img_path = join(run_savepath, f'run{run}_0.png')
-            renderer.composite(initial_img_path, samples.observations, ncol=1)
+            # # Save the initial image (runX_0.png)
+            # initial_img_path = join(run_savepath, f'run{run}_0.png')
+            # renderer.composite(initial_img_path, samples.observations, ncol=1)
 
         if t < len(sequence) - 1:
             next_waypoint = sequence[t + 1]
@@ -104,8 +104,8 @@ for run in range(num_runs):
         rollout.append(next_observation.copy())
 
     # Save the final rollout image (runX_rollout.png)
-    rollout_img_path = join(run_savepath, f'run{run}_rollout.png')
-    renderer.composite(rollout_img_path, np.array(rollout)[None], ncol=1)
+    # rollout_img_path = join(run_savepath, f'run{run}_rollout.png')
+    # renderer.composite(rollout_img_path, np.array(rollout)[None], ncol=1)
 
     # Save Rollout Data as JSON
     json_path = join(run_savepath, 'rollout.json')

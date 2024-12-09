@@ -60,45 +60,44 @@ for t in range(env.max_episode_steps):
     if t == 0:
         cond[0] = observation
         action, samples = policy(cond, batch_size=args.batch_size) # Process defined actions/policy actions
-        actions = samples.actions[0]
+        actions = samples.actions[0] # 384
         sequence = samples.observations[0] # 384 elements
     # pdb.set_trace()
 
-    # ####
+    # If t is last index of sequence:
     if t < len(sequence) - 1:
         next_waypoint = sequence[t+1]
     
     ## If we want to use calculated actions:
     # --------------------------------------------------------------------------------------
     else:
+        # Next waypoint is a copy of the last element of sequence
         next_waypoint = sequence[-1].copy()
+        # Velocities in x and y are set to 0:
         next_waypoint[2:] = 0
         # pdb.set_trace()
-        # if t == env.max_episode_steps - 3:
-        #     print(f"\nNext_waypoint: {next_waypoint}\n")
-        #     print(f"Sequence: {sequence}\n")
             
-    # can use actions or define a simple controller based on state predictions
+    # Can use actions or define a simple controller based on state predictions
+    # Action is defined as the positional difference + the velocity difference for x and y
     action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
     # --------------------------------------------------------------------------------------
     # pdb.set_trace()
-    ####
+    
 
     # Use actions defined in the process, instead of using next_waypoint
     # --------------------------------------------------------------------------------------
     # else:
+    #     # Actions are defined as the actions after the initial action, from index 1 and outwards.
     #     actions = actions[1:]
-    #     if len(actions) > 1:
-    #         action = actions[0]
-    #     else:
-    #         # action = np.zeros(2)
+    #     if len(actions) > 1: # If actions only contains the first action after initial action, define as actions[0] (2nd action from policy)
+    #         action = actions[0] 
+    #     else: # Else action is defined as the negative value of state velocities.
     #         action = -state[2:]
-    #         # pdb.set_trace() # Leads to (pdb) python debugger interrupt each step.
     #--------------------------------------------------------------------------------------
     
     # Section 4.3.1 Scoring refers to this:
     next_observation, reward, terminal, _ = env.step(action)
-    used_actions.append(action)
+    # used_actions.append(action)
     total_reward += reward
     score = env.get_normalized_score(total_reward)
     print(
@@ -145,7 +144,6 @@ json_path = join(args.savepath, 'rollout.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
     'epoch_diffusion': diffusion_experiment.epoch}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-
 
 
 # logger.finish(t, env.max_episode_steps, score=score, value=0)
