@@ -1,5 +1,26 @@
 # Planning with Diffusion &nbsp;&nbsp; [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YajKhu-CUIGBJeQPehjVPJcK_b38a8Nc?usp=sharing)
 
+Adapted from original authors of Planning with Diffusion for Flexible Behavior Synthesis.
+
+## Initialization
+```
+module load Anaconda3/2024.02-1
+conda activate diffuser
+```
+
+## Run planning
+```
+python scripts/plan_maze2d.py --config config.maze2d --dataset maze2d-large-v1
+```
+
+## Run positional error comparison
+```
+python scripts/position_error_comparison.py --config config.maze2d --dataset maze2d-large-v1
+```
+
+To see their original work see below line.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Training and visualizing of diffusion models from [Planning with Diffusion for Flexible Behavior Synthesis](https://diffusion-planning.github.io/).
 This branch has the Maze2D experiments and will be merged into main shortly.
