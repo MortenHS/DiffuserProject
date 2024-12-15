@@ -117,6 +117,7 @@ print('✓')
 #--------------------------------- main loop ---------------------------------#
 #-----------------------------------------------------------------------------#
 
+# trainer.render_reference(batch_size=10)
 n_epochs = int(args.n_train_steps // args.n_steps_per_epoch)
 
 for i in range(n_epochs):
