@@ -2,6 +2,8 @@
 
 Adapted from original authors of Planning with Diffusion for Flexible Behavior Synthesis.
 
+Follow instructions for quickstart, installation and usage below, then run the following to recreate project results:
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Initialization
 ```
 module load Anaconda3/2024.02-1
