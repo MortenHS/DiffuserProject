@@ -7,7 +7,7 @@ import pdb
 #-----------------------------------------------------------------------------#
 
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-large-v1'
+    dataset: str = 'maze2d-umaze-v1'
     config: str = 'config.maze2d'
 
 args = Parser().parse_args('diffusion')
@@ -93,8 +93,8 @@ trainer_config = utils.Config(
 #-------------------------------- instantiate --------------------------------#
 #-----------------------------------------------------------------------------#
 
-model = model_config()
 
+model = model_config()
 diffusion = diffusion_config(model)
 
 trainer = trainer_config(diffusion, dataset, renderer)

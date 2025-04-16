@@ -32,7 +32,7 @@ base = {
     'diffusion': {
         ## model
         'model': 'models.TemporalUnet',
-        'diffusion': 'models.GaussianDiffusion',
+        'diffusion': 'models.CFM', # GaussianDiffusion
         'horizon': 256,
         'n_diffusion_steps': 256,
         'action_weight': 1,
