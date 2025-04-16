@@ -108,6 +108,7 @@ class TemporalUnet(nn.Module):
             x : [ batch x horizon x transition ]
         '''
 
+        print(f"\nCond: {cond}\n")
         x = einops.rearrange(x, 'b h t -> b t h')
 
         t = self.time_mlp(time)

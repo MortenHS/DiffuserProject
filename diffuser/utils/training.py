@@ -328,6 +328,8 @@ class Trainer(object):
                 batch = next(self.dataloader)
                 batch = batch_to_device(batch)
 
+                # Kaller på loss i cfm som skal ha inn (x, cond), 
+                # originalt er ikke cond i bruk og input er (x, global_cond, cond)
                 loss, infos = self.model.loss(*batch)
                 loss = loss / self.gradient_accumulate_every
                 loss.backward()

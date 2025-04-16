@@ -40,7 +40,7 @@ class CFM(nn.Module):
         alphas = 1. - betas
         alphas_cumprod = torch.cumprod(alphas, axis=0)
         alphas_cumprod_prev = torch.cat([torch.ones(1), alphas_cumprod[:-1]])
-
+        self.betas = betas
         # self.sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
         # self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1- alphas_cumprod)
 
@@ -111,7 +111,7 @@ class CFM(nn.Module):
     @torch.no_grad()
     def p_sample_loop_original(self, shape, global_cond, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
-
+        print(f"\n Cond in p_sample_loop_original: {cond}\n")
         batch_size = shape[0]
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
@@ -176,7 +176,7 @@ class CFM(nn.Module):
         # Assumes the model's parameters are all on the same device.
         return next(self.parameters()).device
 
-    def loss(self, x, cond):
+    def loss(self, x, global_cond, cond):
         x = x.to(self.device)
 
         batch_size = len(x)
@@ -187,7 +187,9 @@ class CFM(nn.Module):
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
         
         # xt shape now [1, 128, 6]
-        vt = self.model(xt, cond, t) # model returns "x"
+        # self.model is model as defined in config==TemporalUnet
+        vt = self.model(xt, cond, t) # model returns "x", 
+
         loss = torch.mean((vt - ut) ** 2)
         return loss, {'loss': loss.item()}
 
