@@ -19,14 +19,14 @@ class SinusoidalPosEmb(nn.Module):
         self.dim = dim
 
     def forward(self, x):
-        print(f"\nx shape at entry to SinusoidalPosEmb: {x.shape}, value of x: {x}\n")
+        # print(f"\nx shape at entry to SinusoidalPosEmb: {x.shape}, value of x: {x}\n")
         # x har shape [32] eller [] ved inngang her
         device = x.device
         half_dim = self.dim // 2
         emb = math.log(10000) / (half_dim - 1)
         emb = torch.exp(torch.arange(half_dim, device=device) * -emb)
         # Emb: torch.Size([16]) her
-        print(f"x shape in SinusoidalPosEmb: {x.shape}")
+        # print(f"x shape in SinusoidalPosEmb: {x.shape}")
         emb = x[:, None] * emb[None, :]
         emb = torch.cat((emb.sin(), emb.cos()), dim=-1)
         return emb

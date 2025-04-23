@@ -350,11 +350,11 @@ class Trainer(object):
                 self.save(label)
 
             if self.step == 0 and self.sample_freq:
-                print(f"Goes into render_reference")
+                # print(f"Goes into render_reference")
                 self.render_reference(self.n_reference)
 
             if self.sample_freq and self.step % self.sample_freq == 0:
-                print(f"Goes into render_samples")
+                # print(f"Goes into render_samples")
                 self.render_samples(n_samples=self.n_samples)
 
             self.step += 1
@@ -430,15 +430,15 @@ class Trainer(object):
     
             cond = [(np.array([]), np.array([]))] * batch_size
             
-            print(f"Cond in render_samples: {cond}")
+            # print(f"Cond in render_samples: {cond}")
             ## [ n_samples x horizon x (action_dim + observation_dim) ]
             samples = self.ema_model.conditional_sample(cond)
             samples = to_np(samples)
 
             ## [ n_samples x horizon x observation_dim ]
             normed_observations = samples
-
-            observations = self.dataset.unnormalize(normed_observations)
+            # print(f"Normed_observations: {normed_observations}\n")
+            # observations = self.dataset.unnormalize(normed_observations)
             savepath = os.path.join(self.logdir, f'sample-{self.step}-{i}.png')
             self.renderer.composite(savepath, observations)
-        print(f"Render samples loop complete")
+        # print(f"Render samples loop complete")

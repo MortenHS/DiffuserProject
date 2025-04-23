@@ -179,7 +179,12 @@ class CFM(nn.Module):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
         # t shape here: [] !! Problem
         traj = torchdiffeq.odeint(
-            lambda t, x: (print(f"\nx shape in odeint func: {x.shape}, t shape: {t.shape}"), self.model.forward(x, cond, t)), # Endret fra (t, x, global_cond=global_cond)
+            lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
+
+            # # Lambda har [1] til slutt fordi den blir en tuple med print statement.
+            # lambda t, x: (print(f"\nx shape in odeint func: {x.shape}, t shape: {t.shape}, t value: {t}")
+            # , self.model.forward(x, cond, time=t.expand(x.shape[0])))[1],
+
             torch.randn(shape).to(self.device),
             torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
             atol=1e-4,

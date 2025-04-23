@@ -111,12 +111,12 @@ class TemporalUnet(nn.Module):
         # print(f"\nCond: {cond}\n")
         x = einops.rearrange(x, 'b h t -> b t h')
         # Shape of x becomes: [32, 6, 128]
-        print(f"\nShape of x in tempUnet forward: {x.shape}\n")
+        # print(f"\nShape of x in tempUnet forward: {x.shape}\n")
         # Her kalles det på SinusoidalPosEmb:
-        print(f"Enters the time_mlp function with time value: {time}")
+        # print(f"Time enters the time_mlp function with time value: {time}")
         t = self.time_mlp(time)
         h = []
-        print(f"Leaves the time_mlp function")
+        # print(f"Leaves the time_mlp function")
         for resnet, resnet2, downsample in self.downs:
             x = resnet(x, t)
             x = resnet2(x, t)
