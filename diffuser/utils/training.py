@@ -327,13 +327,15 @@ class Trainer(object):
             for i in range(self.gradient_accumulate_every):
                 batch = next(self.dataloader)
                 batch = batch_to_device(batch)
-
-                # Kaller på loss i cfm som skal ha inn (x, cond), 
+                # Batch er delt opp i: Trajectories [batch_size=32, horizon tror jeg, dim=6], og
+                # conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
+                    # 127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')})}
+                
+                # Kaller på loss i cfm ln[179-196] som skal ha inn (x, cond), 
                 # originalt er ikke cond i bruk og input er (x, global_cond, cond)
                 loss, infos = self.model.loss(*batch)
                 loss = loss / self.gradient_accumulate_every
                 loss.backward()
-                # running_loss += loss.item()
 
             # self.writer.add_scalar('training_loss', running_loss, self.step)
 
@@ -347,14 +349,12 @@ class Trainer(object):
                 label = self.step // self.label_freq * self.label_freq
                 self.save(label)
 
-            if self.step % self.log_freq == 0:
-                infos_str = ' | '.join([f'{key}: {val:8.4f}' for key, val in infos.items()])
-                print(f'{self.step}: {loss:8.4f} | {infos_str} | t: {timer():8.4f}')
-
             if self.step == 0 and self.sample_freq:
+                print(f"Goes into render_reference")
                 self.render_reference(self.n_reference)
 
             if self.sample_freq and self.step % self.sample_freq == 0:
+                print(f"Goes into render_samples")
                 self.render_samples(n_samples=self.n_samples)
 
             self.step += 1
@@ -426,14 +426,13 @@ class Trainer(object):
 
             ## get a single datapoint
             batch = self.dataloader_vis.__next__()
-            global_cond = batch[1]
             batch_size = batch[0].shape[0]
     
             cond = [(np.array([]), np.array([]))] * batch_size
             
-
+            print(f"Cond in render_samples: {cond}")
             ## [ n_samples x horizon x (action_dim + observation_dim) ]
-            samples = self.ema_model.conditional_sample(global_cond, cond)
+            samples = self.ema_model.conditional_sample(cond)
             samples = to_np(samples)
 
             ## [ n_samples x horizon x observation_dim ]
@@ -442,3 +441,4 @@ class Trainer(object):
             observations = self.dataset.unnormalize(normed_observations)
             savepath = os.path.join(self.logdir, f'sample-{self.step}-{i}.png')
             self.renderer.composite(savepath, observations)
+        print(f"Render samples loop complete")

@@ -108,8 +108,48 @@ class CFM(nn.Module):
         return loss_weights
 
     # ------------------------------------------Sampling------------------------------------------#
+    def predict_start_from_noise(self, x_t, t, noise):
+        '''
+            Reconstructs original data from noisy sample at timestep t
+
+            if self.predict_epsilon, model output is (scaled) noise;
+            otherwise, model predicts x0 directly
+        '''
+        if self.predict_epsilon:
+            return (
+                extract(self.sqrt_recip_alphas_cumprod, t, x_t.shape) * x_t -
+                extract(self.sqrt_recipm1_alphas_cumprod, t, x_t.shape) * noise
+            )
+        else:
+            return noise
+    
+
+    def p_mean_variance(self, x, cond, t):
+        ''' 
+        Performs one denoising step in the reverse process
+        '''
+        x_recon = self.predict_start_from_noise(x, t=t, noise=self.model(x, t))
+
+        if self.clip_denoised:
+            x_recon.clamp_(-1., 1.)
+        else:
+            assert RuntimeError()
+
+        model_mean, posterior_variance, posterior_log_variance = self.q_posterior(
+                x_start=x_recon, x_t=x, t=t)
+        return model_mean, posterior_variance, posterior_log_variance
+
+
     @torch.no_grad()
-    def p_sample_loop_original(self, shape, global_cond, cond, verbose=True, return_diffusion=False):
+    def p_sample(self, x, cond, t):
+        b, *_, device = *x.shape, x.device
+        model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t, global_cond=None)
+        noise = torch.randn_like(x)
+        # no noise when t == 0
+        nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
+        return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
+
+    def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
         print(f"\n Cond in p_sample_loop_original: {cond}\n")
         batch_size = shape[0]
@@ -135,10 +175,26 @@ class CFM(nn.Module):
         else:
             return x
 
-    def p_sample_loop(self, shape, global_cond, cond, verbose=True, return_diffusion=False, **kwargs):
+    def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
+        # x shape here: [32, 128, 6] == [B, horizon, dim]
+        # t shape here: [] !! Problem
+        traj = torchdiffeq.odeint(
+            lambda t, x: (print(f"\nx shape in odeint func: {x.shape}, t shape: {t.shape}"), self.model.forward(x, cond, t)), # Endret fra (t, x, global_cond=global_cond)
+            torch.randn(shape).to(self.device),
+            torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+            atol=1e-4,
+            rtol=1e-4,
+            method="euler",
+        )
+    
+        return traj[-1]
+
+
+    def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
         sample_type = kwargs.get('sample_type', 'original')
 
-        return self.p_sample_loop_original(shape, global_cond, verbose, return_diffusion)
+        return self.p_sample_loop_cfm(shape, cond, verbose, return_diffusion)
+        # return self.p_sample_loop_original(shape, verbose, return_diffusion)
     
 
         # if sample_type == 'repaint':
@@ -152,7 +208,7 @@ class CFM(nn.Module):
         # else:
         #     raise NotImplementedError
 
-    def conditional_sample(self, global_cond, *args, horizon=None, **kwargs):
+    def conditional_sample(self, cond, *args, horizon=None, **kwargs):
         '''
             conditions : [ (time, state), ... ]
         '''
@@ -162,11 +218,11 @@ class CFM(nn.Module):
         shape = (batch_size, horizon, self.transition_dim)
         # global_cond = global_cond.to(device)
         # global_cond = {k: v.to(device) for k, v in global_cond.items()}
-        for k, v in global_cond.items():
-            if type(v) is torch.Tensor:
-                global_cond[k] = v.to(device)
+        # for k, v in global_cond.items():
+        #     if type(v) is torch.Tensor:
+        #         global_cond[k] = v.to(device)
 
-        return self.p_sample_loop(shape, global_cond, *args, **kwargs)
+        return self.p_sample_loop(shape, cond, *args, **kwargs)
 
 
     #------------------------------------------ training ------------------------------------------#
@@ -176,22 +232,24 @@ class CFM(nn.Module):
         # Assumes the model's parameters are all on the same device.
         return next(self.parameters()).device
 
-    def loss(self, x, global_cond, cond):
+    def loss(self, x, cond): # def loss(self, x, global_cond, cond):
+        ''' 
+        Hvis implementasjon i CondUnet1D, sørg for å legge til global_cond=None
+        '''
         x = x.to(self.device)
-
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
         
         x1 = x.to(self.device)
         x0 = torch.randn_like(x1)
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
-        
-        # xt shape now [1, 128, 6]
-        # self.model is model as defined in config==TemporalUnet
-        vt = self.model(xt, cond, t) # model returns "x", 
 
+        # I T-CFM: vt = self.model(t, xt, global_cond=global_cond)
+
+        vt = self.model(xt, cond, t)
         loss = torch.mean((vt - ut) ** 2)
         return loss, {'loss': loss.item()}
+
 
     def forward(self, *args, **kwargs):
         return self.conditional_sample(*args, **kwargs)

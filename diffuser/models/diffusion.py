@@ -176,6 +176,10 @@ class GaussianDiffusion(nn.Module):
     #------------------------------------------ training ------------------------------------------#
 
     def q_sample(self, x_start, t, noise=None):
+        '''
+        Forward diffusion process (gradually corrupts data)
+        '''
+
         if noise is None:
             noise = torch.randn_like(x_start)
 
@@ -187,9 +191,13 @@ class GaussianDiffusion(nn.Module):
         return sample
 
     def p_losses(self, x_start, cond, t):
+        ''' 
+        Core training step of diffusion:
+        Part of the reverse process, trains model to reverse the noise from q_sample (x_noisy)
+        '''
         noise = torch.randn_like(x_start)
 
-        x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise)
+        x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) # Simulate xt \sim q(x_t|x_0)
         x_noisy = apply_conditioning(x_noisy, cond, self.action_dim)
 
         x_recon = self.model(x_noisy, cond, t)
@@ -201,12 +209,17 @@ class GaussianDiffusion(nn.Module):
             loss, info = self.loss_fn(x_recon, noise)
         else:
             loss, info = self.loss_fn(x_recon, x_start)
-
+        
         return loss, info
 
     def loss(self, x, cond):
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
+
+        p = self.p_losses(x, cond, t)
+    
+        # x representerer "Trajectories"
+        # Cond her er start og sluttpunkt (e.g. 0 og 127)
         return self.p_losses(x, cond, t)
 
     def forward(self, cond, *args, **kwargs):
