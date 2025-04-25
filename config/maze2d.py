@@ -53,7 +53,7 @@ base = {
 
         ## serialization
         'logbase': 'logs',
-        'prefix': 'diffusion/',
+        'prefix': 'cfm/', # Change here to alter folder name
         'exp_name': watch(diffusion_args_to_watch),
 
         ## training
@@ -93,7 +93,7 @@ base = {
         'conditional': False,
 
         ## loading
-        'diffusion_loadpath': 'f:diffusion/H{horizon}_T{n_diffusion_steps}',
+        'diffusion_loadpath': 'f:cfm/H{horizon}_T{n_diffusion_steps}',
         'diffusion_epoch': 'latest',
     },
 
