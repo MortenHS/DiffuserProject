@@ -115,6 +115,10 @@ class GoalDataset(SequenceDataset):
         
         assert arr.shape[-1] == len(self.predict_features), "Number of features in array does not match predict_features"
         
+        # predict_features og packed_features i TCFM for aircraft er gitt som:
+        # predict_features: List[str] = ['timestamp', 'longitude', 'latitude', 'altitude'],
+        # packed_features: List[str] = ['longitude', 'latitude', 'altitude'],
+
         unnormalized = np.zeros_like(arr)
         
         for i, feature in enumerate(self.predict_features):

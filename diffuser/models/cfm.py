@@ -218,7 +218,7 @@ class CFM(nn.Module):
             conditions : [ (time, state), ... ]
         '''
         device = self.device
-        batch_size = 32
+        batch_size = len(cond[0])
         horizon = horizon or self.horizon
         shape = (batch_size, horizon, self.transition_dim)
         # global_cond = global_cond.to(device)
