@@ -69,7 +69,7 @@ class TemporalUnet(nn.Module):
         self.ups = nn.ModuleList([])
         num_resolutions = len(in_out)
 
-        print(in_out)
+        # print(in_out)
         for ind, (dim_in, dim_out) in enumerate(in_out):
             is_last = ind >= (num_resolutions - 1)
 
@@ -108,15 +108,12 @@ class TemporalUnet(nn.Module):
             x : [ batch x horizon x transition ]
         '''
 
-        # print(f"\nCond: {cond}\n")
         x = einops.rearrange(x, 'b h t -> b t h')
         # Shape of x becomes: [32, 6, 128]
-        # print(f"\nShape of x in tempUnet forward: {x.shape}\n")
-        # Her kalles det på SinusoidalPosEmb:
-        # print(f"Time enters the time_mlp function with time value: {time}")
+
         t = self.time_mlp(time)
         h = []
-        # print(f"Leaves the time_mlp function")
+        
         for resnet, resnet2, downsample in self.downs:
             x = resnet(x, t)
             x = resnet2(x, t)

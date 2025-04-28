@@ -30,6 +30,7 @@ class CFM(nn.Module):
         self.action_dim = action_dim
         self.transition_dim = observation_dim + action_dim
         self.model = model
+        self.model_type = model.__class__.__name__
 
         sigma = 0.0
         # self.FM = ExactOptimalTransportConditionalFlowMatcher(sigma=sigma)
@@ -41,38 +42,11 @@ class CFM(nn.Module):
         alphas_cumprod = torch.cumprod(alphas, axis=0)
         alphas_cumprod_prev = torch.cat([torch.ones(1), alphas_cumprod[:-1]])
         self.betas = betas
-        # self.sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
-        # self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1- alphas_cumprod)
 
         self.n_timesteps = int(n_timesteps)
         self.clip_denoised = clip_denoised
         self.predict_epsilon = predict_epsilon
-        # self.register_buffer('betas', betas)
-        # self.register_buffer('alphas_cumprod', alphas_cumprod)
-        # self.register_buffer('alphas_cumprod_prev', alphas_cumprod_prev)
 
-        # # calculations for diffusion q(x_t | x_{t-1}) and others
-        # self.register_buffer('sqrt_alphas_cumprod', torch.sqrt(alphas_cumprod))
-        # self.register_buffer('sqrt_one_minus_alphas_cumprod', torch.sqrt(1. - alphas_cumprod))
-        # self.register_buffer('log_one_minus_alphas_cumprod', torch.log(1. - alphas_cumprod))
-        # self.register_buffer('sqrt_recip_alphas_cumprod', torch.sqrt(1. / alphas_cumprod))
-        # self.register_buffer('sqrt_recipm1_alphas_cumprod', torch.sqrt(1. / alphas_cumprod - 1))
-
-        # # calculations for posterior q(x_{t-1} | x_t, x_0)
-        # posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
-        # self.register_buffer('posterior_variance', posterior_variance)
-
-        # ## log calculation clipped because the posterior variance
-        # ## is 0 at the beginning of the diffusion chain
-        # self.register_buffer('posterior_log_variance_clipped',
-        #     torch.log(torch.clamp(posterior_variance, min=1e-20)))
-        # self.register_buffer('posterior_mean_coef1',
-        #     betas * np.sqrt(alphas_cumprod_prev) / (1. - alphas_cumprod))
-        # self.register_buffer('posterior_mean_coef2',
-        #     (1. - alphas_cumprod_prev) * np.sqrt(alphas) / (1. - alphas_cumprod))
-
-        # ## get loss coefficients and initialize objective
-        # loss_weights = self.get_loss_weights(action_weight, loss_discount, loss_weights)
         self.loss_fn = Losses[loss_type](loss_weights, self.action_dim)
 
     def set_sampling_timesteps(self, t):
@@ -151,7 +125,7 @@ class CFM(nn.Module):
 
     def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
-        print(f"\n Cond in p_sample_loop_original: {cond}\n")
+        # print(f"\n Cond in p_sample_loop_original: {cond}\n")
         batch_size = shape[0]
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
@@ -177,22 +151,30 @@ class CFM(nn.Module):
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
-        # t shape here: [] !! Problem
-        traj = torchdiffeq.odeint(
-            lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
+        if self.model_type == 'ConditionalUnet1D':
+            traj = torchdiffeq.odeint(
+                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
+                torch.randn(shape).to(self.device),
+                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                atol=1e-4,
+                rtol=1e-4,
+                method="euler",
+            )
+            return traj[-1]
 
-            # # Lambda har [1] til slutt fordi den blir en tuple med print statement.
-            # lambda t, x: (print(f"\nx shape in odeint func: {x.shape}, t shape: {t.shape}, t value: {t}")
-            # , self.model.forward(x, cond, time=t.expand(x.shape[0])))[1],
+        elif self.model_type == 'TemporalUnet':
+            traj = torchdiffeq.odeint(
+                lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
+                torch.randn(shape).to(self.device),
+                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                atol=1e-4,
+                rtol=1e-4,
+                method="euler",
+            )
+            return traj[-1]
+        else:
+            raise ValueError(f"Unsupported model type: {self.model_type}")
 
-            torch.randn(shape).to(self.device),
-            torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
-            atol=1e-4,
-            rtol=1e-4,
-            method="euler",
-        )
-    
-        return traj[-1]
 
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
@@ -221,11 +203,6 @@ class CFM(nn.Module):
         batch_size = len(cond[0])
         horizon = horizon or self.horizon
         shape = (batch_size, horizon, self.transition_dim)
-        # global_cond = global_cond.to(device)
-        # global_cond = {k: v.to(device) for k, v in global_cond.items()}
-        # for k, v in global_cond.items():
-        #     if type(v) is torch.Tensor:
-        #         global_cond[k] = v.to(device)
 
         return self.p_sample_loop(shape, cond, *args, **kwargs)
 
@@ -238,9 +215,6 @@ class CFM(nn.Module):
         return next(self.parameters()).device
 
     def loss(self, x, cond): # def loss(self, x, global_cond, cond):
-        ''' 
-        Hvis implementasjon i CondUnet1D, sørg for å legge til global_cond=None
-        '''
         x = x.to(self.device)
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
@@ -249,55 +223,18 @@ class CFM(nn.Module):
         x0 = torch.randn_like(x1)
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
 
+        if self.model_type == 'ConditionalUnet1D':
+            vt = self.model(t, xt, global_cond=cond)
+        elif self.model_type == 'TemporalUnet':
+            vt = self.model(xt, cond, t)
+        else:
+            raise ValueError(f"Unsupported model type: {self.model_type}")
+        
         # I T-CFM: vt = self.model(t, xt, global_cond=global_cond)
-
-        vt = self.model(xt, cond, t)
+        # vt = self.model(xt, cond, t)
         loss = torch.mean((vt - ut) ** 2)
         return loss, {'loss': loss.item()}
 
 
     def forward(self, *args, **kwargs):
         return self.conditional_sample(*args, **kwargs)
-
-
-    # def loss(self, x, cond):
-    #     batch_size = len(x)
-    #     t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
-
-    #     print(f"\nLoss input information, batch size: {batch_size}, t: {t.shape}, cond: {cond}")
-
-    #     return self.p_losses(x, cond, t)
-
-    # def q_sample(self, x_start, t, noise=None):
-    #     if noise is None:
-    #         noise = torch.randn_like(x_start)
-
-    #     device = self.device
-    #     self.sqrt_alphas_cumprod = self.sqrt_alphas_cumprod.to(device)
-    #     self.sqrt_one_minus_alphas_cumprod = self.sqrt_one_minus_alphas_cumprod.to(device)
-    #     sample = (
-    #         extract(self.sqrt_alphas_cumprod, t, x_start.shape) * x_start +
-    #         extract(self.sqrt_one_minus_alphas_cumprod, t, x_start.shape) * noise
-    #     )
-
-    #     print(f"Noise: {noise.shape}")
-    #     return sample
-
-    # def p_losses(self, x_start, cond, t):
-    #     noise = torch.randn_like(x_start)
-
-    #     x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise)
-    #     x_noisy = apply_conditioning(x_noisy, cond, self.action_dim)
-
-    #     x_recon = self.model(x_noisy, cond, t)
-    #     x_recon = apply_conditioning(x_recon, cond, self.action_dim)
-
-    #     assert noise.shape == x_recon.shape
-
-    #     if self.predict_epsilon:
-    #         loss, info = self.loss_fn(x_recon, noise)
-    #     else:
-    #         loss, info = self.loss_fn(x_recon, x_start)
-
-    #     print(f"Loss and info shapes: loss: {loss.shape}, info: {info.shape}")
-    #     return loss, info

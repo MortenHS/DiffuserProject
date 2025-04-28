@@ -31,7 +31,7 @@ base = {
 
     'diffusion': {
         ## model
-        'model': 'models.TemporalUnet',
+        'model': 'models.ConditionalUnet1D', # TemporalUnet or ConditionalUnet1D
         'diffusion': 'models.CFM', # GaussianDiffusion or CFM
         'horizon': 256,
         'n_diffusion_steps': 256,
