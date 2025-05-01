@@ -61,7 +61,7 @@ for t in range(env.max_episode_steps):
         action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
         actions = samples.actions[0] # 384
         sequence = samples.observations[0] # 384 elements
-    # pdb.set_trace()
+    
 
     # If t is last index of sequence:
     if t < len(sequence) - 1:
@@ -74,13 +74,13 @@ for t in range(env.max_episode_steps):
         next_waypoint = sequence[-1].copy()
         # Velocities in x and y are set to 0:
         next_waypoint[2:] = 0
-        # pdb.set_trace()
+        
             
     # Can use actions or define a simple controller based on state predictions
     # Action is defined as the positional difference + the velocity difference for x and y
     action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
     # --------------------------------------------------------------------------------------
-    # pdb.set_trace()
+    
     
 
     # Use actions defined in the process, instead of using next_waypoint
@@ -98,6 +98,7 @@ for t in range(env.max_episode_steps):
     next_observation, reward, terminal, _ = env.step(action)
     total_reward += reward
     score = env.get_normalized_score(total_reward)
+    
     print(
         f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
         f'{action}'

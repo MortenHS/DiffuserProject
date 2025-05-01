@@ -93,6 +93,8 @@ class GoalDataset(SequenceDataset):
         '''
             condition on both the current observation and the last observation in the plan
         '''
+        # print(f"Observations[0]: {observations[0]}, goal obs: {observations[-1]}")
+
         return {
             0: observations[0],
             self.horizon - 1: observations[-1],
