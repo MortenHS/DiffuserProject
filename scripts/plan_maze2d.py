@@ -17,10 +17,7 @@ class Parser(utils.Parser):
 
 args = Parser().parse_args('plan')
 
-# logger = utils.Logger(args)
-
 env = datasets.load_environment(args.dataset)
-
 #---------------------------------- loading ----------------------------------#
 
 diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
@@ -50,7 +47,7 @@ print(f"Target {target}")
 # observations for rendering
 rollout = [observation.copy()]
 total_reward = 0
-for t in range(env.max_episode_steps):
+for t in range(env.max_episode_steps): # 300 for umaze
 
     state = env.state_vector().copy()
 
@@ -61,7 +58,6 @@ for t in range(env.max_episode_steps):
         action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
         actions = samples.actions[0] # 384
         sequence = samples.observations[0] # 384 elements
-    
 
     # If t is last index of sequence:
     if t < len(sequence) - 1:
@@ -123,7 +119,7 @@ for t in range(env.max_episode_steps):
         # renderer.render_plan(join(args.savepath, f'{t}_plan.mp4'), samples.actions, samples.observations, state)
 
         ## save rollout thus far
-        renderer.composite(join(args.savepath, 'rollout.png'), np.array(rollout)[None], ncol=1)
+        renderer.composite(join(args.savepath, f'rollout.png'), np.array(rollout)[None], ncol=1)
         # renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
 
         # renderer.render_rollout(join(args.savepath, f'rollout.mp4'), rollout, fps=80)
@@ -141,7 +137,7 @@ json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal
     'epoch_diffusion': diffusion_experiment.epoch}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
 
-# # logger.finish(t, env.max_episode_steps, score=score, value=0)
+
 
 # def plot_observation_points(observations_to_plot, target):
 #     observation_x = [point[0] for point in observations_to_plot]

@@ -114,8 +114,7 @@ class Trainer(object):
     #------------------------------------ api ------------------------------------#
     #-----------------------------------------------------------------------------#
 
-    def train(self, n_train_steps):
-        
+    def train(self, n_train_steps): # for umaze = 10 000 = n_steps_per_epoch
         timer = Timer()
         for step in range(n_train_steps):
             # running_loss = 0.0
@@ -242,11 +241,6 @@ class Trainer(object):
 
             # [ 1 x 1 x observation_dim ]
             normed_conditions = to_np(batch.conditions[0])[:, None] # [1, 1, 4]
-
-            # print("conditions[0].shape:", conditions[0].shape)
-            # print("samples.shape:", samples.shape)
-            # print("normed_conditions.shape:", normed_conditions.shape)
-            # print("normed_observations.shape:", normed_observations.shape)
 
             # [ n_samples x (horizon + 1) x observation_dim ]
             normed_observations = np.concatenate([

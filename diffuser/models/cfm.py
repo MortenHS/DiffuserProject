@@ -36,17 +36,17 @@ class CFM(nn.Module):
         # self.FM = ExactOptimalTransportConditionalFlowMatcher(sigma=sigma)
         self.FM = ConditionalFlowMatcher(sigma=sigma)
         self.node = NeuralODE(model, solver="dopri5", sensitivity="adjoint", atol=1e-4, rtol=1e-4)
-
+        
         betas = cosine_beta_schedule(n_timesteps)
         alphas = 1. - betas
         alphas_cumprod = torch.cumprod(alphas, axis=0)
         alphas_cumprod_prev = torch.cat([torch.ones(1), alphas_cumprod[:-1]])
         self.betas = betas
 
-        self.n_timesteps = int(n_timesteps)
+        self.n_timesteps = int(n_timesteps) # For umaze = 64
         self.clip_denoised = clip_denoised
         self.predict_epsilon = predict_epsilon
-
+        # print(f"In CFM() n_timesteps: {self.n_timesteps}")
         self.loss_fn = Losses[loss_type](loss_weights, self.action_dim)
 
     def set_sampling_timesteps(self, t):

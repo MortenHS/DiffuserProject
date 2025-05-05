@@ -20,6 +20,7 @@ args = Parser().parse_args('plan')
 # Load Environment and Diffusion Model
 env = datasets.load_environment(args.dataset)
 diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
+print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
 renderer = diffusion_experiment.renderer
@@ -124,7 +125,7 @@ def save_plots(run_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_err
     plt.ylabel("Y Position")
     plt.legend()
     plt.grid()
-    traj_plot_path = join(run_savepath, 'trajectory_comp.png')
+    traj_plot_path = join(run_savepath, 'trajectory_comp_cfm.png')
     plt.savefig(traj_plot_path)
     plt.close()
 
@@ -139,7 +140,7 @@ def save_plots(run_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_err
     plt.ylabel("Error (Euclidean Distance)")
     plt.legend()
     plt.grid()
-    error_plot_path = join(run_savepath, 'pos_error_comp.png')
+    error_plot_path = join(run_savepath, 'pos_error_comp_cfm.png')
     plt.savefig(error_plot_path)
     plt.close()
 
@@ -153,3 +154,5 @@ trajectory_m2 = trajectory_data["Actions_Method"]
 pos_error_m1 = pos_error_data["Next_Waypoint_Method"]
 pos_error_m2 = pos_error_data["Actions_Method"]
 save_plots(args.savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2, env._target)
+
+print(f"Done performing pos error comp.")
