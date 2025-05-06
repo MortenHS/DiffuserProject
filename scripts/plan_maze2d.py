@@ -42,7 +42,6 @@ target = env._target
 cond = {
     diffusion.horizon - 1: np.array([*target, 0, 0]),
 }
-print(f"Target {target}")
 
 # observations for rendering
 rollout = [observation.copy()]
@@ -75,6 +74,7 @@ for t in range(env.max_episode_steps): # 300 for umaze
     # Can use actions or define a simple controller based on state predictions
     # Action is defined as the positional difference + the velocity difference for x and y
     action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:]) # Calculated actions
+
     # --------------------------------------------------------------------------------------
     
     

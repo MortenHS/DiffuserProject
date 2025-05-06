@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+import torch
 import numpy as np
 from os.path import join
 import matplotlib.pyplot as plt
@@ -9,37 +10,53 @@ from diffuser.guides.policies import Policy
 import diffuser.datasets as datasets
 import diffuser.utils as utils
 
-class Parser(utils.Parser):
-    dataset: str = 'maze2d-umaze-v1'
-    config: str = 'config.maze2d'
+def get_euclid_storage():
+    trajectory_data = {
+        "Diffusion": [],
+        "CFM": []
+    }
+    pos_error_data = {
+        "Diffusion": [],
+        "CFM": []
+    }
+    return trajectory_data, pos_error_data
 
-#---------------------------------- setup ----------------------------------#
 
-args = Parser().parse_args('plan')
+def compare_euclid_pos_error(method_name):
+    # Storage:
+    trajectory_data, pos_error_data = get_euclid_storage()
 
-# Load Environment and Diffusion Model
-env = datasets.load_environment(args.dataset)
-diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
-print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
-diffusion = diffusion_experiment.ema
-dataset = diffusion_experiment.dataset
-renderer = diffusion_experiment.renderer
-policy = Policy(diffusion, dataset.normalizer)
+    if method_name == "CFM":
+        class Parser(utils.Parser):
+            dataset: str = 'maze2d-umaze-v1'
+            config: str = 'config.maze2d_cfm'
 
-# Storage
-trajectory_data = {
-    "Next_Waypoint_Method": [],
-    "Actions_Method": []
-}
-pos_error_data = {
-    "Next_Waypoint_Method": [],
-    "Actions_Method": []
-}
+    if method_name == "Diffusion":
+        class Parser(utils.Parser):
+            dataset: str = 'maze2d-umaze-v1'
+            config: str = 'config.maze2d'
 
-def run_method(method_name, use_waypoint_method):
+    args = Parser().parse_args('plan')
+    
+    env = datasets.load_environment(args.dataset)
+
+    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
+    print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
+
+    diffusion = diffusion_exp.ema
+    dataset = diffusion_exp.dataset
+    renderer = diffusion_exp.renderer
+
+    policy = Policy(diffusion, dataset.normalizer)
+    observation = env.reset()
+
+    if args.conditional:
+        print('Resetting target')
+        env.set_target()
+
     run_savepath = join(args.savepath, f'{method_name}_set_state')
     os.makedirs(run_savepath, exist_ok=True)
-    observation = env.reset()
+    
     if args.dataset == "maze2d-umaze-v1":
         env.set_state(np.array([3.03665433, 2.93015904]), np.array([0.00658355, -0.00951007]))
     elif args.dataset == "maze2d-medium-v1":
@@ -48,7 +65,9 @@ def run_method(method_name, use_waypoint_method):
         env.set_state(np.array([0.94333326, 1.09938711]), np.array([0.10727024, 0.05407418]))
 
     target = env._target
-    cond = {diffusion.horizon - 1: np.array([*target, 0, 0])}
+    cond = {
+        diffusion.horizon - 1: np.array([*target, 0, 0])
+    }
     rollout = [observation.copy()]
 
     trajectory = [observation[:2].copy()]
@@ -65,49 +84,59 @@ def run_method(method_name, use_waypoint_method):
             actions = samples.actions[0]
             sequence = samples.observations[0]
 
-        if use_waypoint_method:
-            # Next Waypoint Method
-            if t < len(sequence) - 1:
-                next_waypoint = sequence[t + 1]
-            else:
-                next_waypoint = sequence[-1].copy()
-                next_waypoint[2:] = 0
-            action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
+        if t < len(sequence) - 1:
+            next_waypoint = sequence[t + 1]
         else:
-            # Actions Method
-            if len(actions) > 1:
-                action = actions[0]
-                actions = actions[1:]
-            else:
-                action = -state[2:]
+            next_waypoint = sequence[-1].copy()
+            next_waypoint[2:] = 0
+        action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
 
         next_observation, reward, terminal, _ = env.step(action)
         total_reward += reward
+        score = env.get_normalized_score(total_reward)
         rollout.append(next_observation.copy())
 
-        trajectory.append(next_observation[:2].copy())
-        pos_error.append(np.linalg.norm(next_observation[:2] - target[:2]))
-        trajectory_data[method_name] = trajectory
-        pos_error_data[method_name] = pos_error
+        if 'maze2d' in args.dataset:
+            xy = next_observation[:2]
+            goal = env.unwrapped._target
+            print(
+                f'maze | pos: {xy} | goal: {goal}'
+            )
+
+        ## update rollout observations
+        rollout.append(next_observation.copy())
+
+        if t % args.vis_freq == 0 or terminal:
+            fullpath = join(args.savepath, f'{t}.png')
+
+            if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
+
+            renderer.composite(join(args.savepath, f'rollout.png'), np.array(rollout)[None], ncol=1)
 
         if terminal:
             break
 
         observation = next_observation
 
+    trajectory.append(next_observation[:2].copy())
+    pos_error.append(np.linalg.norm(next_observation[:2] - target[:2]))
+    trajectory_data[method_name] = trajectory
+    pos_error_data[method_name] = pos_error
+   
     # Save Rollout JSON
     json_data = {
-        'score': env.get_normalized_score(total_reward),
+        'score': score,
         'step': t,
         'return': total_reward,
         'term': terminal,
-        'epoch_diffusion': diffusion_experiment.epoch,
+        'epoch_diffusion': diffusion_exp.epoch,
     }
     json_path = join(run_savepath, 'rollout.json')
     json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
 
+    return trajectory_data, pos_error_data
 
-def save_plots(run_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2, target):
+def save_plots(run_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2):
     assert trajectory_m1 is not None, "trajectory_m1 is None"
     assert trajectory_m2 is not None, "trajectory_m2 is None"
     assert pos_error_m1 is not None, "pos_error_m1 is None"
@@ -115,44 +144,43 @@ def save_plots(run_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_err
 
     # Save Trajectory Plot
     plt.figure(figsize=(8, 6))
-    traj_waypoint = np.array(trajectory_m1)
-    traj_action = np.array(trajectory_m2)
-    plt.plot(traj_waypoint[:, 0], traj_waypoint[:, 1], label="Separated prediction", color="blue")
-    plt.plot(traj_action[:, 0], traj_action[:, 1], label="Concurrent prediction", color="red")
-    plt.scatter(target[0], target[1], color="green", label="Goal", marker="X", s=100)
+    traj_diff = np.array(trajectory_m1)
+    traj_cfm = np.array(trajectory_m2)
+    plt.plot(traj_diff[:, 0], traj_diff[:, 1], label="Diffusion", color="blue")
+    plt.plot(traj_cfm[:, 0], traj_cfm[:, 1], label="CFM", color="red")
     plt.title("Trajectory Comparison")
     plt.xlabel("X Position")
     plt.ylabel("Y Position")
     plt.legend()
     plt.grid()
-    traj_plot_path = join(run_savepath, 'trajectory_comp_cfm.png')
+    traj_plot_path = join(run_savepath, 'trajectory_comp.png')
     plt.savefig(traj_plot_path)
     plt.close()
 
     # Plot Positional Error for both methods
     plt.figure(figsize=(8, 6))
-    pos_error_waypoint = np.array(pos_error_m1)
-    pos_error_action = np.array(pos_error_m2)
-    plt.plot(pos_error_waypoint, label="Separated prediction", color="blue")
-    plt.plot(pos_error_action, label="Concurrent prediction", color="red")
+    pos_error_diff = np.array(pos_error_m1)
+    pos_error_cfm = np.array(pos_error_m2)
+    plt.plot(pos_error_diff, label="Diffusion", color="blue")
+    plt.plot(pos_error_cfm, label="CFM", color="red")
     plt.title("Positional Error Comparison")
     plt.xlabel("Time Step")
     plt.ylabel("Error (Euclidean Distance)")
     plt.legend()
     plt.grid()
-    error_plot_path = join(run_savepath, 'pos_error_comp_cfm.png')
+    error_plot_path = join(run_savepath, 'pos_error_comp.png')
     plt.savefig(error_plot_path)
     plt.close()
 
+trajectory_data_diff, pos_error_data_diff = compare_euclid_pos_error("Diffusion")
+trajectory_data_cfm, pos_error_data_cfm = compare_euclid_pos_error("CFM")
 
-# # Run Both Methods
-run_method("Next_Waypoint_Method", use_waypoint_method=True)
-run_method("Actions_Method", use_waypoint_method=False)
+trajectory_m1 = trajectory_data_diff["Diffusion"]
+trajectory_m2 = trajectory_data_cfm["CFM"]
+pos_error_m1 = pos_error_data_diff["Diffusion"]
+pos_error_m2 = pos_error_data_cfm["CFM"]
 
-trajectory_m1 = trajectory_data["Next_Waypoint_Method"]
-trajectory_m2 = trajectory_data["Actions_Method"]
-pos_error_m1 = pos_error_data["Next_Waypoint_Method"]
-pos_error_m2 = pos_error_data["Actions_Method"]
-save_plots(args.savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2, env._target)
+plot_savepath = 'logs/maze2d_umaze-v1/plans/release_H128_T64_LimitsNormalizer_b1_condFalse/'
 
+save_plots(plot_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2)
 print(f"Done performing pos error comp.")

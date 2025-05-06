@@ -15,7 +15,7 @@
 #SBATCH --mail-user=mortenhs@stud.ntnu.no
 #SBATCH --mail-type=ALL
 
-OUTPUT_DIR="/cluster/work/mortenhs/Janner/diffuser/slurms"
+OUTPUT_DIR="/cluster/work/mortenhs/Janner/diffuser/"
 mkdir -p ${OUTPUT_DIR}
 
 WORKDIR=${SLURM_SUBMIT_DIR}
