@@ -88,7 +88,7 @@ base = {
         'logbase': 'logs',
         'prefix': 'plans/release',
         'exp_name': watch(plan_args_to_watch),
-        'suffix': 'cfm_plan',
+        'suffix': '',
 
         'conditional': False,
 
