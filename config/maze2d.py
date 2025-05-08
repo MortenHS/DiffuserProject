@@ -28,7 +28,6 @@ plan_args_to_watch = [
 ]
 
 base = {
-
     'diffusion': {
         ## model
         'model': 'models.TemporalUnet', # TemporalUnet or ConditionalUnet1D
@@ -59,13 +58,13 @@ base = {
         ## training
         'n_steps_per_epoch': 10000,
         'loss_type': 'l2',
-        'n_train_steps': 1e6,
+        'n_train_steps': 2e6,
         'batch_size': 32,
-        'learning_rate': 3e-3,
+        'learning_rate': 4e-4,
         'gradient_accumulate_every': 2,
         'ema_decay': 0.995,
-        'save_freq': 5000,
-        'sample_freq': 5000,
+        'save_freq': 1000,
+        'sample_freq': 1000,
         'n_saves': 50,
         'save_parallel': False,
         'n_reference': 50,
@@ -80,7 +79,7 @@ base = {
 
         ## diffusion model
         'horizon': 256,
-        'n_diffusion_steps': 256,
+        'n_diffusion_steps': 256, # Sampling steps?
         'normalizer': 'LimitsNormalizer',
 
         ## serialization
@@ -96,18 +95,9 @@ base = {
         'diffusion_loadpath': 'f:diffusion/H{horizon}_T{n_diffusion_steps}',
         'diffusion_epoch': 'latest',
     },
-
 }
 
 #------------------------ overrides ------------------------#
-
-# '''
-#     maze2d maze episode steps:
-#         umaze: 150
-#         medium: 250
-#         large: 600
-# '''
-
 maze2d_umaze_v1 = {
     'diffusion': {
         'horizon': 128,

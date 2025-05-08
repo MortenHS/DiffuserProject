@@ -3,7 +3,7 @@
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:2
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-06:00:00
+#SBATCH --time=0-08:00:00
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16
@@ -30,4 +30,4 @@ module purge
 # Running file
 module load Anaconda3/2024.02-1
 conda activate diffuser
-python /cluster/work/mortenhs/Janner/diffuser/scripts/train.py --dataset maze2d-umaze-v1
+python /cluster/work/mortenhs/Janner/diffuser/scripts/train.py --dataset maze2d-umaze-v1 --config config.maze2d_cfm

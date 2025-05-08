@@ -54,7 +54,8 @@ def compare_euclid_pos_error(method_name):
         print('Resetting target')
         env.set_target()
 
-    os.makedirs(args.savepath, exist_ok=True)
+    pos_err_path = join(args.savepath, f"pos_err")
+    os.makedirs(pos_err_path, exist_ok=True)
     
     if args.dataset == "maze2d-umaze-v1":
         env.set_state(np.array([3.03665433, 2.93015904]), np.array([0.00658355, -0.00951007]))
@@ -111,11 +112,11 @@ def compare_euclid_pos_error(method_name):
         rollout.append(next_observation.copy())
 
         if t % args.vis_freq == 0 or terminal:
-            fullpath = join(args.savepath, f'{t}_{dataset_type}.png')
+            fullpath = join(pos_err_path, f'{t}_{dataset_type}.png')
 
             if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
 
-            renderer.composite(join(args.savepath, f'rollout_{dataset_type}.png'), np.array(rollout)[None], ncol=1)
+            renderer.composite(join(pos_err_path, f'rollout_{dataset_type}.png'), np.array(rollout)[None], ncol=1)
 
         if terminal:
             break
@@ -130,7 +131,7 @@ def compare_euclid_pos_error(method_name):
         'term': terminal,
         'epoch_diffusion': diffusion_exp.epoch,
     }
-    json_path = join(args.savepath, f'rollout_{dataset_type}_{method_name}.json')
+    json_path = join(pos_err_path, f'rollout_{dataset_type}_{method_name}.json')
     json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
 
     return trajectory_data, pos_error_data, target, dataset_type

@@ -125,7 +125,7 @@ class CFM(nn.Module):
 
     def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
-        # print(f"\n Cond in p_sample_loop_original: {cond}\n")
+        
         batch_size = shape[0]
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
@@ -174,8 +174,6 @@ class CFM(nn.Module):
             return traj[-1]
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
-
-
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
         sample_type = kwargs.get('sample_type', 'original')

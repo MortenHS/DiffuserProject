@@ -8,18 +8,16 @@ from diffuser.guides.policies import Policy
 import diffuser.datasets as datasets
 import diffuser.utils as utils
 
-
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-umaze-v1'
+    dataset: str = 'maze2d-large-v1'
     config: str = 'config.maze2d'
 
 #---------------------------------- setup ----------------------------------#
-
 args = Parser().parse_args('plan')
 
 env = datasets.load_environment(args.dataset)
-#---------------------------------- loading ----------------------------------#
 
+#---------------------------------- loading ----------------------------------#
 diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
 print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 
@@ -30,14 +28,13 @@ renderer = diffusion_experiment.renderer
 policy = Policy(diffusion, dataset.normalizer)
 
 #---------------------------------- main loop ----------------------------------#
-
 observation = env.reset()
 
 if args.conditional:
     print('Resetting target')
     env.set_target()
 
-## set conditioning xy position to be the goal
+# set conditioning xy position to be the goal
 target = env._target
 cond = {
     diffusion.horizon - 1: np.array([*target, 0, 0]),
@@ -50,19 +47,19 @@ for t in range(env.max_episode_steps): # 300 for umaze
 
     state = env.state_vector().copy()
 
-    ## can replan if desired, but the open-loop plans are good enough for maze2d
-    ## that we really only need to plan once
+    # can replan if desired, but the open-loop plans are good enough for maze2d
+    # that we really only need to plan once
     if t == 0:
         cond[0] = observation
         action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
-        actions = samples.actions[0] # 384
-        sequence = samples.observations[0] # 384 elements
+        actions = samples.actions[0]
+        sequence = samples.observations[0]
 
     # If t is last index of sequence:
     if t < len(sequence) - 1:
         next_waypoint = sequence[t+1]
     
-    ## If we want to use calculated actions:
+    # If we want to use calculated actions:
     # --------------------------------------------------------------------------------------
     else:
         # Next waypoint is a copy of the last element of sequence
@@ -77,8 +74,6 @@ for t in range(env.max_episode_steps): # 300 for umaze
 
     # --------------------------------------------------------------------------------------
     
-    
-
     # Use actions defined in the process, instead of using next_waypoint
     # --------------------------------------------------------------------------------------
     # else:
@@ -110,48 +105,30 @@ for t in range(env.max_episode_steps): # 300 for umaze
     ## update rollout observations
     rollout.append(next_observation.copy())
 
-    # logger.log(score=score, step=t)
+    if args.config.endswith('_cfm'):
+        method_name = 'cfm'
+    else:
+        method_name = 'diff'
+
     if t % args.vis_freq == 0 or terminal:
-        fullpath = join(args.savepath, f'{t}.png')
+        fullpath = join(args.savepath, f'{t}_{method_name}.png')
 
         if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
-
-        # renderer.render_plan(join(args.savepath, f'{t}_plan.mp4'), samples.actions, samples.observations, state)
-
+            
         ## save rollout thus far
-        renderer.composite(join(args.savepath, f'rollout.png'), np.array(rollout)[None], ncol=1)
-        # renderer.composite(join(args.savepath, 'rollout_' + str(t) + '.png'), np.array(rollout)[None], ncol=1) # Makes the complete path(old rollout.png) now be the rollout_ + final t value + .png
+        
+        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
 
-        # renderer.render_rollout(join(args.savepath, f'rollout.mp4'), rollout, fps=80)
-
-        # logger.video(rollout=join(args.savepath, f'rollout.mp4'), plan=join(args.savepath, f'{t}_plan.mp4'), step=t)
-
+    if t == 799: # (1, 801, 4)
+        wrapped_rollout = np.array(rollout)[None]
+        print(f"Rollout terminal: {wrapped_rollout.shape}")
     if terminal:
         break
 
     observation = next_observation
 
 # save result as a json file
-json_path = join(args.savepath, 'rollout.json')
+json_path = join(args.savepath, f'rollout_{method_name}.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
     'epoch_diffusion': diffusion_experiment.epoch}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-
-
-
-# def plot_observation_points(observations_to_plot, target):
-#     observation_x = [point[0] for point in observations_to_plot]
-#     observation_y = [point[1] for point in observations_to_plot]
-#     plt.figure(figsize=(8, 6))
-#     plt.plot(observation_x, observation_y, label="Observations", color='red', linewidth=1)
-#     # Mark the first and last actions with points
-#     plt.scatter(observation_x[0], observation_y[0], color='blue', label='Starting point', zorder=5)
-#     plt.scatter(observation_x[-1], observation_y[-1], color='green', label='End point', zorder=5)
-#     plt.scatter(target[0], target[1], color='gold', label='Target point', zorder=5)
-#     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-#     plt.title('Observation points', fontsize=14)
-#     plt.xlabel('Observations_x', fontsize=12)
-#     plt.ylabel('Observations_y', fontsize=12)
-#     plt.legend()
-#     plt.tight_layout()
-#     plt.savefig("plotted_observation_points.jpeg", format='jpeg', dpi=300)
