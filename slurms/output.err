@@ -1,7 +1,7 @@
 pybullet build time: Nov 28 2023 23:51:11
 /cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/Cython/Distutils/old_build_ext.py:14: DeprecationWarning: dep_util is Deprecated. Use functions from setuptools instead.
   from distutils.dep_util import newer, newer_group
-load datafile:   0%|          | 0/8 [00:00<?, ?it/s]load datafile:  12%|█▎        | 1/8 [00:00<00:02,  2.54it/s]load datafile:  38%|███▊      | 3/8 [00:00<00:00,  6.54it/s]load datafile:  62%|██████▎   | 5/8 [00:00<00:00,  6.72it/s]load datafile:  88%|████████▊ | 7/8 [00:01<00:00,  6.75it/s]load datafile: 100%|██████████| 8/8 [00:01<00:00,  7.15it/s]
+load datafile:   0%|          | 0/8 [00:00<?, ?it/s]load datafile:  12%|█▎        | 1/8 [00:00<00:02,  3.05it/s]load datafile:  38%|███▊      | 3/8 [00:00<00:00,  5.20it/s]load datafile:  50%|█████     | 4/8 [00:00<00:00,  5.24it/s]load datafile:  62%|██████▎   | 5/8 [00:01<00:00,  5.06it/s]load datafile: 100%|██████████| 8/8 [00:01<00:00,  7.36it/s]
 /cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/lightning_fabric/plugins/environments/xla.py:18: DeprecationWarning: `ModuleAvailableCache` is a special case of `RequirementCache`. Please use `RequirementCache(module=...)` instead.
   from lightning_fabric.accelerators.tpu import _XLA_AVAILABLE, TPUAccelerator
 /cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/lightning_fabric/__init__.py:29: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning_fabric')`.
@@ -10,4 +10,3 @@ Implementing implicit namespace packages (as specified in PEP 420) is preferred 
 /cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/pytorch_lightning/__init__.py:45: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('pytorch_lightning')`.
 Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
   __import__("pkg_resources").declare_namespace(__name__)
-slurmstepd: error: *** JOB 22503941 ON idun-07-06 CANCELLED AT 2025-05-04T14:18:08 DUE TO TIME LIMIT ***

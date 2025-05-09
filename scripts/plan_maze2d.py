@@ -9,7 +9,7 @@ import diffuser.datasets as datasets
 import diffuser.utils as utils
 
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-large-v1'
+    dataset: str = 'maze2d-umaze-v1'
     config: str = 'config.maze2d'
 
 #---------------------------------- setup ----------------------------------#
@@ -30,12 +30,14 @@ policy = Policy(diffusion, dataset.normalizer)
 #---------------------------------- main loop ----------------------------------#
 observation = env.reset()
 
-if args.conditional:
+
+if args.conditional: # False for begge
     print('Resetting target')
     env.set_target()
 
 # set conditioning xy position to be the goal
 target = env._target
+print(f"Target : {target}")
 cond = {
     diffusion.horizon - 1: np.array([*target, 0, 0]),
 }
@@ -43,14 +45,14 @@ cond = {
 # observations for rendering
 rollout = [observation.copy()]
 total_reward = 0
-for t in range(env.max_episode_steps): # 300 for umaze
+for t in range(env.max_episode_steps):
 
     state = env.state_vector().copy()
 
     # can replan if desired, but the open-loop plans are good enough for maze2d
     # that we really only need to plan once
     if t == 0:
-        cond[0] = observation
+        cond[0] = observation # Shape (4,)
         action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
         actions = samples.actions[0]
         sequence = samples.observations[0]
@@ -92,7 +94,7 @@ for t in range(env.max_episode_steps): # 300 for umaze
     
     print(
         f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
-        f'{action}'
+        f'action : {action}'
     )
 
     if 'maze2d' in args.dataset:
@@ -113,22 +115,23 @@ for t in range(env.max_episode_steps): # 300 for umaze
     if t % args.vis_freq == 0 or terminal:
         fullpath = join(args.savepath, f'{t}_{method_name}.png')
 
-        if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
+        if t == 0: 
+            renderer.composite(fullpath, samples.observations, ncol=1)
+            shape_var = samples.observations
+            print(f"Samples observations shape: {shape_var.shape}")
             
         ## save rollout thus far
-        
         renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
 
-    if t == 799: # (1, 801, 4)
-        wrapped_rollout = np.array(rollout)[None]
-        print(f"Rollout terminal: {wrapped_rollout.shape}")
     if terminal:
         break
 
     observation = next_observation
 
+overwritten_timesteps = 1
 # save result as a json file
 json_path = join(args.savepath, f'rollout_{method_name}.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch}
+    'epoch_diffusion': diffusion_experiment.epoch, 'sampling_steps' : overwritten_timesteps}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+

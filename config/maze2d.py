@@ -79,7 +79,7 @@ base = {
 
         ## diffusion model
         'horizon': 256,
-        'n_diffusion_steps': 256, # Sampling steps?
+        'n_diffusion_steps': 256,
         'normalizer': 'LimitsNormalizer',
 
         ## serialization

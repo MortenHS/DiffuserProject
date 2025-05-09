@@ -117,7 +117,7 @@ class CFM(nn.Module):
     @torch.no_grad()
     def p_sample(self, x, cond, t):
         b, *_, device = *x.shape, x.device
-        model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t, global_cond=None)
+        model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t)
         noise = torch.randn_like(x)
         # no noise when t == 0
         nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
@@ -151,11 +151,12 @@ class CFM(nn.Module):
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
+        overwritten_timesteps = 1
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
                 lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
                 torch.randn(shape).to(self.device),
-                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
                 method="euler",
@@ -166,7 +167,7 @@ class CFM(nn.Module):
             traj = torchdiffeq.odeint(
                 lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
                 torch.randn(shape).to(self.device),
-                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
                 method="euler",
@@ -174,6 +175,33 @@ class CFM(nn.Module):
             return traj[-1]
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
+
+    # def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
+    #     # x shape here: [32, 128, 6] == [B, horizon, dim]
+    #     if self.model_type == 'ConditionalUnet1D':
+    #         traj = torchdiffeq.odeint(
+    #             lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
+    #             torch.randn(shape).to(self.device),
+    #             torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+    #             atol=1e-4,
+    #             rtol=1e-4,
+    #             method="euler",
+    #         )
+    #         return traj[-1]
+
+    #     elif self.model_type == 'TemporalUnet':
+    #         traj = torchdiffeq.odeint(
+    #             lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
+    #             torch.randn(shape).to(self.device),
+    #             torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+    #             atol=1e-4,
+    #             rtol=1e-4,
+    #             method="euler",
+    #         )
+    #         return traj[-1]
+    #     else:
+    #         raise ValueError(f"Unsupported model type: {self.model_type}")
+
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
         sample_type = kwargs.get('sample_type', 'original')
