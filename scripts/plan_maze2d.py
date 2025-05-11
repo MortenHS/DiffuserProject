@@ -12,14 +12,17 @@ class Parser(utils.Parser):
     dataset: str = 'maze2d-umaze-v1'
     config: str = 'config.maze2d'
 
+overwritten_timesteps = 64
 #---------------------------------- setup ----------------------------------#
 args = Parser().parse_args('plan')
 
 env = datasets.load_environment(args.dataset)
 
+# print(f"args.diffusion_epoch: {args.diffusion_epoch}")
 #---------------------------------- loading ----------------------------------#
 diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
-print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
+# diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=940000)
+# print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
@@ -30,14 +33,16 @@ policy = Policy(diffusion, dataset.normalizer)
 #---------------------------------- main loop ----------------------------------#
 observation = env.reset()
 
-
 if args.conditional: # False for begge
     print('Resetting target')
     env.set_target()
 
 # set conditioning xy position to be the goal
 target = env._target
-print(f"Target : {target}")
+
+if args.config.endswith('_cfm'): method_name = 'cfm'
+else: method_name = 'diff'
+
 cond = {
     diffusion.horizon - 1: np.array([*target, 0, 0]),
 }
@@ -87,38 +92,30 @@ for t in range(env.max_episode_steps):
     #         action = -state[2:]
     #--------------------------------------------------------------------------------------
     
-    # Section 4.3.1 Scoring refers to this:
+    # Section on Scoring refers to this:
     next_observation, reward, terminal, _ = env.step(action)
     total_reward += reward
     score = env.get_normalized_score(total_reward)
     
-    print(
-        f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
-        f'action : {action}'
-    )
+    # print(
+    #     f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
+    #     f'action : {action}'
+    # )
 
     if 'maze2d' in args.dataset:
         xy = next_observation[:2]
         goal = env.unwrapped._target
-        print(
-            f'maze | pos: {xy} | goal: {goal}'
-        )
+        # print(
+        #     f'maze | pos: {xy} | goal: {goal}'
+        # )
 
     ## update rollout observations
     rollout.append(next_observation.copy())
 
-    if args.config.endswith('_cfm'):
-        method_name = 'cfm'
-    else:
-        method_name = 'diff'
-
     if t % args.vis_freq == 0 or terminal:
         fullpath = join(args.savepath, f'{t}_{method_name}.png')
 
-        if t == 0: 
-            renderer.composite(fullpath, samples.observations, ncol=1)
-            shape_var = samples.observations
-            print(f"Samples observations shape: {shape_var.shape}")
+        if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
             
         ## save rollout thus far
         renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
@@ -128,10 +125,8 @@ for t in range(env.max_episode_steps):
 
     observation = next_observation
 
-overwritten_timesteps = 1
 # save result as a json file
 json_path = join(args.savepath, f'rollout_{method_name}.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch, 'sampling_steps' : overwritten_timesteps}
+    'epoch_diffusion': diffusion_experiment.epoch} # , 'sampling_steps' : overwritten_timesteps
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-

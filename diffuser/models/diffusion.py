@@ -143,13 +143,14 @@ class GaussianDiffusion(nn.Module):
         x = apply_conditioning(x, cond, self.action_dim)
         # print(f"n_timesteps in p_sample_loop: {self.n_timesteps}")
         # n_timesteps = n_diffusion_steps
-        overwritten_timesteps = 1
+        overwritten_timesteps = 64
         if return_diffusion: diffusion = [x]
         progress = utils.Progress(overwritten_timesteps) if verbose else utils.Silent()
         for i in reversed(range(0, overwritten_timesteps)):
             timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
             x = self.p_sample(x, cond, timesteps)
-            x = apply_conditioning(x, cond, self.action_dim)
+            x = apply_conditioning(x, cond, self.action_dim) 
+            # Affects the start/target positions
 
             progress.update({'t': i})
 

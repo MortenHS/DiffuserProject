@@ -1104,3 +1104,1240 @@ Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-323000-1.png
 [ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
 Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-324000-0.png
 Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-324000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-325000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-325000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-326000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-326000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-327000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-327000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-328000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-328000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-329000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-329000-1.png
+Epoch 33 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-330000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-330000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-331000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-331000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-332000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-332000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-333000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-333000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-334000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-334000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-335000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-335000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-336000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-336000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-337000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-337000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-338000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-338000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-339000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-339000-1.png
+Epoch 34 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-340000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-340000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-341000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-341000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-342000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-342000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-343000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-343000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-344000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-344000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-345000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-345000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-346000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-346000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-347000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-347000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-348000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-348000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-349000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-349000-1.png
+Epoch 35 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-350000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-350000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-351000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-351000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-352000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-352000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-353000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-353000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-354000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-354000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-355000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-355000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-356000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-356000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-357000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-357000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-358000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-358000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_320000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-359000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-359000-1.png
+Epoch 36 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-360000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-360000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-361000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-361000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-362000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-362000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-363000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-363000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-364000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-364000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-365000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-365000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-366000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-366000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-367000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-367000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-368000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-368000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-369000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-369000-1.png
+Epoch 37 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-370000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-370000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-371000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-371000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-372000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-372000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-373000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-373000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-374000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-374000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-375000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-375000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-376000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-376000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-377000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-377000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-378000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-378000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-379000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-379000-1.png
+Epoch 38 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-380000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-380000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-381000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-381000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-382000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-382000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-383000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-383000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-384000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-384000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-385000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-385000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-386000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-386000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-387000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-387000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-388000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-388000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-389000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-389000-1.png
+Epoch 39 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-390000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-390000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-391000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-391000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-392000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-392000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-393000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-393000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-394000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-394000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-395000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-395000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-396000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-396000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-397000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-397000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-398000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-398000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_360000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-399000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-399000-1.png
+Epoch 40 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-400000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-400000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-401000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-401000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-402000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-402000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-403000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-403000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-404000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-404000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-405000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-405000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-406000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-406000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-407000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-407000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-408000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-408000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-409000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-409000-1.png
+Epoch 41 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-410000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-410000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-411000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-411000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-412000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-412000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-413000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-413000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-414000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-414000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-415000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-415000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-416000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-416000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-417000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-417000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-418000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-418000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-419000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-419000-1.png
+Epoch 42 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-420000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-420000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-421000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-421000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-422000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-422000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-423000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-423000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-424000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-424000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-425000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-425000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-426000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-426000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-427000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-427000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-428000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-428000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-429000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-429000-1.png
+Epoch 43 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-430000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-430000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-431000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-431000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-432000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-432000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-433000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-433000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-434000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-434000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-435000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-435000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-436000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-436000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-437000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-437000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-438000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-438000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_400000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-439000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-439000-1.png
+Epoch 44 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-440000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-440000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-441000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-441000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-442000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-442000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-443000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-443000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-444000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-444000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-445000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-445000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-446000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-446000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-447000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-447000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-448000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-448000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-449000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-449000-1.png
+Epoch 45 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-450000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-450000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-451000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-451000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-452000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-452000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-453000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-453000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-454000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-454000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-455000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-455000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-456000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-456000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-457000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-457000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-458000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-458000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-459000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-459000-1.png
+Epoch 46 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-460000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-460000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-461000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-461000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-462000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-462000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-463000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-463000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-464000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-464000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-465000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-465000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-466000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-466000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-467000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-467000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-468000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-468000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-469000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-469000-1.png
+Epoch 47 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-470000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-470000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-471000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-471000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-472000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-472000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-473000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-473000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-474000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-474000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-475000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-475000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-476000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-476000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-477000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-477000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-478000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-478000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_440000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-479000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-479000-1.png
+Epoch 48 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-480000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-480000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-481000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-481000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-482000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-482000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-483000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-483000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-484000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-484000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-485000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-485000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-486000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-486000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-487000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-487000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-488000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-488000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-489000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-489000-1.png
+Epoch 49 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-490000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-490000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-491000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-491000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-492000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-492000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-493000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-493000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-494000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-494000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-495000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-495000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-496000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-496000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-497000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-497000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-498000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-498000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-499000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-499000-1.png
+Epoch 50 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-500000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-500000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-501000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-501000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-502000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-502000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-503000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-503000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-504000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-504000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-505000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-505000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-506000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-506000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-507000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-507000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-508000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-508000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-509000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-509000-1.png
+Epoch 51 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-510000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-510000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-511000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-511000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-512000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-512000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-513000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-513000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-514000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-514000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-515000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-515000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-516000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-516000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-517000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-517000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-518000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-518000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_480000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-519000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-519000-1.png
+Epoch 52 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-520000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-520000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-521000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-521000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-522000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-522000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-523000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-523000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-524000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-524000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-525000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-525000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-526000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-526000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-527000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-527000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-528000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-528000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-529000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-529000-1.png
+Epoch 53 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-530000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-530000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-531000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-531000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-532000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-532000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-533000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-533000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-534000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-534000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-535000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-535000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-536000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-536000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-537000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-537000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-538000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-538000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-539000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-539000-1.png
+Epoch 54 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-540000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-540000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-541000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-541000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-542000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-542000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-543000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-543000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-544000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-544000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-545000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-545000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-546000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-546000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-547000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-547000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-548000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-548000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-549000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-549000-1.png
+Epoch 55 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-550000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-550000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-551000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-551000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-552000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-552000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-553000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-553000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-554000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-554000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-555000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-555000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-556000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-556000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-557000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-557000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-558000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-558000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_520000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-559000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-559000-1.png
+Epoch 56 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-560000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-560000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-561000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-561000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-562000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-562000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-563000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-563000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-564000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-564000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-565000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-565000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-566000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-566000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-567000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-567000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-568000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-568000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-569000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-569000-1.png
+Epoch 57 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-570000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-570000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-571000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-571000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-572000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-572000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-573000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-573000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-574000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-574000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-575000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-575000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-576000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-576000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-577000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-577000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-578000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-578000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-579000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-579000-1.png
+Epoch 58 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-580000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-580000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-581000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-581000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-582000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-582000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-583000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-583000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-584000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-584000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-585000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-585000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-586000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-586000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-587000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-587000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-588000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-588000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-589000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-589000-1.png
+Epoch 59 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-590000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-590000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-591000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-591000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-592000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-592000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-593000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-593000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-594000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-594000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-595000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-595000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-596000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-596000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-597000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-597000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-598000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-598000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_560000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-599000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-599000-1.png
+Epoch 60 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-600000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-600000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-601000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-601000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-602000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-602000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-603000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-603000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-604000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-604000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-605000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-605000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-606000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-606000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-607000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-607000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-608000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-608000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-609000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-609000-1.png
+Epoch 61 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-610000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-610000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-611000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-611000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-612000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-612000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-613000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-613000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-614000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-614000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-615000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-615000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-616000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-616000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-617000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-617000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-618000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-618000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-619000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-619000-1.png
+Epoch 62 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-620000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-620000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-621000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-621000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-622000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-622000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-623000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-623000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-624000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-624000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-625000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-625000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-626000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-626000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-627000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-627000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-628000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-628000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-629000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-629000-1.png
+Epoch 63 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-630000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-630000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-631000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-631000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-632000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-632000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-633000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-633000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-634000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-634000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-635000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-635000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-636000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-636000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-637000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-637000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-638000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-638000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_600000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-639000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-639000-1.png
+Epoch 64 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-640000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-640000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-641000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-641000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-642000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-642000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-643000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-643000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-644000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-644000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-645000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-645000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-646000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-646000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-647000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-647000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-648000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-648000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-649000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-649000-1.png
+Epoch 65 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-650000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-650000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-651000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-651000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-652000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-652000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-653000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-653000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-654000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-654000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-655000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-655000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-656000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-656000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-657000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-657000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-658000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-658000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-659000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-659000-1.png
+Epoch 66 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-660000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-660000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-661000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-661000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-662000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-662000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-663000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-663000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-664000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-664000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-665000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-665000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-666000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-666000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-667000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-667000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-668000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-668000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-669000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-669000-1.png
+Epoch 67 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-670000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-670000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-671000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-671000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-672000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-672000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-673000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-673000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-674000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-674000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-675000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-675000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-676000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-676000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-677000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-677000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-678000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-678000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_640000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-679000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-679000-1.png
+Epoch 68 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-680000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-680000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-681000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-681000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-682000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-682000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-683000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-683000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-684000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-684000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-685000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-685000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-686000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-686000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-687000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-687000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-688000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-688000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-689000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-689000-1.png
+Epoch 69 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-690000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-690000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-691000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-691000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-692000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-692000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-693000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-693000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-694000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-694000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-695000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-695000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-696000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-696000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-697000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-697000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-698000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-698000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-699000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-699000-1.png
+Epoch 70 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-700000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-700000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-701000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-701000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-702000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-702000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-703000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-703000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-704000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-704000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-705000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-705000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-706000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-706000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-707000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-707000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-708000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-708000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-709000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-709000-1.png
+Epoch 71 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-710000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-710000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-711000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-711000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-712000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-712000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-713000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-713000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-714000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-714000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-715000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-715000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-716000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-716000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-717000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-717000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-718000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-718000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_680000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-719000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-719000-1.png
+Epoch 72 / 200 | logs/maze2d-umaze-v1/cfm/H128_T64
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_720000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-720000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-720000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_720000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-721000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-721000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_720000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-722000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-722000-1.png
+[ utils/training ] Saved model to logs/maze2d-umaze-v1/cfm/H128_T64/state_720000.pt
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-723000-0.png
+Saved 10 samples to: logs/maze2d-umaze-v1/cfm/H128_T64/sample-723000-1.png

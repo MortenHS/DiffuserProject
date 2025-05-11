@@ -115,43 +115,43 @@ class CFM(nn.Module):
 
 
     @torch.no_grad()
-    def p_sample(self, x, cond, t):
-        b, *_, device = *x.shape, x.device
-        model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t)
-        noise = torch.randn_like(x)
-        # no noise when t == 0
-        nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
-        return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
+    # def p_sample(self, x, cond, t):
+    #     b, *_, device = *x.shape, x.device
+    #     model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t)
+    #     noise = torch.randn_like(x)
+    #     # no noise when t == 0
+    #     nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
+    #     return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
 
-    def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
-        device = self.betas.device
+    # def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
+    #     device = self.betas.device
         
-        batch_size = shape[0]
-        x = torch.randn(shape, device=device)
-        x = apply_conditioning(x, cond, self.action_dim)
+    #     batch_size = shape[0]
+    #     x = torch.randn(shape, device=device)
+    #     x = apply_conditioning(x, cond, self.action_dim)
 
-        if return_diffusion: diffusion = [x]
+    #     if return_diffusion: diffusion = [x]
 
-        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
-        for i in reversed(range(0, self.n_timesteps)):
-            timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
-            x = self.p_sample(x, global_cond, cond, timesteps)
-            x = apply_conditioning(x, cond, self.action_dim)
+    #     progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
+    #     for i in reversed(range(0, self.n_timesteps)):
+    #         timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
+    #         x = self.p_sample(x, global_cond, cond, timesteps)
+    #         x = apply_conditioning(x, cond, self.action_dim)
 
-            progress.update({'t': i})
+    #         progress.update({'t': i})
 
-            if return_diffusion: diffusion.append(x)
+    #         if return_diffusion: diffusion.append(x)
 
-        progress.close()
+    #     progress.close()
 
-        if return_diffusion:
-            return x, torch.stack(diffusion, dim=1)
-        else:
-            return x
+    #     if return_diffusion:
+    #         return x, torch.stack(diffusion, dim=1)
+    #     else:
+    #         return x
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
-        overwritten_timesteps = 1
+        overwritten_timesteps = 256
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
                 lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
