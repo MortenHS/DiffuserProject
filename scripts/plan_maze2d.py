@@ -12,7 +12,7 @@ class Parser(utils.Parser):
     dataset: str = 'maze2d-umaze-v1'
     config: str = 'config.maze2d'
 
-overwritten_timesteps = 64
+# overwritten_timesteps = 64
 #---------------------------------- setup ----------------------------------#
 args = Parser().parse_args('plan')
 
@@ -97,17 +97,17 @@ for t in range(env.max_episode_steps):
     total_reward += reward
     score = env.get_normalized_score(total_reward)
     
-    # print(
-    #     f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
-    #     f'action : {action}'
-    # )
+    print(
+        f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
+        f'action : {action}'
+    )
 
     if 'maze2d' in args.dataset:
         xy = next_observation[:2]
         goal = env.unwrapped._target
-        # print(
-        #     f'maze | pos: {xy} | goal: {goal}'
-        # )
+        print(
+            f'maze | pos: {xy} | goal: {goal}'
+        )
 
     ## update rollout observations
     rollout.append(next_observation.copy())

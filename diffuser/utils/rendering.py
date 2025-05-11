@@ -199,7 +199,7 @@ class MuJoCoRenderer:
 
         if savepath is not None:
             imageio.imsave(savepath, images)
-            print(f'Saved {len(paths)} samples to: {savepath}')
+            # print(f'Saved {len(paths)} samples to: {savepath}')
 
         return images
 
@@ -318,7 +318,7 @@ class MazeRenderer:
         images = einops.rearrange(images,
             '(nrow ncol) H W C -> (nrow H) (ncol W) C', nrow=nrow, ncol=ncol)
         imageio.imsave(savepath, images)
-        print(f'Saved {len(paths)} samples to: {savepath}')
+        # print(f'Saved {len(paths)} samples to: {savepath}')
 
 class Maze2dRenderer(MazeRenderer):
 

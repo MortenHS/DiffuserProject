@@ -3,7 +3,7 @@ import torch
 from torch import nn
 import pdb
 import copy
-from torchcfm.conditional_flow_matching import *
+from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
 from torchdyn.core import NeuralODE
 import torchdiffeq
 
@@ -149,40 +149,14 @@ class CFM(nn.Module):
     #     else:
     #         return x
 
-    def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
-        # x shape here: [32, 128, 6] == [B, horizon, dim]
-        overwritten_timesteps = 256
-        if self.model_type == 'ConditionalUnet1D':
-            traj = torchdiffeq.odeint(
-                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
-                torch.randn(shape).to(self.device),
-                torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
-                atol=1e-4,
-                rtol=1e-4,
-                method="euler",
-            )
-            return traj[-1]
-
-        elif self.model_type == 'TemporalUnet':
-            traj = torchdiffeq.odeint(
-                lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
-                torch.randn(shape).to(self.device),
-                torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
-                atol=1e-4,
-                rtol=1e-4,
-                method="euler",
-            )
-            return traj[-1]
-        else:
-            raise ValueError(f"Unsupported model type: {self.model_type}")
-
     # def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
     #     # x shape here: [32, 128, 6] == [B, horizon, dim]
+    #     overwritten_timesteps = 256
     #     if self.model_type == 'ConditionalUnet1D':
     #         traj = torchdiffeq.odeint(
     #             lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
     #             torch.randn(shape).to(self.device),
-    #             torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+    #             torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
     #             atol=1e-4,
     #             rtol=1e-4,
     #             method="euler",
@@ -193,7 +167,7 @@ class CFM(nn.Module):
     #         traj = torchdiffeq.odeint(
     #             lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
     #             torch.randn(shape).to(self.device),
-    #             torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+    #             torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
     #             atol=1e-4,
     #             rtol=1e-4,
     #             method="euler",
@@ -201,6 +175,32 @@ class CFM(nn.Module):
     #         return traj[-1]
     #     else:
     #         raise ValueError(f"Unsupported model type: {self.model_type}")
+
+    def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
+        # x shape here: [32, 128, 6] == [B, horizon, dim]
+        if self.model_type == 'ConditionalUnet1D':
+            traj = torchdiffeq.odeint(
+                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
+                torch.randn(shape).to(self.device),
+                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                atol=1e-4,
+                rtol=1e-4,
+                method="euler",
+            )
+            return traj[-1]
+
+        elif self.model_type == 'TemporalUnet':
+            traj = torchdiffeq.odeint(
+                lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
+                torch.randn(shape).to(self.device),
+                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                atol=1e-4,
+                rtol=1e-4,
+                method="euler",
+            )
+            return traj[-1]
+        else:
+            raise ValueError(f"Unsupported model type: {self.model_type}")
 
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
