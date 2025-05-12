@@ -28,12 +28,12 @@ def compare_euclid_pos_error(method_name):
 
     if method_name == "CFM":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-umaze-v1'
+            dataset: str = 'maze2d-large-v1'
             config: str = 'config.maze2d_cfm'
 
     if method_name == "Diffusion":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-umaze-v1'
+            dataset: str = 'maze2d-large-v1'
             config: str = 'config.maze2d'
 
     args = Parser().parse_args('plan')
@@ -57,12 +57,12 @@ def compare_euclid_pos_error(method_name):
     pos_err_path = join(args.savepath, f"pos_err")
     os.makedirs(pos_err_path, exist_ok=True)
     
-    if args.dataset == "maze2d-umaze-v1":
-        env.set_state(np.array([3.03665433, 2.93015904]), np.array([0.00658355, -0.00951007]))
-    elif args.dataset == "maze2d-medium-v1":
-        env.set_state(np.array([2.926775177, 1.956217731]), np.array([-0.02120387, -0.09685921]))
-    elif args.dataset == "maze2d-large-v1":
-        env.set_state(np.array([0.94333326, 1.09938711]), np.array([0.10727024, 0.05407418]))
+    # if args.dataset == "maze2d-umaze-v1":
+    #     env.set_state(np.array([3.03665433, 2.93015904]), np.array([0.00658355, -0.00951007]))
+    # elif args.dataset == "maze2d-medium-v1":
+    #     env.set_state(np.array([2.926775177, 1.956217731]), np.array([-0.02120387, -0.09685921]))
+    # elif args.dataset == "maze2d-large-v1":
+    #     env.set_state(np.array([0.94333326, 1.09938711]), np.array([0.10727024, 0.05407418]))
 
     target = env._target
     cond = {
@@ -104,9 +104,9 @@ def compare_euclid_pos_error(method_name):
         if 'maze2d' in args.dataset:
             xy = next_observation[:2]
             goal = env.unwrapped._target
-            print(
-                f'maze | pos: {xy} | goal: {goal}'
-            )
+            # print(
+            #     f'maze | pos: {xy} | goal: {goal}'
+            # )
 
         ## update rollout observations
         rollout.append(next_observation.copy())
@@ -177,12 +177,19 @@ def save_plots(savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m
     print(f"Error comp plot saved to: {error_plot_path}")
 
 trajectory_data_diff, pos_error_data_diff, target_diff, dataset = compare_euclid_pos_error("Diffusion")
-trajectory_data_cfm, pos_error_data_cfm, target_cfm,dataset = compare_euclid_pos_error("CFM")
+trajectory_data_cfm, pos_error_data_cfm, target_cfm, dataset = compare_euclid_pos_error("CFM")
 
 trajectory_m1 = trajectory_data_diff["Diffusion"]
 trajectory_m2 = trajectory_data_cfm["CFM"]
 pos_error_m1 = pos_error_data_diff["Diffusion"]
 pos_error_m2 = pos_error_data_cfm["CFM"]
+
+# Log or print the final positional error for both models
+final_pos_error_diff = pos_error_m1[-1] if pos_error_m1 else None
+final_pos_error_cfm = pos_error_m2[-1] if pos_error_m2 else None
+
+print(f"Final positional error for Diffusion: {final_pos_error_diff}")
+print(f"Final positional error for CFM: {final_pos_error_cfm}")
 
 plot_savepath = 'logs/pos_error_comps/'
 save_plots(plot_savepath, trajectory_m1, trajectory_m2, pos_error_m1, pos_error_m2, target_diff, dataset)

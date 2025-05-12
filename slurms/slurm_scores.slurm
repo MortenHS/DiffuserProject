@@ -1,16 +1,16 @@
 #!/bin/sh
-#SBATCH --job-name="TCFM_umaze_Training"
+#SBATCH --job-name="score_logging"
 #SBATCH --partition=GPUQ
-#SBATCH --gres=gpu:a100:2
+#SBATCH --gres=gpu:a100:1
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-11:30:00
-#SBATCH --nodes=2
+#SBATCH --time=0-01:00:00
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem-per-cpu=64G
+#SBATCH --mem-per-cpu=16G
 
-#SBATCH --output=output.txt      # Specifying 'stdout'
-#SBATCH --error=output.err        # Specifying 'stderr'
+#SBATCH --output=logs/%x_%j.out  # %x: job name, %j: job ID
+#SBATCH --error=logs/%x_%j.err
 
 #SBATCH --mail-user=mortenhs@stud.ntnu.no
 #SBATCH --mail-type=ALL
@@ -30,4 +30,4 @@ module purge
 # Running file
 module load Anaconda3/2024.02-1
 conda activate diffuser
-python /cluster/work/mortenhs/Janner/diffuser/scripts/train.py --dataset maze2d-umaze-v1 --config config.maze2d_cfm
+python /cluster/work/mortenhs/Janner/diffuser/scripts/log_scores_optim.py

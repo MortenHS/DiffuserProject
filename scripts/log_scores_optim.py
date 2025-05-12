@@ -1,115 +1,148 @@
-import os
+import subprocess
 import csv
-import time
+import os
 import statistics
-from concurrent.futures import ProcessPoolExecutor
-from plan_maze2d_optim import Parser, plan_maze
+import time
+import logging
+import torch
 
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the logging level to DEBUG for detailed output
+    format="%(asctime)s - %(levelname)s - %(message)s",  # Log format
+    handlers=[
+        logging.StreamHandler(),  # Log to the terminal
+        logging.FileHandler("logs/log_scores.log", mode="w")  # Log to a file
+    ]
+)
 
-def run_plan_maze_parallel(args, num_iterations):
+def run_plan_maze(config, dataset):
     """
-    Runs the maze planning logic in parallel for multiple iterations.
+    Run the plan_maze2d.py script with the specified config and dataset.
     """
-    scores = []
-    rewards = []
-
-    for _ in range(num_iterations):
-        score, reward = plan_maze(args)
-        scores.append(score)
-        rewards.append(reward)
-
-    mean_score = statistics.mean(scores)
-    median_score = statistics.median(scores)
-    mean_reward = statistics.mean(rewards)
-    median_reward = statistics.median(rewards)
-
-    model = "cfm" if args.config.endswith("_cfm") else "diffusion"
-    dataset_name = args.dataset.split("-")[1]  # Extract umaze, medium, or large
-
-    return [model, dataset_name, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"]
-
+    command = ['python', 'scripts/plan_maze2d.py', '--config', config, '--dataset', dataset]
+    result = subprocess.run(command, capture_output=True, text=True)
+    logging.debug(f"Subprocess stdout: {result.stdout}")
+    logging.debug(f"Subprocess stderr: {result.stderr}")
+    return result
 
 def log_scores(configs_and_datasets, num_iterations):
     """
-    Logs scores and rewards for multiple configurations and datasets.
+    Run plan_maze2d.py for multiple configurations and datasets, compute average and median scores and rewards,
+    and log the aggregated results.
     """
-    args = Parser().parse_args("plan")
+    # Define the max_episode_steps for each dataset type
+    max_episode_steps = {
+        'umaze': 299,
+        'medium': 599,
+        'large': 799
+    }
+
     aggregated_results = []
 
-    # Use ProcessPoolExecutor for parallel execution
-    with ProcessPoolExecutor() as executor:
-        futures = []
-        for config, dataset in configs_and_datasets:
-            # Update args for the current config and dataset
-            args.config = config
-            args.dataset = dataset
+    for config, dataset in configs_and_datasets:
+        logging.info(f"Starting processing for config: {config}, dataset: {dataset}")
+        scores = torch.tensor([], device='cuda')
+        rewards = torch.tensor([], device='cuda')
 
-            # Submit the task to the executor
-            futures.append(executor.submit(run_plan_maze_parallel, args, num_iterations))
+        # Extract the dataset type (e.g., umaze, medium, large)
+        dataset_type = dataset.split('-')[1]
+        t_value = max_episode_steps.get(dataset_type, None)
 
-        for future in futures:
-            aggregated_results.append(future.result())
+        if t_value is None:
+            logging.error(f"Unknown dataset type: {dataset_type}")
+            continue
+
+        for i in range(num_iterations):
+            logging.info(f"Running {config} on {dataset}, iteration {i + 1}/{num_iterations}")
+            result = run_plan_maze(config, dataset)
+            logging.debug(f"Processing output for {config}, {dataset}, iteration {i + 1}")
+
+            # Process only the last line with the correct t: value
+            for line in result.stdout.splitlines():
+                if line.startswith(f"t: {t_value}"):
+                    reward = float(line.split("R: ")[1].split("|")[0].strip())
+                    score = float(line.split("score: ")[1].split("|")[0].strip()) * 100  # Scale score by 100
+                    scores = torch.cat((scores, torch.tensor([score], device='cuda')))
+                    rewards = torch.cat((rewards, torch.tensor([reward], device='cuda')))
+                    logging.debug(f"Extracted score: {score}, reward: {reward}")
+                    break  # No need to process further lines for this iteration
+
+        # Compute average and median for the current config and dataset
+        mean_score = torch.mean(scores).item() if scores.numel() > 0 else 0.0
+        median_score = torch.median(scores).item() if scores.numel() > 0 else 0.0
+        mean_reward = torch.mean(rewards).item() if rewards.numel() > 0 else 0.0
+        median_reward = torch.median(rewards).item() if rewards.numel() > 0 else 0.0
+
+        model = "cfm" if config == "config.maze2d_cfm" else "diffusion"
+        logging.info(f"Finished processing {config} on {dataset}: "
+                     f"Mean Score={mean_score:.2f}, Median Score={median_score:.2f}, "
+                     f"Mean Reward={mean_reward:.2f}, Median Reward={median_reward:.2f}")
+        # Store the aggregated results
+        aggregated_results.append([model, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
 
     # Ensure the logs directory exists
-    os.makedirs("logs", exist_ok=True)
+    os.makedirs('logs', exist_ok=True)
 
     # Write aggregated results to the CSV file
-    with open("logs/scores.csv", mode="w", newline="") as file:
+    with open('logs/scores.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Model", "Dataset", "Mean Score", "Median Score", "Mean Reward", "Median Reward"])
+        writer.writerow(['Model', 'Dataset', 'Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
         writer.writerows(aggregated_results)
 
-    print("\nAggregated results have been written to 'logs/scores.csv'.")
-
-def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_table.txt'):
+def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_table.txt', num_iterations=1):
     """
     Reads the aggregated scores and rewards from the CSV file and generates a LaTeX table.
     Stores the LaTeX table in a text file.
     """
     if not os.path.exists(csv_file):
-        print(f"CSV file '{csv_file}' not found.")
+        logging.error(f"CSV file '{csv_file}' not found.")
         return
 
-    # Read data from the CSV file
     with open(csv_file, mode='r') as file:
         reader = csv.reader(file)
         data = list(reader)
 
-    # Extract header and rows
-    header = data[0]  # ['Model', 'Dataset', 'Mean Score', 'Median Score', 'Mean Reward', 'Median Reward']
-    rows = data[1:]  # Skip the header row
+    header = data[0]
+    rows = data[1:]
 
-    # Generate LaTeX table
-    latex_table = "\\begin{table}[h!]\n\\centering\n\\begin{tabular}{@{}l l r r r r@{}}\n\\toprule\n"
-    latex_table += " & ".join(header) + " \\\\\n\\midrule\n"
+    latex_lines = [
+        "\\begin{table}[h!]",
+        "\\centering",
+        "\\begin{tabular}{@{}l l r r r r@{}}",
+        "\\toprule",
+        " & ".join(header) + " \\\\",
+        "\\midrule",
+    ]
+    latex_lines.extend(" & ".join(row) + " \\\\" for row in rows)
+    latex_lines.extend([
+        "\\bottomrule",
+        "\\end{tabular}",
+        f"\\caption{{Aggregated Scores and Rewards, N=[64, 256, 256] (Averaged over {num_iterations} iterations)}}",
+        "\\label{tab:scores_rewards}",
+        "\\end{table}",
+    ])
 
-    for row in rows:
-        latex_table += " & ".join(row) + " \\\\\n"
-
-    latex_table += "\\bottomrule\n\\end{tabular}\n\\caption{Aggregated Scores and Rewards for Maze2D Experiments}\n\\label{tab:scores_rewards}\n\\end{table}"
-
-    # Ensure the logs directory exists
     os.makedirs('logs', exist_ok=True)
-
-    # Write the LaTeX table to a text file
     with open(output_file, mode='w') as file:
-        file.write(latex_table)
+        file.write("\n".join(latex_lines))
 
-    print(f"LaTeX table has been saved to '{output_file}'.")
+    logging.info(f"LaTeX table has been saved to '{output_file}'.")
 
 if __name__ == "__main__":
     configs_and_datasets = [
-        ("config.maze2d", "maze2d-umaze-v1"),
-        # ("config.maze2d", "maze2d-medium-v1"),
-        # ("config.maze2d", "maze2d-large-v1"),
-        ("config.maze2d_cfm", "maze2d-umaze-v1"),
-        # ("config.maze2d_cfm", "maze2d-medium-v1"),
-        # ("config.maze2d_cfm", "maze2d-large-v1"),
+        ('config.maze2d', 'maze2d-umaze-v1'),
+        ('config.maze2d', 'maze2d-medium-v1'),
+        ('config.maze2d', 'maze2d-large-v1'),
+        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        ('config.maze2d_cfm', 'maze2d-medium-v1'),
+        ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
 
-    num_iterations = 2  # Set the number of iterations for each config and dataset
+    num_iterations = 100
+
     start_time = time.time()
+    logging.info("Starting the score logging process.")
     log_scores(configs_and_datasets, num_iterations)
-    generate_latex_table()
+    generate_latex_table(num_iterations=num_iterations)
     end_time = time.time()
-    print(f"\nTotal time taken: {end_time - start_time:.2f} seconds.")
+    logging.info(f"Total time taken: {end_time - start_time:.2f} seconds")

@@ -9,7 +9,7 @@ import diffuser.datasets as datasets
 import diffuser.utils as utils
 
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-umaze-v1'
+    dataset: str = 'maze2d-large-v1'
     config: str = 'config.maze2d'
 
 # overwritten_timesteps = 64
@@ -73,7 +73,6 @@ for t in range(env.max_episode_steps):
         next_waypoint = sequence[-1].copy()
         # Velocities in x and y are set to 0:
         next_waypoint[2:] = 0
-        
             
     # Can use actions or define a simple controller based on state predictions
     # Action is defined as the positional difference + the velocity difference for x and y
