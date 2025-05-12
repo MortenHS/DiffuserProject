@@ -93,10 +93,49 @@ class GoalDataset(SequenceDataset):
         '''
             condition on both the current observation and the last observation in the plan
         '''
+        # print(f"Observations[0]: {observations[0]}, goal obs: {observations[-1]}")
+
         return {
             0: observations[0],
             self.horizon - 1: observations[-1],
         }
+        
+    def unnormalize(self, arr: np.ndarray) -> np.ndarray:
+        """
+        Unnormalize the entire array based on the predict_features.
+        
+        :param arr: numpy array of shape (batch_size, sequence_length, num_features)
+                    or (sequence_length, num_features)
+        :return: unnormalized numpy array of the same shape as input
+        """
+        # Ensure the input array is a numpy array
+        arr = np.array(arr)
+
+        # Check if the input is a single sequence or a batch
+        if arr.ndim == 2:
+            arr = arr[np.newaxis, ...]  # Add batch dimension
+        
+        assert arr.shape[-1] == len(self.predict_features), "Number of features in array does not match predict_features"
+        
+        # predict_features og packed_features i TCFM for aircraft er gitt som:
+        # predict_features: List[str] = ['timestamp', 'longitude', 'latitude', 'altitude'],
+        # packed_features: List[str] = ['longitude', 'latitude', 'altitude'],
+
+        unnormalized = np.zeros_like(arr)
+        
+        for i, feature in enumerate(self.predict_features):
+            if feature in self.normalization:
+                min_val = self.normalization[feature]['min']
+                max_val = self.normalization[feature]['max']
+                unnormalized[..., i] = ((arr[..., i] + 1) / 2) * (max_val - min_val) + min_val
+            else:
+                unnormalized[..., i] = arr[..., i]  # Keep unnormalized features as is
+        
+        # Remove batch dimension if it was added
+        if unnormalized.shape[0] == 1:
+            unnormalized = unnormalized[0]
+        
+        return unnormalized
 
 class ValueDataset(SequenceDataset):
     '''

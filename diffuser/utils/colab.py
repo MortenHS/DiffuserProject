@@ -54,41 +54,55 @@ def show_diffusion(renderer, observations, n_repeat=100, substep=1, filename='di
     '''
         observations : [ n_diffusion_steps x batch_size x horizon x observation_dim ]
     '''
-    mkdir(savebase)
+    savebase = os.path.join(os.getcwd(), "vids")
+    os.makedirs(savebase, exist_ok=True)
     savepath = os.path.join(savebase, filename)
 
     subsampled = observations[::substep]
 
     images = []
     for t in tqdm(range(len(subsampled))):
-        observation = subsampled[t]
+        observation = subsampled[t]  # shape: [batch_size x horizon x obs_dim]
 
+        # renderer.composite() should now return an image, not save it
         img = renderer.composite(None, observation)
+        if img is None:
+            raise ValueError(f"renderer.composite returned None at timestep {t}")
         images.append(img)
-    images = np.stack(images, axis=0)
 
-    ## pause at the end of video
+    images = np.array(images)
+
+    # Pause at the last frame
     images = np.concatenate([
         images,
         images[-1:].repeat(n_repeat, axis=0)
     ], axis=0)
 
+    # Convert to RGB if needed and ensure dtype is uint8
+    if images.ndim == 4 and images.shape[-1] == 4:  # RGBA → RGB
+        images = images[..., :3]
+    elif images.ndim == 3:  # Grayscale → RGB
+        images = np.stack([images] * 3, axis=-1)
+
+    images = images.astype(np.uint8)
+
     save_video(savepath, images)
     show_video(savepath)
 
 
-def show_sample(renderer, observations, filename='sample.mp4', savebase='/content/videos'):
+def show_sample(renderer, observations, filename='sample.mp4', savebase='/logs/'):
     '''
         observations : [ batch_size x horizon x observation_dim ]
     '''
 
-    mkdir(savebase)
+    savebase = os.path.join(os.getcwd(), "vids")
+    os.makedirs(savebase, exist_ok=True)
     savepath = os.path.join(savebase, filename)
 
     images = []
     for rollout in observations:
         ## [ horizon x height x width x channels ]
-        img = renderer._renders(rollout, partial=True)
+        img = renderer.renders(rollout) # fra _renders
         images.append(img)
 
     ## [ horizon x height x (batch_size * width) x channels ]

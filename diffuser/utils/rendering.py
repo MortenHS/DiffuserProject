@@ -199,7 +199,7 @@ class MuJoCoRenderer:
 
         if savepath is not None:
             imageio.imsave(savepath, images)
-            print(f'Saved {len(paths)} samples to: {savepath}')
+            # print(f'Saved {len(paths)} samples to: {savepath}')
 
         return images
 
@@ -307,7 +307,7 @@ class MazeRenderer:
             observations : [ n_paths x horizon x 2 ]
         '''
         assert len(paths) % ncol == 0, 'Number of paths must be divisible by number of columns'
-
+        
         images = []
         for path, kw in zipkw(paths, **kwargs):
             img = self.renders(*path, **kw)
@@ -318,7 +318,7 @@ class MazeRenderer:
         images = einops.rearrange(images,
             '(nrow ncol) H W C -> (nrow H) (ncol W) C', nrow=nrow, ncol=ncol)
         imageio.imsave(savepath, images)
-        print(f'Saved {len(paths)} samples to: {savepath}')
+        # print(f'Saved {len(paths)} samples to: {savepath}')
 
 class Maze2dRenderer(MazeRenderer):
 

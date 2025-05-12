@@ -65,12 +65,12 @@ class Parser(Tap):
             Load parameters from config file
         '''
         dataset = args.dataset.replace('-', '_')
-        print(f'[ utils/setup ] Reading config: {args.config}:{dataset}')
+        # print(f'[ utils/setup ] Reading config: {args.config}:{dataset}')
         module = importlib.import_module(args.config)
         params = getattr(module, 'base')[experiment]
 
         if hasattr(module, dataset) and experiment in getattr(module, dataset):
-            print(f'[ utils/setup ] Using overrides | config: {args.config} | dataset: {dataset}')
+            # print(f'[ utils/setup ] Using overrides | config: {args.config} | dataset: {dataset}')
             overrides = getattr(module, dataset)[experiment]
             params.update(overrides)
         else:
@@ -91,7 +91,7 @@ class Parser(Tap):
         if not len(extras):
             return
 
-        print(f'[ utils/setup ] Found extras: {extras}')
+        # print(f'[ utils/setup ] Found extras: {extras}')
         assert len(extras) % 2 == 0, f'Found odd number ({len(extras)}) of extras: {extras}'
         for i in range(0, len(extras), 2):
             key = extras[i].replace('--', '')
@@ -99,7 +99,7 @@ class Parser(Tap):
             assert hasattr(args, key), f'[ utils/setup ] {key} not found in config: {args.config}'
             old_val = getattr(args, key)
             old_type = type(old_val)
-            print(f'[ utils/setup ] Overriding config | {key} : {old_val} --> {val}')
+            # print(f'[ utils/setup ] Overriding config | {key} : {old_val} --> {val}')
             if val == 'None':
                 val = None
             elif val == 'latest':

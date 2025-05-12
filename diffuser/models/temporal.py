@@ -69,7 +69,7 @@ class TemporalUnet(nn.Module):
         self.ups = nn.ModuleList([])
         num_resolutions = len(in_out)
 
-        print(in_out)
+        # print(in_out)
         for ind, (dim_in, dim_out) in enumerate(in_out):
             is_last = ind >= (num_resolutions - 1)
 
@@ -109,10 +109,11 @@ class TemporalUnet(nn.Module):
         '''
 
         x = einops.rearrange(x, 'b h t -> b t h')
+        # Shape of x becomes: [32, 6, 128]
 
         t = self.time_mlp(time)
         h = []
-
+        
         for resnet, resnet2, downsample in self.downs:
             x = resnet(x, t)
             x = resnet2(x, t)

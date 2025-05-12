@@ -12,7 +12,6 @@ class Parser(utils.Parser):
 
 args = Parser().parse_args('diffusion')
 
-
 #-----------------------------------------------------------------------------#
 #---------------------------------- dataset ----------------------------------#
 #-----------------------------------------------------------------------------#
@@ -93,8 +92,8 @@ trainer_config = utils.Config(
 #-------------------------------- instantiate --------------------------------#
 #-----------------------------------------------------------------------------#
 
-model = model_config()
 
+model = model_config()
 diffusion = diffusion_config(model)
 
 trainer = trainer_config(diffusion, dataset, renderer)
@@ -106,11 +105,18 @@ trainer = trainer_config(diffusion, dataset, renderer)
 
 utils.report_parameters(model)
 
-print('Testing forward...', end=' ', flush=True)
-batch = utils.batchify(dataset[0])
-loss, _ = diffusion.loss(*batch)
-loss.backward()
-print('✓')
+# print('Testing forward...', end=' ', flush=True)
+# batch = utils.batchify(dataset[0])
+# print(f"\nBatch in train.py: {batch}\n")
+
+# Batch er delt opp i: Trajectories [batch_size=32, horizon tror jeg, dim=6], og
+# conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
+    # 127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')})}
+
+# Loss funksjonen i Diffuser forventer bare: (self, x, cond)
+# loss, _ = diffusion.loss(*batch)
+# loss.backward()
+# print('✓')
 
 
 #-----------------------------------------------------------------------------#
@@ -120,7 +126,8 @@ print('✓')
 # trainer.render_reference(batch_size=10)
 n_epochs = int(args.n_train_steps // args.n_steps_per_epoch)
 
+# print("Sørg for å bruke conda env: diffuser")
+
 for i in range(n_epochs):
     print(f'Epoch {i} / {n_epochs} | {args.savepath}')
     trainer.train(n_train_steps=args.n_steps_per_epoch)
-

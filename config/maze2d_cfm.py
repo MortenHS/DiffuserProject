@@ -28,10 +28,11 @@ plan_args_to_watch = [
 ]
 
 base = {
+
     'diffusion': {
         ## model
-        'model': 'models.TemporalUnet', # TemporalUnet or ConditionalUnet1D
-        'diffusion': 'models.GaussianDiffusion', # GaussianDiffusion or CFM
+        'model': 'models.ConditionalUnet1D', # TemporalUnet or ConditionalUnet1D
+        'diffusion': 'models.CFM', # GaussianDiffusion or CFM
         'horizon': 256,
         'n_diffusion_steps': 256,
         'action_weight': 1,
@@ -52,7 +53,7 @@ base = {
 
         ## serialization
         'logbase': 'logs',
-        'prefix': 'diffusion/', # Change here to alter folder name
+        'prefix': 'cfm/', # Change here to alter folder name
         'exp_name': watch(diffusion_args_to_watch),
 
         ## training
@@ -92,9 +93,10 @@ base = {
         'conditional': False,
 
         ## loading
-        'diffusion_loadpath': 'f:diffusion/H{horizon}_T{n_diffusion_steps}',
+        'diffusion_loadpath': 'f:cfm/H{horizon}_T{n_diffusion_steps}',
         'diffusion_epoch': 'latest',
     },
+
 }
 
 #------------------------ overrides ------------------------#
