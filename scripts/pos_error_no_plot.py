@@ -1,10 +1,9 @@
 import os
 import csv
 import numpy as np
-from os.path import join
 
 from diffuser.guides.policies import Policy
-import time
+from tqdm import tqdm
 import diffuser.datasets as datasets
 import diffuser.utils as utils
 
@@ -33,13 +32,13 @@ def calculate_pos_error(method_name, iterations):
 
     args = Parser().parse_args('plan')
     env = datasets.load_environment(args.dataset)
-
-    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
+    args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs'
+    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=520000) #520000, args.diffusion_epoch
     diffusion = diffusion_exp.ema
     dataset = diffusion_exp.dataset
 
     policy = Policy(diffusion, dataset.normalizer)
-    for _ in range(iterations):
+    for _ in tqdm(range(iterations), desc="Calculating positional errors"):
         observation = env.reset()
         target = env._target
         cond = {
@@ -69,18 +68,20 @@ def calculate_pos_error(method_name, iterations):
             observation = next_observation
 
         pos_error_data.append(pos_error[-1] if pos_error else None)
+        
     dataset_name = args.dataset.split("-")[1]
     return pos_error_data, dataset_name
 
-def log_results_to_csv(filepath, results):
+def log_results_to_csv(filepath, results, iterations):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, mode='w', newline='') as file:
+    with open(filepath, mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["Model", "Average Positional Error", "Median Positional Error"])
         for model, avg_error, median_error in results:
             writer.writerow([model, avg_error, median_error])
+        writer.writerow(["Iterations", iterations])
 
-def main(iterations=100, output_file="logs/pos_error_results.csv"):
+def main(iterations=200, output_file="logs/pos_error_results.csv"):
     # Calculate positional errors for both models
     pos_error_diff, dataset_name = calculate_pos_error("Diffusion", iterations)
     pos_error_cfm, dataset_name = calculate_pos_error("CFM", iterations)
@@ -98,17 +99,8 @@ def main(iterations=100, output_file="logs/pos_error_results.csv"):
         (f"CFM_{dataset_name}", avg_pos_error_cfm, median_pos_error_cfm)
     ]
 
-    # Log results to CSV
-    start_time = time.time()
-
-    log_results_to_csv(output_file, results)
-
-    elapsed_time = time.time() - start_time
-    with open(output_file, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([])
-        writer.writerow(["Time Elapsed (seconds)", elapsed_time])
+    log_results_to_csv(output_file, results, iterations)
     print(f"Results logged to {output_file}")
 
 if __name__ == "__main__":
-    main(iterations=1000)
+    main(iterations=200)

@@ -1,17 +1,16 @@
 import subprocess
 import csv
 import os
-import statistics
 import time
 import logging
 import torch
 
 logging.basicConfig(
     level=logging.DEBUG,  # Set the logging level to DEBUG for detailed output
-    format="%(asctime)s - %(levelname)s - %(message)s",  # Log format
+    format="%(asctime)s - %(levelname)s - %(message)s",  
     handlers=[
-        logging.StreamHandler(),  # Log to the terminal
-        logging.FileHandler("logs/log_scores.log", mode="w")  # Log to a file
+        logging.StreamHandler(),
+        logging.FileHandler("logs/log_scores.log", mode="w")  
     ]
 )
 
@@ -19,7 +18,7 @@ def run_plan_maze(config, dataset):
     """
     Run the plan_maze2d.py script with the specified config and dataset.
     """
-    command = ['python', 'scripts/plan_maze2d.py', '--config', config, '--dataset', dataset]
+    command = ['python', '/cluster/work/mortenhs/Janner/diffuser/scripts/plan_maze2d.py', '--config', config, '--dataset', dataset]
     result = subprocess.run(command, capture_output=True, text=True)
     logging.debug(f"Subprocess stdout: {result.stdout}")
     logging.debug(f"Subprocess stderr: {result.stderr}")
@@ -65,7 +64,7 @@ def log_scores(configs_and_datasets, num_iterations):
                     scores = torch.cat((scores, torch.tensor([score], device='cuda')))
                     rewards = torch.cat((rewards, torch.tensor([reward], device='cuda')))
                     logging.debug(f"Extracted score: {score}, reward: {reward}")
-                    break  # No need to process further lines for this iteration
+                    break 
 
         # Compute average and median for the current config and dataset
         mean_score = torch.mean(scores).item() if scores.numel() > 0 else 0.0
@@ -77,10 +76,9 @@ def log_scores(configs_and_datasets, num_iterations):
         logging.info(f"Finished processing {config} on {dataset}: "
                      f"Mean Score={mean_score:.2f}, Median Score={median_score:.2f}, "
                      f"Mean Reward={mean_reward:.2f}, Median Reward={median_reward:.2f}")
-        # Store the aggregated results
+        
         aggregated_results.append([model, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
 
-    # Ensure the logs directory exists
     os.makedirs('logs', exist_ok=True)
 
     # Write aggregated results to the CSV file
@@ -138,7 +136,7 @@ if __name__ == "__main__":
         ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
 
-    num_iterations = 100
+    num_iterations = 200
 
     start_time = time.time()
     logging.info("Starting the score logging process.")

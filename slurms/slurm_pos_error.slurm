@@ -1,16 +1,16 @@
 #!/bin/sh
-#SBATCH --job-name="score_logging"
+#SBATCH --job-name="pos_error_calcs"
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:1
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-08:00:00
+#SBATCH --time=0-00:40:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=16G
 
-#SBATCH --output=logs/%x_%j.out  # %x: job name, %j: job ID
-#SBATCH --error=logs/%x_%j.err
+#SBATCH --output=pos_error_output.txt      # Specifying 'stdout'
+#SBATCH --error=pos_error_output.err        # Specifying 'stderr'
 
 #SBATCH --mail-user=mortenhs@stud.ntnu.no
 #SBATCH --mail-type=ALL
@@ -30,4 +30,4 @@ module purge
 # Running file
 module load Anaconda3/2024.02-1
 conda activate diffuser
-python /cluster/work/mortenhs/Janner/diffuser/scripts/log_scores_optim.py
+python /cluster/work/mortenhs/Janner/diffuser/scripts/pos_error_no_plot.py

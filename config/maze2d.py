@@ -13,7 +13,6 @@ diffusion_args_to_watch = [
     ('n_diffusion_steps', 'T'),
 ]
 
-
 plan_args_to_watch = [
     ('prefix', ''),
     ##
@@ -58,13 +57,13 @@ base = {
         ## training
         'n_steps_per_epoch': 10000,
         'loss_type': 'l2',
-        'n_train_steps': 2e6,
+        'n_train_steps': 500000,
         'batch_size': 32,
         'learning_rate': 4e-4,
         'gradient_accumulate_every': 2,
         'ema_decay': 0.995,
-        'save_freq': 1000,
-        'sample_freq': 1000,
+        'save_freq': 10000,
+        'sample_freq': 10000,
         'n_saves': 50,
         'save_parallel': False,
         'n_reference': 50,
@@ -83,7 +82,7 @@ base = {
         'normalizer': 'LimitsNormalizer',
 
         ## serialization
-        'vis_freq': 10,
+        'vis_freq': 100,
         'logbase': 'logs',
         'prefix': 'plans/release',
         'exp_name': watch(plan_args_to_watch),

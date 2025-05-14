@@ -240,7 +240,7 @@ class CFM(nn.Module):
         # Assumes the model's parameters are all on the same device.
         return next(self.parameters()).device
 
-    def loss(self, x, cond): # def loss(self, x, global_cond, cond):
+    def loss(self, x, cond):
         x = x.to(self.device)
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
@@ -256,8 +256,6 @@ class CFM(nn.Module):
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
         
-        # I T-CFM: vt = self.model(t, xt, global_cond=global_cond)
-        # vt = self.model(xt, cond, t)
         loss = torch.mean((vt - ut) ** 2)
         return loss, {'loss': loss.item()}
 

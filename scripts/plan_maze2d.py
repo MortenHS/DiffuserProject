@@ -9,20 +9,18 @@ import diffuser.datasets as datasets
 import diffuser.utils as utils
 
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-large-v1'
-    config: str = 'config.maze2d'
+    dataset: str = 'maze2d-umaze-v1'
+    config: str = 'config.maze2d_cfm'
 
-# overwritten_timesteps = 64
 #---------------------------------- setup ----------------------------------#
 args = Parser().parse_args('plan')
 
 env = datasets.load_environment(args.dataset)
-
-# print(f"args.diffusion_epoch: {args.diffusion_epoch}")
 #---------------------------------- loading ----------------------------------#
-diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
-# diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=940000)
+args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs'
+diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=520000) # 520000.pt, args.diffusion_epoch
 # print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
+# logs, maze2d-dataset-v1, cfm/H128_T64
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
@@ -104,20 +102,20 @@ for t in range(env.max_episode_steps):
     if 'maze2d' in args.dataset:
         xy = next_observation[:2]
         goal = env.unwrapped._target
-        print(
-            f'maze | pos: {xy} | goal: {goal}'
-        )
+        # print(
+        #     f'maze | pos: {xy} | goal: {goal}'
+        # )
 
     ## update rollout observations
-    rollout.append(next_observation.copy())
+    # rollout.append(next_observation.copy())
 
-    if t % args.vis_freq == 0 or terminal:
-        fullpath = join(args.savepath, f'{t}_{method_name}.png')
+    # if t % args.vis_freq == 0 or terminal:
+    #     fullpath = join(args.savepath, f'{t}_{method_name}.png')
 
-        if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
+    #     if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
             
-        ## save rollout thus far
-        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
+    #     ## save rollout thus far
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
 
     if terminal:
         break
@@ -127,5 +125,5 @@ for t in range(env.max_episode_steps):
 # save result as a json file
 json_path = join(args.savepath, f'rollout_{method_name}.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch} # , 'sampling_steps' : overwritten_timesteps
+    'epoch_diffusion': diffusion_experiment.epoch}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)

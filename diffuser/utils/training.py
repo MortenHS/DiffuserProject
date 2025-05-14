@@ -1,12 +1,9 @@
 import os
-import copy
 import numpy as np
 import torch
 import einops
-import pdb
 
 from .arrays import batch_to_device, to_np, to_device, apply_dict
-from .timer import Timer
 from .cloud import sync_logs
 
 def cycle(dl):
@@ -115,7 +112,6 @@ class Trainer(object):
     #-----------------------------------------------------------------------------#
 
     def train(self, n_train_steps): # for umaze = 10 000 = n_steps_per_epoch
-        timer = Timer()
         for step in range(n_train_steps):
             # running_loss = 0.0
             for i in range(self.gradient_accumulate_every):
