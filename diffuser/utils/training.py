@@ -2,6 +2,7 @@ import os
 import numpy as np
 import torch
 import einops
+import csv
 
 from .arrays import batch_to_device, to_np, to_device, apply_dict
 from .cloud import sync_logs
@@ -111,21 +112,23 @@ class Trainer(object):
     #------------------------------------ api ------------------------------------#
     #-----------------------------------------------------------------------------#
 
-    def train(self, n_train_steps): # for umaze = 10 000 = n_steps_per_epoch
+    def train(self, n_train_steps, loss_log_file="loss_log.csv"): # for umaze = 10 000 = n_steps_per_epoch
+        loss_data = []
         for step in range(n_train_steps):
-            # running_loss = 0.0
+            running_loss = 0.0
             for i in range(self.gradient_accumulate_every):
                 batch = next(self.dataloader)
                 batch = batch_to_device(batch)
                 # Batch er delt opp i: Trajectories [batch_size=32, horizon tror jeg, dim=6], og
                 # conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
-                    # 127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')})}
+                #     127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')}}
                 
                 # Kaller på loss i cfm ln[179-196] som skal ha inn (x, cond), 
                 # originalt er ikke cond i bruk og input er (x, global_cond, cond)
                 loss, infos = self.model.loss(*batch)
                 loss = loss / self.gradient_accumulate_every
                 loss.backward()
+                running_loss += loss.item()
 
             # self.writer.add_scalar('training_loss', running_loss, self.step)
 
@@ -146,8 +149,14 @@ class Trainer(object):
             if self.sample_freq and self.step % self.sample_freq == 0:
                 # print(f"Goes into render_samples")
                 self.render_samples(n_samples=self.n_samples)
-
+            loss_data.append([self.step, running_loss])
             self.step += 1
+        
+        with open(loss_log_file, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            if step == 0:
+                writer.writerow(["Step", "Loss"])  # Write the header
+            writer.writerows(loss_data)  # Write all accumulated loss data
 
     def save(self, epoch):
         '''

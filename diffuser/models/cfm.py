@@ -204,8 +204,8 @@ class CFM(nn.Module):
 
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
-        sample_type = kwargs.get('sample_type', 'original')
-
+        # sample_type = kwargs.get('sample_type', 'original')
+        # [32, 4]
         return self.p_sample_loop_cfm(shape, cond, verbose, return_diffusion)
         # return self.p_sample_loop_original(shape, verbose, return_diffusion)
     
@@ -248,6 +248,8 @@ class CFM(nn.Module):
         x1 = x.to(self.device)
         x0 = torch.randn_like(x1)
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
+        # print(f"Cond: {cond}")
+        # Cond gir ut en dict med keys: 0 [32, 4] og 127 [32, 4] for umaze
 
         if self.model_type == 'ConditionalUnet1D':
             vt = self.model(t, xt, global_cond=cond)

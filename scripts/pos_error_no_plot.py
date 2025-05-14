@@ -7,33 +7,22 @@ from tqdm import tqdm
 import diffuser.datasets as datasets
 import diffuser.utils as utils
 
-def get_euclid_storage():
-    trajectory_data = {
-        "Diffusion": [],
-        "CFM": []
-    }
-    pos_error_data = {
-        "Diffusion": [],
-        "CFM": []
-    }
-    return trajectory_data, pos_error_data
-
 def calculate_pos_error(method_name, iterations):
     pos_error_data = []
     if method_name == "CFM":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-umaze-v1'
+            dataset: str = 'maze2d-medium-v1'
             config: str = 'config.maze2d_cfm'
 
     if method_name == "Diffusion":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-umaze-v1'
+            dataset: str = 'maze2d-medium-v1'
             config: str = 'config.maze2d'
 
     args = Parser().parse_args('plan')
     env = datasets.load_environment(args.dataset)
     args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs'
-    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=520000) #520000, args.diffusion_epoch
+    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=480000) #520000, args.diffusion_epoch
     diffusion = diffusion_exp.ema
     dataset = diffusion_exp.dataset
 
@@ -74,9 +63,11 @@ def calculate_pos_error(method_name, iterations):
 
 def log_results_to_csv(filepath, results, iterations):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    file_exists = os.path.isfile(filepath)
     with open(filepath, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Model", "Average Positional Error", "Median Positional Error"])
+        if not file_exists:
+            writer.writerow(["Model", "Average Positional Error", "Median Positional Error"])
         for model, avg_error, median_error in results:
             writer.writerow([model, avg_error, median_error])
         writer.writerow(["Iterations", iterations])

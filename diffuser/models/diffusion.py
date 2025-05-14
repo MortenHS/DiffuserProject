@@ -165,8 +165,10 @@ class GaussianDiffusion(nn.Module):
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
+        # print(f"Cond: {cond} in p_sample_loop")
 
-        batch_size = shape[0]
+        # Cond her er dict med 0 og 127 for umaze, med shape [10, 4]
+        batch_size = shape[0] # 10
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
         if return_diffusion: diffusion = [x]
@@ -226,6 +228,8 @@ class GaussianDiffusion(nn.Module):
         x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) # Simulate xt \sim q(x_t|x_0)
         x_noisy = apply_conditioning(x_noisy, cond, self.action_dim)
 
+        # print(f"Her går den inn i self.model(x_noisy, cond, t)")
+        # self.model er TemporalUnet
         x_recon = self.model(x_noisy, cond, t)
         x_recon = apply_conditioning(x_recon, cond, self.action_dim)
 
@@ -239,6 +243,7 @@ class GaussianDiffusion(nn.Module):
         return loss, info
 
     def loss(self, x, cond):
+        print(f"Går inn i loss")
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
 

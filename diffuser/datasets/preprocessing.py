@@ -59,6 +59,7 @@ def add_deltas(env):
 def maze2d_set_terminals(env):
     env = load_environment(env) if type(env) == str else env
     goal = np.array(env._target)
+    # goal = np.array(env.target_goal) # Random antmaze test
     threshold = 0.5
 
     def _fn(dataset):

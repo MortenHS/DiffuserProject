@@ -44,8 +44,8 @@ class Policy:
         # observation_np = observation_np[None].repeat(batch_size, axis=0)
         # observation = utils.to_torch(observation_np, device=self.device)
 
-        ## run reverse diffusion process
-        sample = self.diffusion_model(conditions)
+        # Calls forward for given model: run reverse diffusion process, run cond_sample 
+        sample = self.diffusion_model(conditions) # Calls forward in CFM or diffusion.py
         sample = utils.to_np(sample)
 
         ## extract action [ batch_size x horizon x transition_dim ]

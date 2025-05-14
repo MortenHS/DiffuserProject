@@ -2,7 +2,6 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
-import pdb
 
 from diffuser.guides.policies import Policy
 import diffuser.datasets as datasets
@@ -17,8 +16,8 @@ args = Parser().parse_args('plan')
 
 env = datasets.load_environment(args.dataset)
 #---------------------------------- loading ----------------------------------#
-args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs'
-diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=520000) # 520000.pt, args.diffusion_epoch
+args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs/tests_2'
+diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=940) # 520000.pt, args.diffusion_epoch
 # print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 # logs, maze2d-dataset-v1, cfm/H128_T64
 
@@ -31,7 +30,15 @@ policy = Policy(diffusion, dataset.normalizer)
 #---------------------------------- main loop ----------------------------------#
 observation = env.reset()
 
-if args.conditional: # False for begge
+# def set_target(self, target_location=None):
+#     if target_location is None:
+#         idx = self.np_random.choice(len(self.empty_and_goal_locations))
+#         reset_location = np.array(self.empty_and_goal_locations[idx]).astype(self.observation_space.dtype)
+#         target_location = reset_location + self.np_random.uniform(low=-.1, high=.1, size=self.model.nq)
+#     self._target = target_location
+
+# Single vs multi-task? Single = False, Multi = True
+if args.conditional:
     print('Resetting target')
     env.set_target()
 
@@ -102,28 +109,30 @@ for t in range(env.max_episode_steps):
     if 'maze2d' in args.dataset:
         xy = next_observation[:2]
         goal = env.unwrapped._target
-        # print(
-        #     f'maze | pos: {xy} | goal: {goal}'
-        # )
+        print(
+            f'maze | pos: {xy} | goal: {goal}'
+        )
 
-    ## update rollout observations
-    # rollout.append(next_observation.copy())
+    # update rollout observations
+    rollout.append(next_observation.copy())
 
-    # if t % args.vis_freq == 0 or terminal:
-    #     fullpath = join(args.savepath, f'{t}_{method_name}.png')
+    if t % args.vis_freq == 0 or terminal:
+        fullpath = join(args.savepath, f'{t}_{method_name}.png')
 
-    #     if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
+        if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
             
-    #     ## save rollout thus far
-    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
+        ## save rollout thus far
+        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
 
     if terminal:
         break
 
     observation = next_observation
 
+
 # save result as a json file
-json_path = join(args.savepath, f'rollout_{method_name}.json')
+json_path = join(args.savepath, f'rollout_{method_name}_tests_2.json')
 json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
     'epoch_diffusion': diffusion_experiment.epoch}
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+print(f"Json saved to {json_path}")

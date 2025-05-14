@@ -294,7 +294,7 @@ class MazeRenderer:
 
         path_length = len(observations)
         colors = plt.cm.jet(np.linspace(0,1,path_length))
-        plt.plot(observations[:,1], observations[:,0], c='black', zorder=10)
+        plt.plot(observations[:,1], observations[:,0], c='black', zorder=10) # Kan kommenteres ut for å ikke se linjene mellom punktene
         plt.scatter(observations[:,1], observations[:,0], c=colors, zorder=20)
         plt.axis('off')
         plt.title(title)

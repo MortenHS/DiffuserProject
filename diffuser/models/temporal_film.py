@@ -43,7 +43,7 @@ class ConditionalResidualBlock1D(nn.Module):
         # print(f"Cond channels: {cond_channels}") # varierer, men ender med 32 før feilmelding
         # print(f"Cond dim: {cond_dim}") # 64 for tida
         if cond_predict_scale:
-            print(f"If cond_predict_scale is activated")
+            # print(f"If cond_predict_scale is activated")
             cond_channels = out_channels * 2
         self.cond_predict_scale = cond_predict_scale
         self.out_channels = out_channels
@@ -249,8 +249,9 @@ class ConditionalUnet1D(nn.Module):
         global_feature = self.diffusion_step_encoder(timesteps)
         # print(f"Shape of global_feature: {global_feature.shape}")
 
+        # print(f"Global cond keys: {global_cond.keys()}")
         # # print(global_cond)
-        if global_cond is not None:                 
+        if global_cond is not None:        
             if 'hideouts' in global_cond.keys():
                 global_feature = torch.cat([global_cond['hideouts'], global_feature], axis=-1)
 
@@ -261,10 +262,20 @@ class ConditionalUnet1D(nn.Module):
             if 'class' in global_cond.keys():
                 encoded = self.film_encoder(global_cond['class'])
                 global_feature = torch.cat([encoded, global_feature], axis=-1)
+            # print(f"Global cond not None")
+            # if 0 in global_cond.keys():
+            #     print(f"In '0' in CU1D")
+            #     encoded = self.film_encoder(global_cond[0])
+            #     global_feature = torch.cat([encoded, global_feature], axis=-1)
+
+            # if str(self.horizon-1) in global_cond.keys():
+            #     print(f"In 'Self.horizon-1': {self.horizon-1} in CU1D")
+            #     encoded = self.film_encoder(global_cond[str(self.horizon-1)])
+            #     global_feature = torch.cat([encoded, global_feature], axis=-1)
 
         # encode local features
         h_local = list()
-        if local_cond is not None:
+        if local_cond is not None: # Forventer en tensor, eller hvertfall ikke en dict.
             local_cond = einops.rearrange(local_cond, 'b h t -> b t h')
             resnet, resnet2 = self.local_cond_encoder
             x = resnet(local_cond, global_feature)
@@ -330,13 +341,16 @@ if __name__ == "__main__":
     # test forward
     x = torch.randn(2, 64, 2).to(device)
     timestep = torch.tensor([32, 32]).to(device)
-    global_cond = torch.randn((2, 8)).to(device)
+    global_cond = torch.randn((2, 4)).to(device)
     # model(x, timestep, global_cond = global_cond)
 
     out_orig = model_orig(x, None, timestep)
     print(out_orig.shape)
 
-    out_new = model(x, timestep, global_cond = None)
+    # print(f"Shape of x: {x.shape}")
+    # print(f"Shape of timestep: {timestep.shape}")
+    # print(f"Shape of global_cond: {global_cond.shape}")
+    out_new = model(timestep, x, global_cond = None)
     print(out_new.shape)
 
     model = ConditionalUnet1D(
@@ -351,5 +365,7 @@ if __name__ == "__main__":
         cond_predict_scale=True
     ).to(device)
 
-    out_global_cond = model(x, timestep, global_cond = global_cond)
+# [2,8]
+    # print(f"Global_cond shape: {global_cond.shape}, global cond: {global_cond}")
+    out_global_cond = model(timestep, x, global_cond = global_cond)
     print(out_global_cond.shape)

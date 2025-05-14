@@ -1,14 +1,12 @@
 import diffuser.utils as utils
-import pdb
-
 
 #-----------------------------------------------------------------------------#
 #----------------------------------- setup -----------------------------------#
 #-----------------------------------------------------------------------------#
 
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-large-v1'
-    config: str = 'config.maze2d'
+    dataset: str = 'maze2d-umaze-v1'
+    config: str = 'config.maze2d_cfm'
 
 args = Parser().parse_args('diffusion')
 
