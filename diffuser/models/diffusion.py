@@ -171,7 +171,9 @@ class GaussianDiffusion(nn.Module):
         batch_size = shape[0] # 10
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
+
         if return_diffusion: diffusion = [x]
+
         progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
         for i in reversed(range(0, self.n_timesteps)):
             timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
@@ -194,8 +196,9 @@ class GaussianDiffusion(nn.Module):
         '''
             conditions : [ (time, state), ... ]
         '''
+        print(f"Går inn i conditional_sample")
         device = self.betas.device
-        batch_size = len(cond[0])
+        batch_size = len(cond[0]) # Antar 10
         horizon = horizon or self.horizon
         shape = (batch_size, horizon, self.transition_dim)
 
@@ -223,6 +226,7 @@ class GaussianDiffusion(nn.Module):
         Core training step of diffusion:
         Part of the reverse process, trains model to reverse the noise from q_sample (x_noisy)
         '''
+        # print(f"Går inn i p_losses")
         noise = torch.randn_like(x_start)
 
         x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) # Simulate xt \sim q(x_t|x_0)
@@ -235,7 +239,7 @@ class GaussianDiffusion(nn.Module):
 
         assert noise.shape == x_recon.shape
 
-        if self.predict_epsilon:
+        if self.predict_epsilon: # True by default, False i config.maze2d
             loss, info = self.loss_fn(x_recon, noise)
         else:
             loss, info = self.loss_fn(x_recon, x_start)
@@ -243,14 +247,11 @@ class GaussianDiffusion(nn.Module):
         return loss, info
 
     def loss(self, x, cond):
-        print(f"Går inn i loss")
+        # print(f"Går inn i loss fra training loop")
         batch_size = len(x)
-        t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
-
-        p = self.p_losses(x, cond, t)
-    
+        t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()   
         # x representerer "Trajectories"
-        # Cond her er start og sluttpunkt (e.g. 0 og 127)
+        # Cond her er start og sluttpunkt (e.g. 0 og 127 for umaze)
         return self.p_losses(x, cond, t)
 
     def forward(self, cond, *args, **kwargs):

@@ -30,7 +30,7 @@ class CFM(nn.Module):
         self.action_dim = action_dim
         self.transition_dim = observation_dim + action_dim
         self.model = model
-        self.model_type = model.__class__.__name__
+        self.model_type = model.__class__.__name__ # TempUnet or Cu1D
 
         sigma = 0.0
         # self.FM = ExactOptimalTransportConditionalFlowMatcher(sigma=sigma)
@@ -178,6 +178,8 @@ class CFM(nn.Module):
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
+        # print(f"Shape: {shape}, cond[0] shape: {cond[0].shape} ")
+        # shape = (1, 128, 6), cond[0] shape: (1, 4)
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
                 lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
@@ -225,8 +227,9 @@ class CFM(nn.Module):
         '''
             conditions : [ (time, state), ... ]
         '''
+        # print(f"Går inn i conditional_sample")
         device = self.device
-        batch_size = len(cond[0])
+        batch_size = len(cond[0]) # 1 for CFM
         horizon = horizon or self.horizon
         shape = (batch_size, horizon, self.transition_dim)
 
@@ -236,11 +239,14 @@ class CFM(nn.Module):
     #------------------------------------------ training ------------------------------------------#
     @property
     def device(self):
-        """Get the device where the model's parameters are allocated."""
-        # Assumes the model's parameters are all on the same device.
+        """
+        Get the device where the model's parameters are allocated,
+        assuming all parameters are on the same device.
+        """
         return next(self.parameters()).device
 
-    def loss(self, x, cond):
+    def loss(self, x, cond): # Cond her er en av parameterne i *batch
+        # print(f"Går inn i loss fra training loop")
         x = x.to(self.device)
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
@@ -252,15 +258,18 @@ class CFM(nn.Module):
         # Cond gir ut en dict med keys: 0 [32, 4] og 127 [32, 4] for umaze
 
         if self.model_type == 'ConditionalUnet1D':
-            vt = self.model(t, xt, global_cond=cond)
+            vt = self.model(t, xt, global_cond=cond) 
+            vt = apply_conditioning(vt, cond, self.action_dim) # Test med
+            # global_cond kan være None, fordi den uansett ikke har dict titles som kjøres i Cu1D.
         elif self.model_type == 'TemporalUnet':
             vt = self.model(xt, cond, t)
+            vt = apply_conditioning(vt, cond, self.action_dim) # Test med
+            # cond her brukes ikke i Temporal sin forward func.
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
         
         loss = torch.mean((vt - ut) ** 2)
         return loss, {'loss': loss.item()}
-
 
     def forward(self, *args, **kwargs):
         return self.conditional_sample(*args, **kwargs)

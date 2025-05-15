@@ -17,7 +17,7 @@ args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
 #---------------------------------- loading ----------------------------------#
 args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs/tests_2'
-diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=940) # 520000.pt, args.diffusion_epoch
+diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=4000) # 520000.pt, args.diffusion_epoch
 # print(f"Loading diffusion from: {join(args.logbase, args.dataset, args.diffusion_loadpath)}")
 # logs, maze2d-dataset-v1, cfm/H128_T64
 
@@ -117,12 +117,12 @@ for t in range(env.max_episode_steps):
     rollout.append(next_observation.copy())
 
     if t % args.vis_freq == 0 or terminal:
-        fullpath = join(args.savepath, f'{t}_{method_name}.png')
+        fullpath = join(args.savepath, f'{t}_{method_name}_test2.png')
 
         if t == 0: renderer.composite(fullpath, samples.observations, ncol=1)
             
         ## save rollout thus far
-        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1)
+        renderer.composite(join(args.savepath, f'rollout_{method_name}_test2.png'), np.array(rollout)[None], ncol=1)
 
     if terminal:
         break

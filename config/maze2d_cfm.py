@@ -57,7 +57,7 @@ base = {
         'exp_name': watch(diffusion_args_to_watch),
 
         ## training
-        'n_steps_per_epoch': 10000,
+        'n_steps_per_epoch': 100000,
         'loss_type': 'l2',
         'n_train_steps': 5e5,
         'batch_size': 32,

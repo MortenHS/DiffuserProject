@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name="TCFM_umaze_nocond"
+#SBATCH --job-name="TCFM_umaze"
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:1
 #SBATCH --account=share-iv-mtp
