@@ -285,7 +285,7 @@ class MazeRenderer:
         self._remove_margins = False
         self._extent = (0, 1, 1, 0)
 
-    def renders(self, observations, conditions=None, title=None):
+    def renders(self, observations, conditions=None, title=None, plot_goal=False, goal=None):
         plt.clf()
         fig = plt.gcf()
         fig.set_size_inches(5, 5)
@@ -296,12 +296,13 @@ class MazeRenderer:
         colors = plt.cm.jet(np.linspace(0,1,path_length))
         plt.plot(observations[:,1], observations[:,0], c='black', zorder=10) # Kan kommenteres ut for å ikke se linjene mellom punktene
         plt.scatter(observations[:,1], observations[:,0], c=colors, zorder=20)
+        if plot_goal: plt.scatter(goal[1], goal[0], c='darkgreen', marker="v", s=100, zorder=30)
         plt.axis('off')
         plt.title(title)
         img = plot2img(fig, remove_margins=self._remove_margins)
         return img
 
-    def composite(self, savepath, paths, ncol=5, **kwargs):
+    def composite(self, savepath, paths, plot_goal=False, ncol=5, **kwargs):
         '''
             savepath : str
             observations : [ n_paths x horizon x 2 ]
@@ -310,7 +311,7 @@ class MazeRenderer:
         
         images = []
         for path, kw in zipkw(paths, **kwargs):
-            img = self.renders(*path, **kw)
+            img = self.renders(plot_goal=plot_goal, *path, **kw)
             images.append(img)
         images = np.stack(images, axis=0)
 
@@ -332,23 +333,30 @@ class Maze2dRenderer(MazeRenderer):
         self._remove_margins = False
         self._extent = (0, 1, 1, 0)
 
-    def renders(self, observations, conditions=None, **kwargs):
+    def renders(self, observations, conditions=None, plot_goal=False, **kwargs):
         bounds = MAZE_BOUNDS[self.env_name]
-
+        if plot_goal: goal = np.array([1, 1])
+        else: goal = None
+            
         observations = observations + .5
         if len(bounds) == 2:
             _, scale = bounds
             observations /= scale
+            if plot_goal: goal = (goal + .5) / scale
         elif len(bounds) == 4:
             _, iscale, _, jscale = bounds
             observations[:, 0] /= iscale
             observations[:, 1] /= jscale
+            if plot_goal:
+                goal = goal + 0.5
+                goal[0] /= iscale
+                goal[1] /= jscale
         else:
             raise RuntimeError(f'Unrecognized bounds for {self.env_name}: {bounds}')
 
         if conditions is not None:
             conditions /= scale
-        return super().renders(observations, conditions, **kwargs)
+        return super().renders(observations, conditions, plot_goal=plot_goal, goal=goal, **kwargs)
 
 #-----------------------------------------------------------------------------#
 #---------------------------------- rollouts ---------------------------------#

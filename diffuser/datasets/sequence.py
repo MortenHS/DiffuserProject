@@ -38,10 +38,6 @@ class SequenceDataset(torch.utils.data.Dataset):
         self.path_lengths = fields.path_lengths
         self.normalize()
 
-        print(fields)
-        # shapes = {key: val.shape for key, val in self.fields.items()}
-        # print(f'[ datasets/mujoco ] Dataset fields: {shapes}')
-
     def normalize(self, keys=['observations', 'actions']):
         '''
             normalize fields that will be predicted by the diffusion model
@@ -93,44 +89,11 @@ class GoalDataset(SequenceDataset):
         '''
             condition on both the current observation and the last observation in the plan
         '''
-        # print(f"Observations[0]: {observations[0]}, goal obs: {observations[-1]}")
-
         return {
             0: observations[0],
             self.horizon - 1: observations[-1],
         }
         
-    # def unnormalize(self, arr: np.ndarray) -> np.ndarray:
-    #     """
-
-    #     :param arr: numpy array of shape (batch_size, sequence_length, num_features)
-    #                 or (sequence_length, num_features)
-    #     :return: unnormalized numpy array of the same shape as input
-    #     """
-    #     # Ensure the input array is a numpy array
-    #     arr = np.array(arr)
-
-    #     # Check if the input is a single sequence or a batch
-    #     if arr.ndim == 2:
-    #         arr = arr[np.newaxis, ...]  # Add batch dimension
-        
-    #     assert arr.shape[-1] == len(self.predict_features), "Number of features in array does not match predict_features"
-        
-    #     unnormalized = np.zeros_like(arr)
-        
-    #     for i, feature in enumerate(self.predict_features):
-    #         if feature in self.normalization:
-    #             min_val = self.normalization[feature]['min']
-    #             max_val = self.normalization[feature]['max']
-    #             unnormalized[..., i] = ((arr[..., i] + 1) / 2) * (max_val - min_val) + min_val
-    #         else:
-    #             unnormalized[..., i] = arr[..., i]  # Keep unnormalized features as is
-        
-    #     # Remove batch dimension if it was added
-    #     if unnormalized.shape[0] == 1:
-    #         unnormalized = unnormalized[0]
-        
-    #     return unnormalized
 
 class ValueDataset(SequenceDataset):
     '''

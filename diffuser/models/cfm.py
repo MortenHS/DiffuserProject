@@ -33,7 +33,6 @@ class CFM(nn.Module):
         self.model_type = model.__class__.__name__ # TempUnet or Cu1D
 
         sigma = 0.0
-        # self.FM = ExactOptimalTransportConditionalFlowMatcher(sigma=sigma)
         self.FM = ConditionalFlowMatcher(sigma=sigma)
         self.node = NeuralODE(model, solver="dopri5", sensitivity="adjoint", atol=1e-4, rtol=1e-4)
         
@@ -46,7 +45,6 @@ class CFM(nn.Module):
         self.n_timesteps = int(n_timesteps) # For umaze = 64
         self.clip_denoised = clip_denoised
         self.predict_epsilon = predict_epsilon
-        # print(f"In CFM() n_timesteps: {self.n_timesteps}")
         self.loss_fn = Losses[loss_type](loss_weights, self.action_dim)
 
     def set_sampling_timesteps(self, t):
@@ -97,7 +95,6 @@ class CFM(nn.Module):
         else:
             return noise
     
-
     def p_mean_variance(self, x, cond, t):
         ''' 
         Performs one denoising step in the reverse process
@@ -115,40 +112,6 @@ class CFM(nn.Module):
 
 
     @torch.no_grad()
-    # def p_sample(self, x, cond, t):
-    #     b, *_, device = *x.shape, x.device
-    #     model_mean, _, model_log_variance = self.p_mean_variance(x=x, cond=cond, t=t)
-    #     noise = torch.randn_like(x)
-    #     # no noise when t == 0
-    #     nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
-    #     return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
-
-    # def p_sample_loop_original(self, shape, cond, verbose=True, return_diffusion=False):
-    #     device = self.betas.device
-        
-    #     batch_size = shape[0]
-    #     x = torch.randn(shape, device=device)
-    #     x = apply_conditioning(x, cond, self.action_dim)
-
-    #     if return_diffusion: diffusion = [x]
-
-    #     progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
-    #     for i in reversed(range(0, self.n_timesteps)):
-    #         timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
-    #         x = self.p_sample(x, global_cond, cond, timesteps)
-    #         x = apply_conditioning(x, cond, self.action_dim)
-
-    #         progress.update({'t': i})
-
-    #         if return_diffusion: diffusion.append(x)
-
-    #     progress.close()
-
-    #     if return_diffusion:
-    #         return x, torch.stack(diffusion, dim=1)
-    #     else:
-    #         return x
-
     # def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
     #     # x shape here: [32, 128, 6] == [B, horizon, dim]
     #     overwritten_timesteps = 256
@@ -178,11 +141,10 @@ class CFM(nn.Module):
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         # x shape here: [32, 128, 6] == [B, horizon, dim]
-        # print(f"Shape: {shape}, cond[0] shape: {cond[0].shape} ")
         # shape = (1, 128, 6), cond[0] shape: (1, 4)
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
-                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
+                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=None)),
                 torch.randn(shape).to(self.device),
                 torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
                 atol=1e-4,
@@ -206,28 +168,14 @@ class CFM(nn.Module):
 
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
-        # sample_type = kwargs.get('sample_type', 'original')
         # [32, 4]
         return self.p_sample_loop_cfm(shape, cond, verbose, return_diffusion)
-        # return self.p_sample_loop_original(shape, verbose, return_diffusion)
     
-
-        # if sample_type == 'repaint':
-        #     return self.p_sample_loop_repaint(shape, global_cond, verbose, return_diffusion)
-        # elif sample_type == 'constrained':
-        #     return self.p_sample_loop_constrained(shape, global_cond, verbose, return_diffusion)
-        # elif sample_type == 'original':
-        #     return self.p_sample_loop_original(shape, global_cond, verbose, return_diffusion)
-        # elif sample_type == 'estimate_feature':
-        #     return self.p_sample_loop_estimate_feature(shape, global_cond, verbose, return_diffusion)
-        # else:
-        #     raise NotImplementedError
 
     def conditional_sample(self, cond, *args, horizon=None, **kwargs):
         '''
             conditions : [ (time, state), ... ]
         '''
-        # print(f"Går inn i conditional_sample")
         device = self.device
         batch_size = len(cond[0]) # 1 for CFM
         horizon = horizon or self.horizon
@@ -245,8 +193,7 @@ class CFM(nn.Module):
         """
         return next(self.parameters()).device
 
-    def loss(self, x, cond): # Cond her er en av parameterne i *batch
-        # print(f"Går inn i loss fra training loop")
+    def loss(self, x, cond):
         x = x.to(self.device)
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()
@@ -254,16 +201,17 @@ class CFM(nn.Module):
         x1 = x.to(self.device)
         x0 = torch.randn_like(x1)
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
-        # print(f"Cond: {cond}")
         # Cond gir ut en dict med keys: 0 [32, 4] og 127 [32, 4] for umaze
+        
+        # Apply conditioning to xt for inpainting purposes.
+        xt = apply_conditioning(xt, cond, self.action_dim)
 
         if self.model_type == 'ConditionalUnet1D':
-            vt = self.model(t, xt, global_cond=cond) 
-            vt = apply_conditioning(vt, cond, self.action_dim) # Test med
-            # global_cond kan være None, fordi den uansett ikke har dict titles som kjøres i Cu1D.
+            vt = self.model(t, xt, global_cond=None) 
+            vt = apply_conditioning(vt, cond, self.action_dim)
         elif self.model_type == 'TemporalUnet':
             vt = self.model(xt, cond, t)
-            vt = apply_conditioning(vt, cond, self.action_dim) # Test med
+            vt = apply_conditioning(vt, cond, self.action_dim)
             # cond her brukes ikke i Temporal sin forward func.
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")

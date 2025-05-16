@@ -53,7 +53,7 @@ def load_diffusion(*loadpath, epoch='latest', device='cuda:0'):
     if epoch == 'latest':
         epoch = get_latest_epoch(loadpath)
 
-    # print(f'\n[ utils/serialization ] Loading model epoch: {epoch}\n')
+    print(f'\n[ utils/serialization ] Loading model epoch: {epoch}\n')
 
     trainer.load(epoch)
 

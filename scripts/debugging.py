@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import csv
 import os
+import re
 import pandas as pd
 import numpy as np
 
@@ -38,7 +39,6 @@ def plot_loss_from_csv(csv_file="loss_log.csv", savepath="logs/tests/loss_plot.p
     plt.grid(True)
     plt.savefig(savepath)
     plt.close()
-
 
 def plot_positional_errors_from_csv(csv_path, save_path):
     # Load CSV
@@ -81,6 +81,29 @@ def plot_positional_errors_from_csv(csv_path, save_path):
     plt.savefig(save_path)
     plt.close()
 
+def plot_epoch_progression(csv_path, savepath):
+    df = pd.read_csv(csv_path)
+
+    # Ensure 'Epoch' is treated as integer for sorting
+    df['Epoch'] = df['Epoch'].astype(int)
+
+    # Sort by epoch (ascending)
+    df = df.sort_values('Epoch')
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.plot(df['Epoch'], df['Mean Score'], label='Mean Score', marker='o')
+    plt.plot(df['Epoch'], df['Median Score'], label='Median Score', marker='o')
+    plt.plot(df['Epoch'], df['Mean Reward'], label='Mean Reward', marker='o')
+    plt.plot(df['Epoch'], df['Median Reward'], label='Median Reward', marker='o')
+    plt.xlabel('Epoch')
+    plt.ylabel('Value')
+    plt.title('Progression of Scores and Rewards Across Epochs')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(savepath)
+    plt.close()
 
 
 if __name__ == "__main__":
@@ -90,7 +113,10 @@ if __name__ == "__main__":
     # print(f"Loss plot generated successfully to {savepath}")
 
     # For positional errors:
-    csv_path = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_results.csv"
-    savepath_positional = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_comps/positional_errors_plot.png"
-    plot_positional_errors_from_csv(csv_path, savepath_positional)
-    print(f"Positional error plot generated successfully to {savepath_positional}")
+    # csv_path = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_results.csv"
+    # savepath_positional = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_comps/positional_errors_plot.png"
+    # plot_positional_errors_from_csv(csv_path, savepath_positional)
+    # print(f"Positional error plot generated successfully to {savepath_positional}")
+
+    # For epoch progression:
+    plot_epoch_progression('logs/umaze_scores_epoch_test.csv', 'logs/tests/umaze_scores_epoch_test.png')

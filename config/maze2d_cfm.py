@@ -52,14 +52,14 @@ base = {
         'max_path_length': 40000,
 
         ## serialization
-        'logbase': 'logs/tests_2',
+        'logbase': 'logs',
         'prefix': 'cfm/', # Change here to alter folder name
         'exp_name': watch(diffusion_args_to_watch),
 
         ## training
         'n_steps_per_epoch': 100000,
         'loss_type': 'l2',
-        'n_train_steps': 5e5,
+        'n_train_steps': 1e6,
         'batch_size': 32,
         'learning_rate': 4e-4,
         'gradient_accumulate_every': 2,

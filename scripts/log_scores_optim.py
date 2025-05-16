@@ -20,8 +20,8 @@ def run_plan_maze(config, dataset):
     """
     command = ['python', '/cluster/work/mortenhs/Janner/diffuser/scripts/plan_maze2d.py', '--config', config, '--dataset', dataset]
     result = subprocess.run(command, capture_output=True, text=True)
-    logging.debug(f"Subprocess stdout: {result.stdout}")
-    logging.debug(f"Subprocess stderr: {result.stderr}")
+    # logging.debug(f"Subprocess stdout: {result.stdout}")
+    # logging.debug(f"Subprocess stderr: {result.stderr}")
     return result
 
 def log_scores(configs_and_datasets, num_iterations):
@@ -37,6 +37,7 @@ def log_scores(configs_and_datasets, num_iterations):
     }
 
     aggregated_results = []
+    used_epoch = None
 
     for config, dataset in configs_and_datasets:
         logging.info(f"Starting processing for config: {config}, dataset: {dataset}")
@@ -54,7 +55,15 @@ def log_scores(configs_and_datasets, num_iterations):
         for i in range(num_iterations):
             logging.info(f"Running {config} on {dataset}, iteration {i + 1}/{num_iterations}")
             result = run_plan_maze(config, dataset)
-            logging.debug(f"Processing output for {config}, {dataset}, iteration {i + 1}")
+
+            # Parse epoch from the output if not already set
+            if used_epoch is None:
+                for line in result.stdout.splitlines():
+                    if "[ utils/serialization ] Loading model epoch:" in line:
+                        try:
+                            used_epoch = int(line.split("epoch:")[1].split("\\n")[0].strip())
+                        except Exception:
+                            used_epoch = "unknown"
 
             # Process only the last line with the correct t: value
             for line in result.stdout.splitlines():
@@ -63,7 +72,7 @@ def log_scores(configs_and_datasets, num_iterations):
                     score = float(line.split("score: ")[1].split("|")[0].strip()) * 100  # Scale score by 100
                     scores = torch.cat((scores, torch.tensor([score], device='cuda')))
                     rewards = torch.cat((rewards, torch.tensor([reward], device='cuda')))
-                    logging.debug(f"Extracted score: {score}, reward: {reward}")
+                    logging.debug(f"Extracted score: {score:.4f}, reward: {reward:.4f}")
                     break 
 
         # Compute average and median for the current config and dataset
@@ -77,14 +86,17 @@ def log_scores(configs_and_datasets, num_iterations):
                      f"Mean Score={mean_score:.2f}, Median Score={median_score:.2f}, "
                      f"Mean Reward={mean_reward:.2f}, Median Reward={median_reward:.2f}")
         
-        aggregated_results.append([model, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
+        aggregated_results.append([model, used_epoch, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
 
     os.makedirs('logs', exist_ok=True)
 
     # Write aggregated results to the CSV file
-    with open('logs/scores.csv', mode='w', newline='') as file:
+    csv_path = 'logs/scores.csv'
+    file_exists = os.path.isfile(csv_path)
+    with open(csv_path, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Model', 'Dataset', 'Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
+        if not file_exists:
+            writer.writerow(['Model','Epoch','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
         writer.writerows(aggregated_results)
 
 def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_table.txt', num_iterations=1):
@@ -139,8 +151,7 @@ if __name__ == "__main__":
     num_iterations = 200
 
     start_time = time.time()
-    logging.info("Starting the score logging process.")
     log_scores(configs_and_datasets, num_iterations)
-    generate_latex_table(num_iterations=num_iterations)
+    # generate_latex_table(num_iterations=num_iterations)
     end_time = time.time()
     logging.info(f"Total time taken: {end_time - start_time:.2f} seconds")

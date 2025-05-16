@@ -106,7 +106,6 @@ class TemporalUnet(nn.Module):
         '''
             x : [ batch x horizon x transition ]
         '''
-        # print(f"Her er den inn i forward i TempUnet")
         x = einops.rearrange(x, 'b h t -> b t h')
         # Shape of x becomes: [32, 6, 128]
 

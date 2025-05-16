@@ -72,15 +72,12 @@ class Trainer(object):
 
         # --------------------------------------------Data Processing -----------------------------------------------#
         self.dataset = dataset
-        # self.collate_fn_repeat = self.dataset.collate_fn_repeat
-        # self.collate_fn = self.dataset.collate_fn
 
         self.dataloader = cycle(torch.utils.data.DataLoader(
             self.dataset, batch_size=train_batch_size, num_workers=1, shuffle=True, pin_memory=True
         ))
         
         # ------------------------------------------------------------------------------------------------------#
-        # vis_fn = lambda batch: self.collate_fn_repeat(batch, 10)
 
         # Tilsvarende til dataloader_vis i Diffuser?
         self.dataloader_vis = cycle(torch.utils.data.DataLoader(
@@ -90,7 +87,6 @@ class Trainer(object):
         self.optimizer = torch.optim.Adam(diffusion_model.parameters(), lr=train_lr)
 
         self.logdir = results_folder
-        # self.writer = SummaryWriter(self.logdir)
 
         self.bucket = bucket
         self.n_reference = n_reference
@@ -119,20 +115,18 @@ class Trainer(object):
             for i in range(self.gradient_accumulate_every):
                 batch = next(self.dataloader)
                 batch = batch_to_device(batch)
-                # print(f"Batch_size = len(batch[0]): {len(batch[0])}")
-                # print(f"Batch.conditions: {batch.conditions}")
+
                 # Batch er delt opp i: Trajectories [batch_size=32, horizon, dim=6], og
                 # conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
                 #     127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')}} for CFM
                 
                 # Kaller på loss i cfm ln[179-196] som skal ha inn (x, cond), 
                 # originalt er ikke cond i bruk og input er (x, global_cond, cond)
+
                 loss, infos = self.model.loss(*batch)
                 loss = loss / self.gradient_accumulate_every
                 loss.backward()
                 running_loss += loss.item()
-
-            # self.writer.add_scalar('training_loss', running_loss, self.step)
 
             self.optimizer.step()
             self.optimizer.zero_grad()
@@ -145,11 +139,9 @@ class Trainer(object):
                 self.save(label)
 
             if self.step == 0 and self.sample_freq:
-                # print(f"Goes into render_reference")
                 self.render_reference(self.n_reference)
 
             if self.sample_freq and self.step % self.sample_freq == 0:
-                # print(f"Goes into render_samples")
                 self.render_samples(n_samples=self.n_samples)
             loss_data.append([self.step, running_loss])
             self.step += 1
@@ -157,8 +149,8 @@ class Trainer(object):
         with open(loss_log_file, mode='a', newline='') as file:
             writer = csv.writer(file)
             if step == 0:
-                writer.writerow(["Step", "Loss"])  # Write the header
-            writer.writerows(loss_data)  # Write all accumulated loss data
+                writer.writerow(["Step", "Loss"])
+            writer.writerows(loss_data)
 
     def save(self, epoch):
         '''
@@ -211,12 +203,11 @@ class Trainer(object):
 
         ## get trajectories and condition at t=0 from batch
         trajectories = to_np(batch.trajectories)
-        # conditions = to_np(batch.conditions[0])[:,None]
 
         ## [ batch_size x horizon x observation_dim ]
         normed_observations = trajectories[:, :, self.dataset.action_dim:]
         observations = self.dataset.normalizer.unnormalize(normed_observations, 'observations')
-
+        
         savepath = os.path.join(self.logdir, f'_sample-reference.png')
         self.renderer.composite(savepath, observations)
 
@@ -232,7 +223,6 @@ class Trainer(object):
             conditions = to_device(batch.conditions, 'cuda:0')
             # Conditions[0] has shape [1, 4]
 
-            # print(f"Conditions[0] before apply_dict: {conditions[0]}")
             # repeat each item in conditions `n_samples` times: 1+4 * 2 = 10?
             if type(self.ema_model).__name__ == "GaussianDiffusion":
                 conditions = apply_dict(
@@ -259,18 +249,20 @@ class Trainer(object):
                 ], axis=1)
 
                 # Shape of normed_observations: [10, 129, 4]
-
                 # [ n_samples x (horizon + 1) x observation_dim ]
                 observations = self.dataset.normalizer.unnormalize(normed_observations, 'observations')
-
+                
                 savepath = os.path.join(self.logdir, f'sample-{self.step}-{i}.png')
-                self.renderer.composite(savepath, observations)
+                self.renderer.composite(savepath, observations, plot_goal=False)
+
             else:
+                # Conditions[0] has shape [1, 4]
                 conditions = apply_dict(
                     einops.repeat,
                     conditions,
                     'b d -> (repeat b) d', repeat=n_samples,
                 ) 
+                # conditions[0].shape = [10, 4]
 
                 # [ n_samples x horizon x (action_dim + observation_dim) ]
                 samples = self.ema_model.conditional_sample(conditions) # conditions er 2 ganger [10,4]
@@ -279,20 +271,9 @@ class Trainer(object):
 
                 # [ n_samples x horizon x observation_dim ]
                 normed_observations = samples[:, :, self.dataset.action_dim:] # [32, 128, 4]
-
-                # # [ 1 x 1 x observation_dim ]
-                # normed_conditions = to_np(batch.conditions[0])[:, None] # [1, 1, 4]
-                # # [ n_samples x (horizon + 1) x observation_dim ]
-                # normed_observations = np.concatenate([
-                #     np.repeat(normed_conditions, n_samples, axis=0),
-                #     normed_observations
-                # ], axis=1)
-                # normed_observations = samples
-                # print(f"normed_observations.shape: {normed_observations.shape}")
-                # [ n_samples x (horizon + 1) x observation_dim ]
-                # print(f"normed_observations.shape: {normed_observations.shape}")
-
+                
                 # Shape of normed_observations: [1, 128, 4]
                 observations = self.dataset.normalizer.unnormalize(normed_observations, 'observations')
                 savepath = os.path.join(self.logdir, f'sample-{self.step}-{i}.png')
-                self.renderer.composite(savepath, observations)
+                self.renderer.composite(savepath, observations, plot_goal=False)
+    

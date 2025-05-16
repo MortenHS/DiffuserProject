@@ -165,8 +165,6 @@ class GaussianDiffusion(nn.Module):
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
         device = self.betas.device
-        # print(f"Cond: {cond} in p_sample_loop")
-
         # Cond her er dict med 0 og 127 for umaze, med shape [10, 4]
         batch_size = shape[0] # 10
         x = torch.randn(shape, device=device)
@@ -196,9 +194,8 @@ class GaussianDiffusion(nn.Module):
         '''
             conditions : [ (time, state), ... ]
         '''
-        print(f"Går inn i conditional_sample")
         device = self.betas.device
-        batch_size = len(cond[0]) # Antar 10
+        batch_size = len(cond[0])
         horizon = horizon or self.horizon
         shape = (batch_size, horizon, self.transition_dim)
 
@@ -226,7 +223,6 @@ class GaussianDiffusion(nn.Module):
         Core training step of diffusion:
         Part of the reverse process, trains model to reverse the noise from q_sample (x_noisy)
         '''
-        # print(f"Går inn i p_losses")
         noise = torch.randn_like(x_start)
 
         x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) # Simulate xt \sim q(x_t|x_0)
@@ -247,13 +243,10 @@ class GaussianDiffusion(nn.Module):
         return loss, info
 
     def loss(self, x, cond):
-        # print(f"Går inn i loss fra training loop")
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()   
-        # x representerer "Trajectories"
         # Cond her er start og sluttpunkt (e.g. 0 og 127 for umaze)
         return self.p_losses(x, cond, t)
 
     def forward(self, cond, *args, **kwargs):
         return self.conditional_sample(cond=cond, *args, **kwargs)
-
