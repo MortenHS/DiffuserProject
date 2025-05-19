@@ -1,0 +1,13 @@
+pybullet build time: Nov 28 2023 23:51:11
+/cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/Cython/Distutils/old_build_ext.py:14: DeprecationWarning: dep_util is Deprecated. Use functions from setuptools instead.
+  from distutils.dep_util import newer, newer_group
+load datafile:   0%|          | 0/8 [00:00<?, ?it/s]load datafile:  12%|█▎        | 1/8 [00:00<00:03,  2.21it/s]load datafile:  38%|███▊      | 3/8 [00:00<00:01,  4.38it/s]load datafile:  50%|█████     | 4/8 [00:00<00:00,  4.63it/s]load datafile:  62%|██████▎   | 5/8 [00:01<00:00,  4.64it/s]load datafile:  88%|████████▊ | 7/8 [00:01<00:00,  6.98it/s]load datafile: 100%|██████████| 8/8 [00:01<00:00,  6.17it/s]
+/cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/lightning_fabric/plugins/environments/xla.py:18: DeprecationWarning: `ModuleAvailableCache` is a special case of `RequirementCache`. Please use `RequirementCache(module=...)` instead.
+  from lightning_fabric.accelerators.tpu import _XLA_AVAILABLE, TPUAccelerator
+/cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/lightning_fabric/__init__.py:29: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning_fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  __import__("pkg_resources").declare_namespace(__name__)
+/cluster/home/mortenhs/.conda/envs/diffuser/lib/python3.8/site-packages/pytorch_lightning/__init__.py:45: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('pytorch_lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  __import__("pkg_resources").declare_namespace(__name__)
+slurmstepd: error: *** JOB 22825651 ON idun-07-04 CANCELLED AT 2025-05-17T08:58:11 DUE TO TIME LIMIT ***

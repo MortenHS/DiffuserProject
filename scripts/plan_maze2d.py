@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
 
-from diffuser.guides.policies import Policy
+from diffuser.guides.policies import Policy, PolicyFM
 import diffuser.datasets as datasets
 import diffuser.utils as utils
 
@@ -17,17 +17,25 @@ args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
 #---------------------------------- loading ----------------------------------#
 args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs/'
-diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=2000) # 520000.pt, args.diffusion_epoch
+diffusion_experiment = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch) # 520000.pt, args.diffusion_epoch
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
 renderer = diffusion_experiment.renderer
 
-policy = Policy(diffusion, dataset.normalizer)
+if args.config.endswith('_cfm'): 
+    method_name = 'cfm'
+    policy = PolicyFM(diffusion, dataset.normalizer)
+else: 
+    method_name = 'diff'
+    policy = Policy(diffusion, dataset.normalizer)
+
+# policy = Policy(diffusion, dataset.normalizer)
 
 #---------------------------------- main loop ----------------------------------#
 observation = env.reset()
 
+# print(f"Observation: {observation}")
 # Single vs multi-task? Single = False, Multi = True
 if args.conditional:
     print('Resetting target')
@@ -53,10 +61,13 @@ for t in range(env.max_episode_steps):
     # that we really only need to plan once
     if t == 0:
         cond[0] = observation # Shape (4,)
+        # print(f"Cond[0]: {cond[0]}")
         action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
         actions = samples.actions[0]
-        sequence = samples.observations[0] # (128, 4) (Horizon, obs_dim)
-        
+        sequence = samples.observations[0] # (128, 4) (Horizon, obs_dim), len = 128
+        # Sequence[0]: [0.905375   1.0962021  0.1819725  0.04143763]
+         
+
     if t < len(sequence) - 1:
         next_waypoint = sequence[t+1]
     
@@ -90,30 +101,36 @@ for t in range(env.max_episode_steps):
     total_reward += reward
     score = env.get_normalized_score(total_reward)
     
-    print(
-        f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
-        f'action : {action}'
-    )
+    # print(
+    #     f't: {t} | r: {reward:.2f} |  R: {total_reward:.2f} | score: {score:.4f} | '
+    #     f'action : {action}'
+    # )
 
     if 'maze2d' in args.dataset:
         xy = next_observation[:2]
         goal = env.unwrapped._target
-        print(
-            f'maze | pos: {xy} | goal: {goal}'
-        )
+        # print(
+        #     f'maze | pos: {xy} | goal: {goal}'
+        # )
 
     # update rollout observations
-    rollout.append(next_observation.copy())
-    if t % args.vis_freq == 0 or terminal:
-        fullpath = join(args.savepath, f'{t}_{method_name}.png')
+    # rollout.append(next_observation.copy())
+
+    # if t % args.vis_freq == 0 or terminal:
+    #     fullpath = join(args.savepath, f'{t}_{method_name}.png')
         
-        # Sequence = samples.observations[0] (128, 4)
-        if t == 0: renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True)
-        # Samples observations shape: (1, 128, 4) (batch_size, horizon, obs_dim)
+    #     # Sequence = samples.observations[0] (128, 4)
+    #     if t == 0: 
+    #         renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True)
+    #         # print(f"Rollout[0]: {rollout[0]}")
+    #     # Samples observations shape: (1, 128, 4) (batch_size, horizon, obs_dim)
             
-        # save rollout thus far
-        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True)
-        # Rollout shape: (1, 301, 4) (batch_size, max_episode_steps+1, obs_dim)
+    #     # save rollout thus far
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True)
+    #     # Rollout shape: (1, 301, 4) (batch_size, max_episode_steps+1, obs_dim)
+    
+    # if t == env.max_episode_steps - 1:
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True)
 
     if terminal:
         break
@@ -121,8 +138,8 @@ for t in range(env.max_episode_steps):
     observation = next_observation
 
 # save result as a json file
-json_path = join(args.savepath, f'rollout_{method_name}.json')
-json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
-    'epoch_diffusion': diffusion_experiment.epoch}
-json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-print(f"Json saved to {json_path}")
+# json_path = join(args.savepath, f'rollout_{method_name}.json')
+# json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
+#     'epoch_diffusion': diffusion_experiment.epoch}
+# json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+# print(f"Json saved to {json_path}")

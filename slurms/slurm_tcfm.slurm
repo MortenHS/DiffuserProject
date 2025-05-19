@@ -3,14 +3,14 @@
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:1
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-08:00:00
+#SBATCH --time=0-16:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=64G
 
-#SBATCH --output=output.txt      # Specifying 'stdout'
-#SBATCH --error=output.err        # Specifying 'stderr'
+#SBATCH --output=output_cfm.txt      # Specifying 'stdout'
+#SBATCH --error=output_cfm.err        # Specifying 'stderr'
 
 #SBATCH --mail-user=mortenhs@stud.ntnu.no
 #SBATCH --mail-type=ALL

@@ -30,7 +30,7 @@ def load_config(*loadpath):
     loadpath = os.path.join(*loadpath)
     config = pickle.load(open(loadpath, 'rb'))
     print(f'[ utils/serialization ] Loaded config from {loadpath}')
-    print(config)
+    # print(config)
     return config
 
 def load_diffusion(*loadpath, epoch='latest', device='cuda:0'):

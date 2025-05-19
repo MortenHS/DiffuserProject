@@ -115,7 +115,6 @@ class Trainer(object):
             for i in range(self.gradient_accumulate_every):
                 batch = next(self.dataloader)
                 batch = batch_to_device(batch)
-
                 # Batch er delt opp i: Trajectories [batch_size=32, horizon, dim=6], og
                 # conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
                 #     127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')}} for CFM

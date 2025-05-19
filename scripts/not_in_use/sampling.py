@@ -1,79 +1,53 @@
+from collections import namedtuple
+import torch
+import einops
 import diffuser.utils as utils
-import diffuser.datasets as datasets
-from os.path import join
-from diffuser.guides.policies import Policy
-import numpy as np
-import imageio
-# Conditional Sampling
-class Parser(utils.Parser):
-    dataset: str = 'maze2d-large-v1'
-    config: str = 'config.maze2d'
 
-args = Parser().parse_args('plan')
+Trajectories = namedtuple('Trajectories', 'actions observations')
 
-diffusion_experiment = utils.load_diffusion(
-    args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch)
+class PolicyFM:
+    def __init__(self, flow_model, normalizer):
+        self.flow_model = flow_model
+        self.normalizer = normalizer
+        self.action_dim = normalizer.action_dim
 
-dataset = diffusion_experiment.dataset
-diffusion = diffusion_experiment.ema
-renderer = diffusion_experiment.renderer
-model = diffusion_experiment.trainer.ema_model
+    @property
+    def device(self):
+        parameters = list(self.flow_model.parameters())
+        return parameters[0].device
 
-policy = Policy(diffusion, dataset.normalizer)
+    def _format_conditions(self, conditions, batch_size):
+        # Flow matching models may expect different conditioning, but normalization is still needed
+        conditions = utils.apply_dict(
+            self.normalizer.normalize,
+            conditions,
+            'observations',
+        )
+        conditions = utils.to_torch(conditions, dtype=torch.float32, device='cuda:0')
+        conditions = utils.apply_dict(
+            einops.repeat,
+            conditions,
+            'd -> repeat d', repeat=batch_size,
+        )
+        return conditions
 
-env = datasets.load_environment(args.dataset)
-observation = env.reset()
+    def __call__(self, conditions, debug=False, batch_size=1):
+        conditions = self._format_conditions(conditions, batch_size)
 
-obs = utils.colab.run_diffusion(model, dataset, observation, n_samples=10)
+        # For flow matching, you typically sample by integrating the learned vector field
+        # This may look like: sample = self.flow_model.sample(conditions)
+        # The sample shape should be [batch_size, horizon, obs_dim + action_dim]
+        sample = self.flow_model.conditional_sample(conditions)
+        sample = utils.to_np(sample)
 
-# Conditioning on target (final) 
-target = env._target
-cond = {
-    diffusion.horizon - 1: np.array([*target, 0, 0]),
-}
+        # Extract actions and observations as before
+        actions = sample[:, :, :self.action_dim]
+        actions = self.normalizer.unnormalize(actions, 'actions')
 
-# Use final observations for evaluation/visualization
-final = obs[-1]    # [256 x horizon x obs_dim]
-total_reward = 0
-state = env.state_vector().copy()
-cond[0] = obs
+        action = actions[0, 0]
 
-print(f"Cond shape {cond[0].shape}") # (2, 10, 384, 10)
-action, samples = policy(cond, batch_size=args.batch_size) # policy returns action, trajectories
-actions = samples.actions[0]
-sequence = samples.observations[0]
+        normed_observations = sample[:, :, self.action_dim:]
+        observations = self.normalizer.unnormalize(normed_observations, 'observations')
 
-next_waypoint = sequence[-1].copy()
-next_waypoint[2:] = 0
-
-action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
-
-next_observation, reward, terminal, _ = env.step(action)
-total_reward += reward
-score = env.get_normalized_score(total_reward)
-
-img = renderer.renders(final[0, :, :2])  # pick first trajectory
-imageio.imwrite('logs/trajectory_sample.png', img)
-
-# Gir unexpected keyword argument in p_sample_loop(). Kan muligens hardkodes?
-
-# n_samples = 1
-# observations = utils.colab.run_diffusion(
-#     model, dataset, observation, n_samples, args.device)
-
-# # observations = utils.colab.run_diffusion(
-# #     model, dataset, observation, args.n_diffusion_steps, args.device)
-
-# # print(observations.shape) # (65, 64, 128, 4)
-# # print(args.n_diffusion_steps) # 64
-
-# final_obs = observations[-1]       # shape: [n_samples, horizon, obs_dim]
-# positions = final_obs[:, :, :2]    # shape: [n_samples, horizon, 2]
-# print(f"Len positions: {len(positions)}")
-
-# if len(positions)==256:
-#     ncol = 16
-# elif len(positions)==1:
-#     ncol = 1
-
-# renderer.composite(f'logs/sample_image_{n_diffusion_steps}.png', paths=positions, ncol=ncol)
+        trajectories = Trajectories(actions, observations)
+        return action, trajectories

@@ -141,14 +141,14 @@ def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_tab
 if __name__ == "__main__":
     configs_and_datasets = [
         # ('config.maze2d', 'maze2d-umaze-v1'),
-        ('config.maze2d', 'maze2d-medium-v1'),
+        # ('config.maze2d', 'maze2d-medium-v1'),
         # ('config.maze2d', 'maze2d-large-v1'),
-        # ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
         # ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
 
-    num_iterations = 200
+    num_iterations = 20
 
     start_time = time.time()
     log_scores(configs_and_datasets, num_iterations)
