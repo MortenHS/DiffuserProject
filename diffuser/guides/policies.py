@@ -17,12 +17,31 @@ class Policy:
         return parameters[0].device
 
     def _format_conditions(self, conditions, batch_size):
-        conditions = utils.apply_dict(
+        """
+        Formats and prepares the input `conditions` dictionary for model processing.
+
+        This function performs the following steps:
+        1. Normalizes the 'observations' entry in the `conditions` dictionary using the provided normalizer.
+        2. Converts all entries in the `conditions` dictionary to PyTorch tensors with dtype float32 and moves them to the CUDA device 'cuda:0'.
+        3. Repeats each tensor in the `conditions` dictionary along a new batch dimension to match the specified `batch_size`.
+
+        Args:
+            conditions (dict): A dictionary containing condition data
+            batch_size (int): The number of times to repeat each condition to match the batch size required by the model.
+
+        Returns:
+            dict: A dictionary with the same keys as `conditions`, where each value is a normalized, CUDA tensor repeated along the batch dimension.
+        """
+        # Step 1:
+        conditions = utils.apply_dict( 
             self.normalizer.normalize,
             conditions,
             'observations',
         )
+        # Step 2:
         conditions = utils.to_torch(conditions, dtype=torch.float32, device='cuda:0')
+
+        # Step 3:
         conditions = utils.apply_dict(
             einops.repeat,
             conditions,
@@ -31,10 +50,9 @@ class Policy:
         return conditions
 
     def __call__(self, conditions, debug=False, batch_size=1):
-        print(f"Conds before_format: {conditions[0]}")
         conditions = self._format_conditions(conditions, batch_size)
-        print(f"Conds after_format: {conditions[0]}")
-        # Calls forward for given model: run reverse diffusion process, run cond_sample 
+
+        # Calls forward for given model: run reverse diffusion process, run conditional_sample function
         sample = self.diffusion_model(conditions) # Calls forward in CFM or diffusion.py
         sample = utils.to_np(sample)
 
@@ -45,7 +63,7 @@ class Policy:
         ## extract first action
         action = actions[0, 0]
 
-        # if debug:
+        ## extract observations [ batch_size x horizon x observation_dim ]
         normed_observations = sample[:, :, self.action_dim:]
         observations = self.normalizer.unnormalize(normed_observations, 'observations')
     
@@ -78,17 +96,12 @@ class PolicyFM:
         return conditions
 
     def __call__(self, conditions, debug=False, batch_size=1):
-        print(f"Conds before_format: {conditions[0]}")
         conditions = self._format_conditions(conditions, batch_size)
-        print(f"Conds after_format: {conditions}")
-
-        # For flow matching, you typically sample by integrating the learned vector field
-        # This may look like: sample = self.flow_model.sample(conditions)
+        
         # The sample shape should be [batch_size, horizon, obs_dim + action_dim]
-        sample = self.flow_model.conditional_sample(conditions)
+        sample = self.flow_model(conditions)
         sample = utils.to_np(sample)
 
-        # Extract actions and observations as before
         actions = sample[:, :, :self.action_dim]
         actions = self.normalizer.unnormalize(actions, 'actions')
 

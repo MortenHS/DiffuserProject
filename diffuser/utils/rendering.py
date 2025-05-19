@@ -302,7 +302,7 @@ class MazeRenderer:
         img = plot2img(fig, remove_margins=self._remove_margins)
         return img
 
-    def composite(self, savepath, paths, plot_goal=False, ncol=5, **kwargs):
+    def composite(self, savepath, paths, plot_goal=False, goal=None, ncol=5, **kwargs):
         '''
             savepath : str
             observations : [ n_paths x horizon x 2 ]
@@ -311,7 +311,7 @@ class MazeRenderer:
         
         images = []
         for path, kw in zipkw(paths, **kwargs):
-            img = self.renders(plot_goal=plot_goal, *path, **kw)
+            img = self.renders(plot_goal=plot_goal, goal=goal, *path, **kw)
             images.append(img)
         images = np.stack(images, axis=0)
 
@@ -333,9 +333,10 @@ class Maze2dRenderer(MazeRenderer):
         self._remove_margins = False
         self._extent = (0, 1, 1, 0)
 
-    def renders(self, observations, conditions=None, plot_goal=False, **kwargs):
+    def renders(self, observations, conditions=None, plot_goal=False, goal=None, **kwargs):
         bounds = MAZE_BOUNDS[self.env_name]
-        if plot_goal: goal = np.array([1, 1])
+        if plot_goal: 
+            goal = np.array([goal[0], goal[1]])
         else: goal = None
             
         observations = observations + .5

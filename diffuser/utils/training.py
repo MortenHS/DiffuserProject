@@ -118,11 +118,8 @@ class Trainer(object):
                 # Batch er delt opp i: Trajectories [batch_size=32, horizon, dim=6], og
                 # conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
                 #     127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')}} for CFM
-                
-                # Kaller på loss i cfm ln[179-196] som skal ha inn (x, cond), 
-                # originalt er ikke cond i bruk og input er (x, global_cond, cond)
 
-                loss, infos = self.model.loss(*batch)
+                loss, infos = self.model.loss(*batch) # In CFM/GaussianDiffusion
                 loss = loss / self.gradient_accumulate_every
                 loss.backward()
                 running_loss += loss.item()
@@ -142,6 +139,7 @@ class Trainer(object):
 
             if self.sample_freq and self.step % self.sample_freq == 0:
                 self.render_samples(n_samples=self.n_samples)
+
             loss_data.append([self.step, running_loss])
             self.step += 1
         
@@ -212,28 +210,25 @@ class Trainer(object):
 
     def render_samples(self, batch_size=2, n_samples=2):
         '''
-            renders samples from (ema) diffusion model
+            renders n_samples samples from generative model
         '''
-        # print(f"ema_model type: {type(self.ema_model).__name__}")
         for i in range(batch_size):
 
             ## get a single datapoint
             batch = self.dataloader_vis.__next__()
             conditions = to_device(batch.conditions, 'cuda:0')
-            # Conditions[0] has shape [1, 4]
 
-            # repeat each item in conditions `n_samples` times: 1+4 * 2 = 10?
+            # repeat each item in conditions `n_samples` times: conditions[0].shape goes from [1, 4] to [10, 4]
             if type(self.ema_model).__name__ == "GaussianDiffusion":
                 conditions = apply_dict(
                     einops.repeat,
                     conditions,
                     'b d -> (repeat b) d', repeat=n_samples,
-                ) # conditions[0].shape = [10, 4]
+                ) 
                 
-                ## [ n_samples x horizon x (action_dim + observation_dim) ]
-                samples = self.ema_model.conditional_sample(conditions) # conditions er 2 ganger [10,4]
+                # [ n_samples x horizon x (action_dim + observation_dim) ]
+                samples = self.ema_model.conditional_sample(conditions)
                 samples = to_np(samples)
-                # samples shape: [32, 128, 6], 6 = 4+2 action_dim + observation_dim
 
                 # [ n_samples x horizon x observation_dim ]
                 normed_observations = samples[:, :, self.dataset.action_dim:] # [32, 128, 4]
@@ -250,7 +245,6 @@ class Trainer(object):
                 # Shape of normed_observations: [10, 129, 4]
                 # [ n_samples x (horizon + 1) x observation_dim ]
                 observations = self.dataset.normalizer.unnormalize(normed_observations, 'observations')
-                
                 savepath = os.path.join(self.logdir, f'sample-{self.step}-{i}.png')
                 self.renderer.composite(savepath, observations, plot_goal=False)
 
@@ -260,7 +254,7 @@ class Trainer(object):
                     einops.repeat,
                     conditions,
                     'b d -> (repeat b) d', repeat=n_samples,
-                ) 
+                )
                 # conditions[0].shape = [10, 4]
 
                 # [ n_samples x horizon x (action_dim + observation_dim) ]
@@ -270,6 +264,15 @@ class Trainer(object):
 
                 # [ n_samples x horizon x observation_dim ]
                 normed_observations = samples[:, :, self.dataset.action_dim:] # [32, 128, 4]
+
+                                # [ 1 x 1 x observation_dim ]
+                normed_conditions = to_np(batch.conditions[0])[:, None] # [1, 1, 4]
+                
+                # [ n_samples x (horizon + 1) x observation_dim ]
+                normed_observations = np.concatenate([
+                    np.repeat(normed_conditions, n_samples, axis=0),
+                    normed_observations
+                ], axis=1)
                 
                 # Shape of normed_observations: [1, 128, 4]
                 observations = self.dataset.normalizer.unnormalize(normed_observations, 'observations')

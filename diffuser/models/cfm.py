@@ -1,13 +1,9 @@
-import numpy as np
 import torch
 from torch import nn
-import pdb
-import copy
 from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
 from torchdyn.core import NeuralODE
 import torchdiffeq
 
-import diffuser.utils as utils
 from .helpers import (
     cosine_beta_schedule,
     extract,
@@ -125,50 +121,36 @@ class CFM(nn.Module):
     #             method="euler",
     #         )
     #         return traj[-1]
-
-    #     elif self.model_type == 'TemporalUnet':
-    #         traj = torchdiffeq.odeint(
-    #             lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
-    #             torch.randn(shape).to(self.device),
-    #             torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
-    #             atol=1e-4,
-    #             rtol=1e-4,
-    #             method="euler",
-    #         )
-    #         return traj[-1]
     #     else:
     #         raise ValueError(f"Unsupported model type: {self.model_type}")
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
-        # x shape here: [32, 128, 6] == [B, horizon, dim]
-        # shape = (1, 128, 6), cond[0] shape: (1, 4)
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
-                lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=None)),
+                lambda t, x: self.model.forward(
+                    t=t.expand(x.shape[0]), 
+                    x=apply_conditioning(x, cond, self.action_dim), 
+                    global_cond=None
+                ),
                 torch.randn(shape).to(self.device),
                 torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
                 method="euler",
             )
-            return traj[-1]
 
-        elif self.model_type == 'TemporalUnet':
-            traj = torchdiffeq.odeint(
-                lambda t, x: (self.model.forward(x, cond, time=t.expand(x.shape[0]))),
-                torch.randn(shape).to(self.device),
-                torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
-                atol=1e-4,
-                rtol=1e-4,
-                method="euler",
-            )
+            # Before/without apply cond: [65, 1, 128, 6], traj[-1]: [1, 128, 6]
+            # After apply cond: [1, 128, 6], traj[-1]: [128, 6]
+
+            # traj[-1] = apply_conditioning(traj[-1], cond, self.action_dim)
+            # print(f"Cond[0][0]: {cond[0][0]}")
+            # print(f"Traj[-1][0] after applying conditioning: {traj[-1][0]}")
             return traj[-1]
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False, **kwargs):
-        # [32, 4]
         return self.p_sample_loop_cfm(shape, cond, verbose, return_diffusion)
     
 
@@ -201,18 +183,13 @@ class CFM(nn.Module):
         x1 = x.to(self.device)
         x0 = torch.randn_like(x1)
         t, xt, ut = self.FM.sample_location_and_conditional_flow(x0, x1)
-        # Cond gir ut en dict med keys: 0 [32, 4] og 127 [32, 4] for umaze
-        
+
         # Apply conditioning to xt for inpainting purposes.
         xt = apply_conditioning(xt, cond, self.action_dim)
 
         if self.model_type == 'ConditionalUnet1D':
             vt = self.model(t, xt, global_cond=None) 
             vt = apply_conditioning(vt, cond, self.action_dim)
-        elif self.model_type == 'TemporalUnet':
-            vt = self.model(xt, cond, t)
-            vt = apply_conditioning(vt, cond, self.action_dim)
-            # cond her brukes ikke i Temporal sin forward func.
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
         

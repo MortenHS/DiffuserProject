@@ -169,10 +169,13 @@ class GaussianDiffusion(nn.Module):
         batch_size = shape[0] # 10
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
+        print(f"Conditions[0][0] in p_sample_loop: {cond[0][0]}")
+        print(f"First pos of x in p_sample_loop, before for-loop: {x[0][0]}")
 
         if return_diffusion: diffusion = [x]
 
-        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
+        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent() # Progress bar
+
         for i in reversed(range(0, self.n_timesteps)):
             timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
             x = self.p_sample(x, cond, timesteps)

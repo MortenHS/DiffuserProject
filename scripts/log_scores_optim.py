@@ -148,10 +148,9 @@ if __name__ == "__main__":
         # ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
 
-    num_iterations = 20
-
+    num_iterations = 200
     start_time = time.time()
     log_scores(configs_and_datasets, num_iterations)
-    # generate_latex_table(num_iterations=num_iterations)
+    generate_latex_table(num_iterations=num_iterations)
     end_time = time.time()
     logging.info(f"Total time taken: {end_time - start_time:.2f} seconds")

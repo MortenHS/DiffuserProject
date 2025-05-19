@@ -108,9 +108,9 @@ def plot_epoch_progression(csv_path, savepath):
 
 if __name__ == "__main__":
     # For loss values of model training:
-    savepath="logs/tests/loss_plot.png"
-    plot_loss_from_csv("slurms/loss_log.csv", savepath=savepath)
-    print(f"Loss plot generated successfully to {savepath}")
+    # savepath="logs/tests/loss_plot.png"
+    # plot_loss_from_csv("slurms/loss_log.csv", savepath=savepath)
+    # print(f"Loss plot generated successfully to {savepath}")
 
     # For positional errors:
     # csv_path = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_results.csv"
@@ -119,4 +119,4 @@ if __name__ == "__main__":
     # print(f"Positional error plot generated successfully to {savepath_positional}")
 
     # For epoch progression:
-    # plot_epoch_progression('logs/umaze_scores_epoch_test.csv', 'logs/tests/umaze_scores_epoch_test.png')
+    plot_epoch_progression('logs/scores.csv', 'logs/tests/cfm_scores_epoch_test.png')
