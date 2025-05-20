@@ -36,7 +36,7 @@ def compare_euclid_pos_error(method_name):
         args.logbase, 
         args.dataset, 
         args.diffusion_loadpath, 
-        epoch=760000
+        epoch=args.diffusion_epoch # 760000 for umaze.
         )
     
     diffusion = diffusion_exp.ema
@@ -90,6 +90,12 @@ def save_plots(savepath, pos_error_m1, pos_error_m2, dataset):
     assert pos_error_m1 is not None, "pos_error_m1 is None"
     assert pos_error_m2 is not None, "pos_error_m2 is None"
 
+    if dataset == "umaze":
+        episode_steps = 299
+    elif dataset == "medium":
+        episode_steps = 599
+    else:
+        episode_steps = 799
     os.makedirs(savepath, exist_ok=True)
 
     # Plot Positional Error for both methods
@@ -99,7 +105,7 @@ def save_plots(savepath, pos_error_m1, pos_error_m2, dataset):
     plt.plot(pos_error_diff, label="Diffusion", color="blue")
     plt.plot(pos_error_cfm, label="CFM", color="red")
     plt.title(f"Positional Error Comparison {dataset}")
-    plt.xlabel("Episode Step")
+    plt.xlabel(f"Episode steps: {episode_steps}")
     plt.ylabel("Error (Euclidean Distance)")
     plt.legend()
     plt.grid()

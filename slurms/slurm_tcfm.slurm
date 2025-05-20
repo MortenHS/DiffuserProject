@@ -1,9 +1,9 @@
 #!/bin/sh
-#SBATCH --job-name="TCFM_large"
+#SBATCH --job-name="TCFM_large_short"
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:1
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-20:00:00
+#SBATCH --time=0-12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16

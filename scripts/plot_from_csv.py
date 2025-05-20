@@ -105,6 +105,33 @@ def plot_epoch_progression(csv_path, savepath):
     plt.savefig(savepath)
     plt.close()
 
+def compute_score_reward_stats(log_path):
+    scores = []
+    rewards = []
+    pattern = re.compile(r"Extracted score: ([\-\d\.]+), reward: ([\-\d\.]+)")
+
+    with open(log_path, "r") as f:
+        for line in f:
+            match = pattern.search(line)
+            if match:
+                score = float(match.group(1))
+                reward = float(match.group(2))
+                scores.append(score)
+                rewards.append(reward)
+
+    scores = np.array(scores)
+    rewards = np.array(rewards)
+
+    print(f"Scores: mean={scores.mean():.2f}, median={np.median(scores):.2f}")
+    print(f"Rewards: mean={rewards.mean():.2f}, median={np.median(rewards):.2f}")
+
+    return {
+        "score_mean": scores.mean(),
+        "score_median": np.median(scores),
+        "reward_mean": rewards.mean(),
+        "reward_median": np.median(rewards),
+    }
+
 
 if __name__ == "__main__":
     # For loss values of model training:
@@ -119,4 +146,8 @@ if __name__ == "__main__":
     # print(f"Positional error plot generated successfully to {savepath_positional}")
 
     # For epoch progression:
-    plot_epoch_progression('logs/scores.csv', 'logs/tests/cfm_scores_epoch_test.png')
+    # plot_epoch_progression('logs/scores.csv', 'logs/tests/cfm_scores_epoch_test.png')
+
+    # For scores from log file:
+    stats = compute_score_reward_stats("logs/log_scores.log")
+    print(stats)
