@@ -59,7 +59,7 @@ base = {
         ## training
         'n_steps_per_epoch': 100000,
         'loss_type': 'l2',
-        'n_train_steps': 1e6,
+        'n_train_steps': 500000,
         'batch_size': 32,
         'learning_rate': 4e-4,
         'gradient_accumulate_every': 2,

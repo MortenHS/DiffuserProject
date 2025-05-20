@@ -11,18 +11,18 @@ def calculate_pos_error(method_name, iterations):
     pos_error_data = []
     if method_name == "CFM":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-medium-v1'
+            dataset: str = 'maze2d-umaze-v1'
             config: str = 'config.maze2d_cfm'
 
     if method_name == "Diffusion":
         class Parser(utils.Parser):
-            dataset: str = 'maze2d-medium-v1'
+            dataset: str = 'maze2d-umaze-v1'
             config: str = 'config.maze2d'
 
     args = Parser().parse_args('plan')
     env = datasets.load_environment(args.dataset)
     args.logbase = '/cluster/work/mortenhs/Janner/diffuser/logs'
-    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=480000) #520000, args.diffusion_epoch
+    diffusion_exp = utils.load_diffusion(args.logbase, args.dataset, args.diffusion_loadpath, epoch=args.diffusion_epoch) #520000, args.diffusion_epoch
     diffusion = diffusion_exp.ema
     dataset = diffusion_exp.dataset
 
@@ -46,13 +46,10 @@ def calculate_pos_error(method_name, iterations):
             else:
                 next_waypoint = sequence[-1].copy()
                 next_waypoint[2:] = 0
-            action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
 
+            action = next_waypoint[:2] - state[:2] + (next_waypoint[2:] - state[2:])
             next_observation, _, terminal, _ = env.step(action)
             pos_error.append(np.linalg.norm(next_observation[:2] - target[:2]))
-
-            if terminal:
-                break
 
             observation = next_observation
 
@@ -94,4 +91,4 @@ def main(iterations=200, output_file="logs/pos_error_results.csv"):
     print(f"Results logged to {output_file}")
 
 if __name__ == "__main__":
-    main(iterations=200)
+    main(iterations=20)

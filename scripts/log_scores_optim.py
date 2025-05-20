@@ -90,14 +90,14 @@ def log_scores(configs_and_datasets, num_iterations):
 
     os.makedirs('logs', exist_ok=True)
 
-    # Write aggregated results to the CSV file
-    csv_path = 'logs/scores.csv'
-    file_exists = os.path.isfile(csv_path)
-    with open(csv_path, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        if not file_exists:
-            writer.writerow(['Model','Epoch','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
-        writer.writerows(aggregated_results)
+    # # Write aggregated results to the CSV file
+    # csv_path = 'logs/scores.csv'
+    # file_exists = os.path.isfile(csv_path)
+    # with open(csv_path, mode='a', newline='') as file:
+    #     writer = csv.writer(file)
+    #     if not file_exists:
+    #         writer.writerow(['Model','Epoch','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
+    #     writer.writerows(aggregated_results)
 
 def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_table.txt', num_iterations=1):
     """
@@ -140,17 +140,17 @@ def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_tab
 
 if __name__ == "__main__":
     configs_and_datasets = [
-        # ('config.maze2d', 'maze2d-umaze-v1'),
+        ('config.maze2d', 'maze2d-umaze-v1'),
         # ('config.maze2d', 'maze2d-medium-v1'),
         # ('config.maze2d', 'maze2d-large-v1'),
-        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        # ('config.maze2d_cfm', 'maze2d-umaze-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
         # ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
 
-    num_iterations = 200
+    num_iterations = 20
     start_time = time.time()
     log_scores(configs_and_datasets, num_iterations)
-    generate_latex_table(num_iterations=num_iterations)
+    # generate_latex_table(num_iterations=num_iterations)
     end_time = time.time()
     logging.info(f"Total time taken: {end_time - start_time:.2f} seconds")

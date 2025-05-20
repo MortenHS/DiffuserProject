@@ -9,7 +9,7 @@ import diffuser.utils as utils
 #-------------------------------------------------------------------- setup --------------------------------------------------------------------#
 class Parser(utils.Parser):
     dataset: str = 'maze2d-umaze-v1'
-    config: str = 'config.maze2d'
+    config: str = 'config.maze2d_cfm'
 
 args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
@@ -20,7 +20,7 @@ diffusion_experiment = utils.load_diffusion(
     args.logbase, 
     args.dataset, 
     args.diffusion_loadpath, 
-    epoch=args.diffusion_epoch # 520000.pt, args.diffusion_epoch
+    epoch=760000 # 520000.pt, args.diffusion_epoch
     ) 
 
 diffusion = diffusion_experiment.ema
@@ -60,6 +60,8 @@ rollout = [observation.copy()]
 total_reward = 0
 for t in range(env.max_episode_steps):
     state = env.state_vector().copy()
+    if t == 0:
+        print(f"State: {state}")
 
     # While trajectory length is not reached, run the controller
     if t < len(sequence) - 1:
@@ -89,7 +91,7 @@ for t in range(env.max_episode_steps):
             f'maze | pos: {xy_pos} | goal: {goal}'
         )
     
-    #---------------------------------- Rendering and saving plots --------------------------------------------------------------------#
+#----------------------------------------------------------------------- Rendering and saving plots --------------------------------------------------------------------#
 
     # update rollout observations
     rollout.append(next_observation.copy())
@@ -110,9 +112,15 @@ for t in range(env.max_episode_steps):
 # print(f"Final position of samples.observations: {samples.observations[0][-1]}") # Last element in sequence
 # print(f"Final position of rollout: {rollout[-1]}")
 
+
 #---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
 json_path = join(args.savepath, f'rollout_{method_name}.json')
-json_data = {'score': score, 'step': t, 'return': total_reward, 'term': terminal,
+json_data = {
+    'score': score, 
+    'step': t, 
+    'return': total_reward, 
+    'term': terminal,
     'epoch_diffusion': diffusion_experiment.epoch}
+
 json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
 print(f"Json saved to {json_path}")

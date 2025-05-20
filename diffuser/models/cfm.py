@@ -125,6 +125,7 @@ class CFM(nn.Module):
     #         raise ValueError(f"Unsupported model type: {self.model_type}")
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
+        # overwritten_timesteps = 1
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
                 lambda t, x: self.model.forward(
@@ -134,17 +135,11 @@ class CFM(nn.Module):
                 ),
                 torch.randn(shape).to(self.device),
                 torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
+                # torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
                 method="euler",
             )
-
-            # Before/without apply cond: [65, 1, 128, 6], traj[-1]: [1, 128, 6]
-            # After apply cond: [1, 128, 6], traj[-1]: [128, 6]
-
-            # traj[-1] = apply_conditioning(traj[-1], cond, self.action_dim)
-            # print(f"Cond[0][0]: {cond[0][0]}")
-            # print(f"Traj[-1][0] after applying conditioning: {traj[-1][0]}")
             return traj[-1]
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
