@@ -138,7 +138,7 @@ class CFM(nn.Module):
                 # torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
-                method="dopri5",
+                method="euler",
             )
             return traj[-1]
         else:

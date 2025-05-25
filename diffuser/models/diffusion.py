@@ -135,60 +135,57 @@ class GaussianDiffusion(nn.Module):
         return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
 
     @torch.no_grad()
-    def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
-        device = self.betas.device
-
-        batch_size = shape[0]
-        x = torch.randn(shape, device=device)
-        x = apply_conditioning(x, cond, self.action_dim)
-        overwritten_timesteps = 256
-        if return_diffusion: diffusion = [x]
-        progress = utils.Progress(overwritten_timesteps) if verbose else utils.Silent()
-        for i in reversed(range(0, overwritten_timesteps)):
-            timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
-            x = self.p_sample(x, cond, timesteps)
-            x = apply_conditioning(x, cond, self.action_dim) 
-            # Affects the start/target positions
-
-            progress.update({'t': i})
-
-            if return_diffusion: diffusion.append(x)
-
-        progress.close()
-        if return_diffusion:
-            return x, torch.stack(diffusion, dim=1)
-        else:
-            return x
-
-
     # def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
     #     device = self.betas.device
-    #     # Cond her er dict med 0 og 127 for umaze, med shape [10, 4]
-    #     batch_size = shape[0] # 10
+
+    #     batch_size = shape[0]
     #     x = torch.randn(shape, device=device)
     #     x = apply_conditioning(x, cond, self.action_dim)
-    #     print(f"Conditions[0][0] in p_sample_loop: {cond[0][0]}")
-    #     print(f"First pos of x in p_sample_loop, before for-loop: {x[0][0]}")
-
+    #     overwritten_timesteps = 256
     #     if return_diffusion: diffusion = [x]
-
-    #     progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent() # Progress bar
-
-    #     for i in reversed(range(0, self.n_timesteps)):
+    #     progress = utils.Progress(overwritten_timesteps) if verbose else utils.Silent()
+    #     for i in reversed(range(0, overwritten_timesteps)):
     #         timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
     #         x = self.p_sample(x, cond, timesteps)
-    #         x = apply_conditioning(x, cond, self.action_dim)
+    #         x = apply_conditioning(x, cond, self.action_dim) 
+    #         # Affects the start/target positions
 
     #         progress.update({'t': i})
 
     #         if return_diffusion: diffusion.append(x)
 
     #     progress.close()
-
     #     if return_diffusion:
     #         return x, torch.stack(diffusion, dim=1)
     #     else:
     #         return x
+
+    def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
+        device = self.betas.device
+        # Cond her er dict med 0 og 127 for umaze, med shape [10, 4]
+        batch_size = shape[0] # 10
+        x = torch.randn(shape, device=device)
+        x = apply_conditioning(x, cond, self.action_dim)
+
+        if return_diffusion: diffusion = [x]
+
+        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent() # Progress bar
+
+        for i in reversed(range(0, self.n_timesteps)):
+            timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
+            x = self.p_sample(x, cond, timesteps)
+            x = apply_conditioning(x, cond, self.action_dim)
+
+            progress.update({'t': i})
+
+            if return_diffusion: diffusion.append(x)
+
+        progress.close()
+
+        if return_diffusion:
+            return x, torch.stack(diffusion, dim=1)
+        else:
+            return x
 
     @torch.no_grad()
     def conditional_sample(self, cond, *args, horizon=None, **kwargs):

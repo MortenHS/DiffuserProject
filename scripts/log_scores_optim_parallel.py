@@ -4,6 +4,7 @@ import os
 import time
 import logging
 import torch
+import numpy as np
 
 logging.basicConfig(
     level=logging.DEBUG,  # Set the logging level to DEBUG for detailed output
@@ -14,17 +15,22 @@ logging.basicConfig(
     ]
 )
 
-def run_plan_maze(config, dataset):
+def run_plan_maze(config, dataset, sampling_steps):
     """
     Run the plan_maze2d.py script with the specified config and dataset.
     """
-    command = ['python', '/cluster/work/mortenhs/Janner/diffuser/scripts/plan_maze2d_parallel.py', '--config', config, '--dataset', dataset]
+    command = [
+        'python', '/cluster/work/mortenhs/Janner/diffuser/scripts/plan_maze2d_parallel.py', 
+        '--config', config, 
+        '--dataset', dataset, 
+        '--sampling_steps', str(sampling_steps)
+        ]
     result = subprocess.run(command, capture_output=True, text=True)
     # logging.debug(f"Subprocess stdout: {result.stdout}")
     # logging.debug(f"Subprocess stderr: {result.stderr}")
     return result
 
-def log_scores(configs_and_datasets, num_iterations):
+def log_scores(configs_and_datasets, num_iterations, sampling_steps):
     """
     Run plan_maze2d.py for multiple configurations and datasets, compute average and median scores and rewards,
     and log the aggregated results.
@@ -54,7 +60,7 @@ def log_scores(configs_and_datasets, num_iterations):
 
         for i in range(num_iterations):
             logging.info(f"Running {config} on {dataset}, iteration {i + 1}/{num_iterations}")
-            result = run_plan_maze(config, dataset)
+            result = run_plan_maze(config, dataset, sampling_steps)
 
             # Parse epoch from the output if not already set
             if used_epoch is None:
@@ -86,17 +92,17 @@ def log_scores(configs_and_datasets, num_iterations):
                      f"Mean Score={mean_score:.2f}, Median Score={median_score:.2f}, "
                      f"Mean Reward={mean_reward:.2f}, Median Reward={median_reward:.2f}")
         
-        aggregated_results.append([model, used_epoch, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
+        aggregated_results.append([model, sampling_steps, dataset_type, f"{mean_score:.2f}", f"{median_score:.2f}", f"{mean_reward:.2f}", f"{median_reward:.2f}"])
 
     os.makedirs('logs', exist_ok=True)
 
     # Write aggregated results to the CSV file
-    csv_path = 'logs/scores_parallel.csv'
+    csv_path = 'logs/sampling_step_scores.csv'
     file_exists = os.path.isfile(csv_path)
     with open(csv_path, mode='a', newline='') as file:
         writer = csv.writer(file)
         if not file_exists:
-            writer.writerow(['Model','Epoch','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
+            writer.writerow(['Model','N','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
         writer.writerows(aggregated_results)
 
 def generate_latex_table(csv_file = 'logs/scores_parallel.csv', output_file='logs/latex_table.txt', num_iterations=1):
@@ -141,17 +147,21 @@ def generate_latex_table(csv_file = 'logs/scores_parallel.csv', output_file='log
 if __name__ == "__main__":
     configs_and_datasets = [
         # ('config.maze2d', 'maze2d-umaze-v1'),
-        ('config.maze2d', 'maze2d-medium-v1'),
+        # ('config.maze2d', 'maze2d-medium-v1'),
         # ('config.maze2d', 'maze2d-large-v1'),
-        # ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
         # ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
-    # To run both medium an large cfm for 200 iterations takes slightly more than 3 hours with 1 GPU.
+    num_iterations = 50
 
-    num_iterations = 200
+    # Evenly spaced sampling_steps from 1 to 256 (inclusive)
+    num_intervals = 10
+    sampling_steps_list = np.linspace(1, 256, num_intervals, dtype=int)
+
     start_time = time.time()
-    log_scores(configs_and_datasets, num_iterations)
-    # generate_latex_table(num_iterations=num_iterations)
+    for sampling_steps in sampling_steps_list:
+        logging.info(f"Running all configs with sampling_steps={sampling_steps}")
+        log_scores(configs_and_datasets, num_iterations, sampling_steps)
     end_time = time.time()
     logging.info(f"Total time taken: {end_time - start_time:.2f} seconds")

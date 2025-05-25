@@ -6,9 +6,10 @@ import diffuser.utils as utils
 Trajectories = namedtuple('Trajectories', 'actions observations')
 
 class Policy:
-    def __init__(self, model, normalizer):
+    def __init__(self, model, sampling_steps, normalizer):
         self.model = model
         self.normalizer = normalizer
+        self.sampling_steps = sampling_steps
         self.action_dim = normalizer.action_dim
 
     @property
@@ -51,7 +52,8 @@ class Policy:
 
     def __call__(self, conditions, debug=False, batch_size=1):
         conditions = self._format_conditions(conditions, batch_size)
-
+        
+        self.model.n_timesteps = self.sampling_steps
         # Calls forward for given model: run reverse diffusion process, run conditional_sample function
         sample = self.model(conditions) # Calls forward in CFM or diffusion.py
         sample = utils.to_np(sample)

@@ -10,6 +10,7 @@ import diffuser.utils as utils
 class Parser(utils.Parser):
     dataset: str = 'maze2d-umaze-v1'
     config: str = 'config.maze2d'
+    sampling_steps: int = 1
 
 args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
@@ -22,6 +23,8 @@ diffusion_experiment = utils.load_diffusion(
     args.diffusion_loadpath, 
     epoch=480000 # 500000.pt, args.diffusion_epoch
     ) 
+
+sampling_steps = args.sampling_steps
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset

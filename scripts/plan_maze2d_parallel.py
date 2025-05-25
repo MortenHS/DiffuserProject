@@ -10,6 +10,7 @@ import diffuser.utils as utils
 class Parser(utils.Parser):
     dataset: str = 'maze2d-medium-v1'
     config: str = 'config.maze2d_cfm'
+    sampling_steps: int = 1
 
 args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
@@ -22,6 +23,7 @@ diffusion_experiment = utils.load_diffusion(
     args.diffusion_loadpath, 
     epoch=480000 # 520000.pt, args.diffusion_epoch
     ) 
+sampling_steps = args.sampling_steps
 
 diffusion = diffusion_experiment.ema
 dataset = diffusion_experiment.dataset
@@ -31,7 +33,7 @@ if args.config.endswith('_cfm'): method_name = 'cfm'
 else: method_name = 'diff'
 
 
-policy = Policy(diffusion, dataset.normalizer)
+policy = Policy(diffusion, sampling_steps, dataset.normalizer)
 #-------------------------------------------------------------------- main planning loop --------------------------------------------------------------------#
 observation = env.reset()
 
@@ -93,13 +95,13 @@ for t in range(env.max_episode_steps):
     # rollout.append(next_observation.copy())
 
     # if t == 0:
-    #     fullpath = join(args.savepath, f'{t}_{method_name}.png')
+    #     fullpath = join(args.savepath, f'0_{method_name}_N_{sampling_steps}.png')
     #     renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True, goal=goal)
 
     # # if t % 100 == 0:
     # #     renderer.composite(join(args.savepath, f'rollout_{method_name}_{t}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
     # if t == env.max_episode_steps - 1:
-    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
 
     # observation = next_observation
 
@@ -113,7 +115,7 @@ for t in range(env.max_episode_steps):
 
 
 #---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
-# json_path = join(args.savepath, f'rollout_{method_name}.json')
+# json_path = join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.json')
 # json_data = {
 #     'score': score, 
 #     'step': t, 

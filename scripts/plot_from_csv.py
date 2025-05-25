@@ -134,15 +134,19 @@ def compute_score_reward_stats(log_path):
 
 def plot_scores_vs_n(csv_path, savepath):
     df = pd.read_csv(csv_path)
+    if df['Model'].unique() == 'cfm':
+        df = df[df['Model'] == 'cfm']
+        model_name = 'CFM'
+    elif df['Model'].unique() == 'diffusion':
+        df = df[df['Model'] == 'diffusion']
+        model_name = 'Diffusion'
+    else:
+        print("Warning: Model type not recognized in the CSV path. Defaulting to 'Unknown'.")
+        model_name = 'Unknown'
 
     # Clean up whitespace in Dataset column
     df['Dataset'] = df['Dataset'].str.strip()
-
-    if 'cfm' in csv_path:
-        df = df[df['Model'] == 'cfm']
-    elif 'diff' in csv_path:
-        df = df[df['Model'] == 'diffusion']
-
+    
     # Get unique datasets (e.g., umaze, medium, large)
     datasets = df['Dataset'].unique()
 
@@ -163,7 +167,7 @@ def plot_scores_vs_n(csv_path, savepath):
 
     plt.xlabel('Sampling steps [N]')
     plt.ylabel('Value')
-    plt.title('Scores and Rewards vs. Sampling Steps')
+    plt.title(f'{model_name} Scores and Rewards vs. Sampling Steps for {dataset}')
     plt.legend(loc='upper left')
     plt.grid(True)
     plt.tight_layout()
@@ -192,4 +196,5 @@ if __name__ == "__main__":
     # print(stats)
 
     # plot_scores_vs_n('logs/scores_cfm.csv', 'logs/plots_from_tests/cfm_scores_vs_n.png')
-    plot_scores_vs_n('logs/scores_diff.csv', 'logs/plots_from_tests/diff_scores_vs_n.png')
+    # plot_scores_vs_n('logs/scores_diff.csv', 'logs/plots_from_tests/diff_scores_vs_n.png')
+    plot_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests/cfm_umaze_samp_steps.png')
