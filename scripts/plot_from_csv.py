@@ -5,7 +5,7 @@ import re
 import pandas as pd
 import numpy as np
 
-def plot_loss_from_csv(csv_file="loss_log.csv", savepath="logs/tests/loss_plot.png"):
+def plot_loss(csv_file="loss_log.csv", savepath="logs/tests/loss_plot.png"):
     """
     Reads loss values from a CSV file and plots loss vs. training steps.
 
@@ -40,7 +40,7 @@ def plot_loss_from_csv(csv_file="loss_log.csv", savepath="logs/tests/loss_plot.p
     plt.savefig(savepath)
     plt.close()
 
-def plot_positional_errors_from_csv(csv_path, save_path):
+def plot_positional_errors(csv_path, save_path):
     # Load CSV
     df = pd.read_csv(csv_path)
 
@@ -132,22 +132,64 @@ def compute_score_reward_stats(log_path):
         "reward_median": np.median(rewards),
     }
 
+def plot_scores_vs_n(csv_path, savepath):
+    df = pd.read_csv(csv_path)
+
+    # Clean up whitespace in Dataset column
+    df['Dataset'] = df['Dataset'].str.strip()
+
+    if 'cfm' in csv_path:
+        df = df[df['Model'] == 'cfm']
+    elif 'diff' in csv_path:
+        df = df[df['Model'] == 'diffusion']
+
+    # Get unique datasets (e.g., umaze, medium, large)
+    datasets = df['Dataset'].unique()
+
+    plt.figure(figsize=(10, 6))
+
+    for dataset in datasets:
+        sub = df[df['Dataset'] == dataset]
+        try:
+            sub = sub.copy()
+            sub['N'] = sub['N'].astype(int)
+            sub = sub.sort_values('N')
+        except Exception:
+            print(f"Warning: Could not convert 'N' to int for dataset {dataset}. Skipping sorting.")
+            pass
+
+        plt.plot(sub['N'], sub['Mean Score'], marker='o', label=f"{dataset} (Mean Score)")
+        plt.plot(sub['N'], sub['Mean Reward'], marker='s', linestyle='--', label=f"{dataset} (Mean Reward)")
+
+    plt.xlabel('Sampling steps [N]')
+    plt.ylabel('Value')
+    plt.title('Scores and Rewards vs. Sampling Steps')
+    plt.legend(loc='upper left')
+    plt.grid(True)
+    plt.tight_layout()
+    os.makedirs(os.path.dirname(savepath), exist_ok=True)
+    plt.savefig(savepath)
+    plt.close()
+    print(f"Plot saved to {savepath}")
 
 if __name__ == "__main__":
     # For loss values of model training:
     # savepath="logs/tests/loss_plot.png"
-    # plot_loss_from_csv("slurms/loss_log.csv", savepath=savepath)
+    # plot_loss("slurms/loss_log.csv", savepath=savepath)
     # print(f"Loss plot generated successfully to {savepath}")
 
     # For positional errors:
     # csv_path = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_results.csv"
     # savepath_positional = "/cluster/work/mortenhs/Janner/diffuser/logs/pos_error_comps/positional_errors_plot.png"
-    # plot_positional_errors_from_csv(csv_path, savepath_positional)
+    # plot_positional_errors(csv_path, savepath_positional)
     # print(f"Positional error plot generated successfully to {savepath_positional}")
 
     # For epoch progression:
-    # plot_epoch_progression('logs/scores.csv', 'logs/tests/cfm_scores_epoch_test.png')
+    # plot_epoch_progression('logs/scores.csv', 'logs/tests/diff_scores_epoch_test.png')
 
     # For scores from log file:
-    stats = compute_score_reward_stats("logs/log_scores.log")
-    print(stats)
+    # stats = compute_score_reward_stats("logs/log_scores.log")
+    # print(stats)
+
+    # plot_scores_vs_n('logs/scores_cfm.csv', 'logs/plots_from_tests/cfm_scores_vs_n.png')
+    plot_scores_vs_n('logs/scores_diff.csv', 'logs/plots_from_tests/diff_scores_vs_n.png')

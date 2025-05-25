@@ -20,8 +20,6 @@ def run_plan_maze(config, dataset):
     """
     command = ['python', '/cluster/work/mortenhs/Janner/diffuser/scripts/plan_maze2d.py', '--config', config, '--dataset', dataset]
     result = subprocess.run(command, capture_output=True, text=True)
-    # logging.debug(f"Subprocess stdout: {result.stdout}")
-    # logging.debug(f"Subprocess stderr: {result.stderr}")
     return result
 
 def log_scores(configs_and_datasets, num_iterations):
@@ -90,14 +88,14 @@ def log_scores(configs_and_datasets, num_iterations):
 
     os.makedirs('logs', exist_ok=True)
 
-    # # Write aggregated results to the CSV file
-    # csv_path = 'logs/scores.csv'
-    # file_exists = os.path.isfile(csv_path)
-    # with open(csv_path, mode='a', newline='') as file:
-    #     writer = csv.writer(file)
-    #     if not file_exists:
-    #         writer.writerow(['Model','Epoch','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
-    #     writer.writerows(aggregated_results)
+    # Write aggregated results to the CSV file
+    csv_path = 'logs/scores_diff.csv'
+    file_exists = os.path.isfile(csv_path)
+    with open(csv_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        if not file_exists:
+            writer.writerow(['Model','Epoch','N','Dataset','Mean Score', 'Median Score', 'Mean Reward', 'Median Reward'])
+        writer.writerows(aggregated_results)
 
 def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_table.txt', num_iterations=1):
     """
@@ -141,14 +139,15 @@ def generate_latex_table(csv_file='logs/scores.csv', output_file='logs/latex_tab
 if __name__ == "__main__":
     configs_and_datasets = [
         # ('config.maze2d', 'maze2d-umaze-v1'),
-        # ('config.maze2d', 'maze2d-medium-v1'),
-        # ('config.maze2d', 'maze2d-large-v1'),
-        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        ('config.maze2d', 'maze2d-medium-v1'),
+        ('config.maze2d', 'maze2d-large-v1'),
+        # ('config.maze2d_cfm', 'maze2d-umaze-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
         # ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
+    # To run both medium an large cfm for 200 iterations takes slightly more than 3 hours with 1 GPU.
 
-    num_iterations = 200
+    num_iterations = 50
     start_time = time.time()
     log_scores(configs_and_datasets, num_iterations)
     # generate_latex_table(num_iterations=num_iterations)
