@@ -1,16 +1,17 @@
 #!/bin/sh
-#SBATCH --job-name="score_logging_cfm_med"
+#SBATCH --job-name="score_logging_cfm_large"
 #SBATCH --partition=GPUQ
 #SBATCH --gres=gpu:a100:1
+#SBATCH --exclude=idun-06-05
 #SBATCH --account=share-iv-mtp
-#SBATCH --time=0-04:30:00
+#SBATCH --time=0-02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=16G
 
-#SBATCH --output=N_logs_diff_med.out 
-#SBATCH --error=N_logs_diff_med.err
+#SBATCH --output=cfm_large.out 
+#SBATCH --error=cfm_large.err
 
 #SBATCH --mail-user=mortenhs@stud.ntnu.no
 #SBATCH --mail-type=ALL
@@ -30,4 +31,4 @@ module purge
 # Running file
 module load Anaconda3/2024.02-1
 conda activate diffuser
-python /cluster/work/mortenhs/Janner/diffuser/scripts/log_scores_optim.py
+python /cluster/work/mortenhs/Janner/diffuser/scripts/log_scores_optim_parallel.py

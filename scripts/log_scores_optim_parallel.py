@@ -149,15 +149,19 @@ if __name__ == "__main__":
         # ('config.maze2d', 'maze2d-umaze-v1'),
         # ('config.maze2d', 'maze2d-medium-v1'),
         # ('config.maze2d', 'maze2d-large-v1'),
-        ('config.maze2d_cfm', 'maze2d-umaze-v1'),
+        # ('config.maze2d_cfm', 'maze2d-umaze-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
-        # ('config.maze2d_cfm', 'maze2d-large-v1'),
+        ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
-    num_iterations = 50
+    num_iterations = 200
 
     # Evenly spaced sampling_steps from 1 to 256 (inclusive)
-    num_intervals = 10
-    sampling_steps_list = np.linspace(1, 256, num_intervals, dtype=int)
+    # num_intervals = 10
+    # sampling_steps_list = np.linspace(1, 256, num_intervals, dtype=int)
+
+    #For just logging scores
+    num_intervals = 1
+    sampling_steps_list = np.linspace(256, 256, num_intervals, dtype=int)
 
     start_time = time.time()
     for sampling_steps in sampling_steps_list:

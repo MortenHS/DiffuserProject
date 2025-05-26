@@ -8,9 +8,9 @@ import diffuser.utils as utils
 
 #-------------------------------------------------------------------- setup --------------------------------------------------------------------#
 class Parser(utils.Parser):
-    dataset: str = 'maze2d-umaze-v1'
+    dataset: str = 'maze2d-large-v1'
     config: str = 'config.maze2d'
-    sampling_steps: int = 1
+    sampling_steps: int = 256
 
 args = Parser().parse_args('plan')
 env = datasets.load_environment(args.dataset)
@@ -21,9 +21,8 @@ diffusion_experiment = utils.load_diffusion(
     args.logbase, 
     args.dataset, 
     args.diffusion_loadpath, 
-    epoch=480000 # 500000.pt, args.diffusion_epoch
+    epoch=490000 # 500000.pt, args.diffusion_epoch 480000
     ) 
-
 sampling_steps = args.sampling_steps
 
 diffusion = diffusion_experiment.ema
@@ -33,11 +32,11 @@ renderer = diffusion_experiment.renderer
 if args.config.endswith('_cfm'): method_name = 'cfm'
 else: method_name = 'diff'
 
-policy = Policy(diffusion, dataset.normalizer)
+policy = Policy(diffusion, sampling_steps, dataset.normalizer)
 #-------------------------------------------------------------------- main planning loop --------------------------------------------------------------------#
 observation = env.reset()
 
-# Single vs multi-task? Single = False, Multi = True
+# Single vs multi-task? Single = False, Multi = Trueø
 if args.conditional:
     print('Resetting target')
     env.set_target()
@@ -85,25 +84,25 @@ for t in range(env.max_episode_steps):
     if 'maze2d' in args.dataset:
         xy_pos = next_observation[:2]
         goal = env.unwrapped._target
-        # print(
-        #     f'maze | pos: {xy_pos} | goal: {goal}'
-        # )
+        print(
+            f'maze | pos: {xy_pos} | goal: {goal}'
+        )
     
 #----------------------------------------------------------------------- Rendering and saving plots --------------------------------------------------------------------#
 
-    # # # update rollout observations
-    # rollout.append(next_observation.copy())
+    # # update rollout observations
+    rollout.append(next_observation.copy())
 
-    # if t == 0:
-    #     fullpath = join(args.savepath, f'{t}_{method_name}.png')
-    #     renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True, goal=goal)
+    if t == 0:
+        fullpath = join(args.savepath, f'{t}_{method_name}.png')
+        renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True, goal=goal)
 
-    # # if t % 100 == 0:
-    # #     renderer.composite(join(args.savepath, f'rollout_{method_name}_{t}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
-    # if t == env.max_episode_steps - 1:
-    #     renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
+    # if t % 100 == 0:
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}_{t}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
+    if t == env.max_episode_steps - 1:
+        renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
 
-    # observation = next_observation
+    observation = next_observation
 
 # print(f"Initial state: {initial_state}")
 # print(f"Final state: {state}")
@@ -113,14 +112,14 @@ for t in range(env.max_episode_steps):
 # print(f"Final position of samples.observations: {samples.observations[0][-1]}") # Last element in sequence
 # print(f"Final position of rollout: {rollout[-1]}")
 
-#---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
-# json_path = join(args.savepath, f'rollout_{method_name}.json')
-# json_data = {
-#     'score': score, 
-#     'step': t, 
-#     'return': total_reward, 
-#     'term': terminal,
-#     'epoch_diffusion': diffusion_experiment.epoch}
+## ---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
+json_path = join(args.savepath, f'rollout_{method_name}.json')
+json_data = {
+    'score': score, 
+    'step': t, 
+    'return': total_reward, 
+    'term': terminal,
+    'epoch_diffusion': diffusion_experiment.epoch}
 
-# json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-# print(f"Json saved to {json_path}")
+json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+print(f"Json saved to {json_path}")

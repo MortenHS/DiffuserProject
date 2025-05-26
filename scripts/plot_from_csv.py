@@ -132,49 +132,81 @@ def compute_score_reward_stats(log_path):
         "reward_median": np.median(rewards),
     }
 
-def plot_scores_vs_n(csv_path, savepath):
+def plot_all_scores_vs_n(csv_path, save_dir, plot_rewards=False):
     df = pd.read_csv(csv_path)
-    if df['Model'].unique() == 'cfm':
-        df = df[df['Model'] == 'cfm']
-        model_name = 'CFM'
-    elif df['Model'].unique() == 'diffusion':
-        df = df[df['Model'] == 'diffusion']
-        model_name = 'Diffusion'
-    else:
-        print("Warning: Model type not recognized in the CSV path. Defaulting to 'Unknown'.")
-        model_name = 'Unknown'
-
-    # Clean up whitespace in Dataset column
     df['Dataset'] = df['Dataset'].str.strip()
-    
-    # Get unique datasets (e.g., umaze, medium, large)
+    df['Model'] = df['Model'].str.strip()
+    df['N'] = df['N'].astype(int)
     datasets = df['Dataset'].unique()
+    models = df['Model'].unique()
 
-    plt.figure(figsize=(10, 6))
+    # Assign colors by model, not dataset
+    model_colors = {'cfm': 'tab:blue', 'diffusion': 'tab:orange'}
+    linestyles = {'cfm': '-', 'diffusion': '--'}
+    markers = {'cfm': 'o', 'diffusion': 's'}
+
+    os.makedirs(save_dir, exist_ok=True)
 
     for dataset in datasets:
-        sub = df[df['Dataset'] == dataset]
-        try:
-            sub = sub.copy()
-            sub['N'] = sub['N'].astype(int)
-            sub = sub.sort_values('N')
-        except Exception:
-            print(f"Warning: Could not convert 'N' to int for dataset {dataset}. Skipping sorting.")
-            pass
+        plt.figure(figsize=(10, 6))
+        for model in models:
+            sub = df[(df['Model'] == model) & (df['Dataset'] == dataset)]
+            if sub.empty:
+                continue
+            x = sub['N']
+            y = sub['Mean Score']
+            color = model_colors.get(model, None)
+            # Scatter plot
+            plt.scatter(
+                x, y,
+                marker=markers.get(model, 'o'),
+                color=color,
+                alpha=0.7,
+                label=f"{model} (Mean Score)"
+            )
+            # Regression line
+            if len(x) > 1:
+                z = np.polyfit(x, y, 1)
+                p = np.poly1d(z)
+                plt.plot(
+                    x, p(x),
+                    color=color,
+                    linestyle=linestyles.get(model, '-'),
+                    linewidth=2,
+                    label=f"{model} regression"
+                )
+            # Optionally plot rewards
+            if plot_rewards:
+                y_reward = sub['Mean Reward']
+                plt.scatter(
+                    x, y_reward,
+                    marker=markers.get(model, 'x'),
+                    color=color,
+                    alpha=0.5,
+                    label=f"{model} (Mean Reward)"
+                )
+                if len(x) > 1:
+                    z_reward = np.polyfit(x, y_reward, 1)
+                    p_reward = np.poly1d(z_reward)
+                    plt.plot(
+                        x, p_reward(x),
+                        color=color,
+                        linestyle=':',
+                        linewidth=2,
+                        label=f"{model} reward regression"
+                    )
 
-        plt.plot(sub['N'], sub['Mean Score'], marker='o', label=f"{dataset} (Mean Score)")
-        plt.plot(sub['N'], sub['Mean Reward'], marker='s', linestyle='--', label=f"{dataset} (Mean Reward)")
+        plt.xlabel('Sampling steps [N]')
+        plt.ylabel('Score' + (' / Reward' if plot_rewards else ''))
+        plt.title(f'Scores vs. Sampling Steps ({dataset})')
+        plt.legend(loc='best', fontsize='small')
+        plt.grid(True)
+        plt.tight_layout()
+        savepath = os.path.join(save_dir, f'scores_vs_n_{dataset}.png')
+        plt.savefig(savepath)
+        plt.close()
+        print(f"Plot saved to {savepath}")
 
-    plt.xlabel('Sampling steps [N]')
-    plt.ylabel('Value')
-    plt.title(f'{model_name} Scores and Rewards vs. Sampling Steps for {dataset}')
-    plt.legend(loc='upper left')
-    plt.grid(True)
-    plt.tight_layout()
-    os.makedirs(os.path.dirname(savepath), exist_ok=True)
-    plt.savefig(savepath)
-    plt.close()
-    print(f"Plot saved to {savepath}")
 
 if __name__ == "__main__":
     # For loss values of model training:
@@ -197,4 +229,6 @@ if __name__ == "__main__":
 
     # plot_scores_vs_n('logs/scores_cfm.csv', 'logs/plots_from_tests/cfm_scores_vs_n.png')
     # plot_scores_vs_n('logs/scores_diff.csv', 'logs/plots_from_tests/diff_scores_vs_n.png')
-    plot_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests/cfm_umaze_samp_steps.png')
+    # plot_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests/samp_steps.png')
+
+    plot_all_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests')

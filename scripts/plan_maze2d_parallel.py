@@ -21,7 +21,7 @@ diffusion_experiment = utils.load_diffusion(
     args.logbase, 
     args.dataset, 
     args.diffusion_loadpath, 
-    epoch=480000 # 520000.pt, args.diffusion_epoch
+    epoch=488800 # 520000.pt, args.diffusion_epoch
     ) 
 sampling_steps = args.sampling_steps
 
