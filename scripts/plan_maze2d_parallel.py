@@ -21,7 +21,7 @@ diffusion_experiment = utils.load_diffusion(
     args.logbase, 
     args.dataset, 
     args.diffusion_loadpath, 
-    epoch=488800 # 520000.pt, args.diffusion_epoch
+    epoch=args.diffusion_epoch
     ) 
 sampling_steps = args.sampling_steps
 
@@ -37,7 +37,8 @@ policy = Policy(diffusion, sampling_steps, dataset.normalizer)
 #-------------------------------------------------------------------- main planning loop --------------------------------------------------------------------#
 observation = env.reset()
 
-# Single vs multi-task? Single = False, Multi = True
+# Single vs multi-task. 
+# Single = False, Multi = True
 if args.conditional:
     print('Resetting target')
     env.set_target()
@@ -85,43 +86,34 @@ for t in range(env.max_episode_steps):
     if 'maze2d' in args.dataset:
         xy_pos = next_observation[:2]
         goal = env.unwrapped._target
-        # print(
-        #     f'maze | pos: {xy_pos} | goal: {goal}'
-        # )
+        print(
+            f'maze | pos: {xy_pos} | goal: {goal}'
+        )
     
 #----------------------------------------------------------------------- Rendering and saving plots --------------------------------------------------------------------#
 
-    # # update rollout observations
-    # rollout.append(next_observation.copy())
+    # update rollout observations
+    rollout.append(next_observation.copy())
 
-    # if t == 0:
-    #     fullpath = join(args.savepath, f'0_{method_name}_N_{sampling_steps}.png')
-    #     renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True, goal=goal)
+    if t == 0:
+        fullpath = join(args.savepath, f'0_{method_name}_N_{sampling_steps}.png')
+        renderer.composite(fullpath, samples.observations, ncol=1, plot_goal=True, goal=goal)
 
-    # # if t % 100 == 0:
-    # #     renderer.composite(join(args.savepath, f'rollout_{method_name}_{t}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
-    # if t == env.max_episode_steps - 1:
-    #     renderer.composite(join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
+    # if t % 100 == 0:
+    #     renderer.composite(join(args.savepath, f'rollout_{method_name}_{t}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
+    if t == env.max_episode_steps - 1:
+        renderer.composite(join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
 
-    # observation = next_observation
-
-# print(f"Initial state: {initial_state}")
-# print(f"Final state: {state}")
-# print(f"Conditions: Initial {cond[0]} | Final {cond[diffusion.horizon - 1]}")
-# print(f"First position of samples.observations: {samples.observations[0][0]}") # First element in sequence
-# print(f"First position of rollout: {rollout[0]}")
-# print(f"Final position of samples.observations: {samples.observations[0][-1]}") # Last element in sequence
-# print(f"Final position of rollout: {rollout[-1]}")
-
+    observation = next_observation
 
 #---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
-# json_path = join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.json')
-# json_data = {
-#     'score': score, 
-#     'step': t, 
-#     'return': total_reward, 
-#     'term': terminal,
-#     'epoch_diffusion': diffusion_experiment.epoch}
+json_path = join(args.savepath, f'rollout_{method_name}_N_{sampling_steps}.json')
+json_data = {
+    'score': score, 
+    'step': t, 
+    'return': total_reward, 
+    'term': terminal,
+    'epoch_diffusion': diffusion_experiment.epoch}
 
-# json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
-# print(f"Json saved to {json_path}")
+json.dump(json_data, open(json_path, 'w'), indent=2, sort_keys=True)
+print(f"Json saved to {json_path}")

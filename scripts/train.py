@@ -96,26 +96,7 @@ diffusion = diffusion_config(model)
 
 trainer = trainer_config(diffusion, dataset, renderer)
 
-
-#-----------------------------------------------------------------------------#
-#------------------------ test forward & backward pass -----------------------#
-#-----------------------------------------------------------------------------#
-
 utils.report_parameters(model)
-
-# print('Testing forward...', end=' ', flush=True)
-# batch = utils.batchify(dataset[0])
-# print(f"\nBatch in train.py: {batch}\n")
-
-# Batch er delt opp i: Trajectories [batch_size=32, horizon tror jeg, dim=6], og
-# conditions: {{0: tensor([[-0.5100,  0.0400,  0.0019,  0.0042]], device='cuda:0'), 
-    # 127: tensor([[ 0.6872,  0.8385, -0.7158,  0.0234]], device='cuda:0')})}
-
-# Loss funksjonen i Diffuser forventer bare: (self, x, cond)
-# loss, _ = diffusion.loss(*batch)
-# loss.backward()
-# print('✓')
-
 
 #-----------------------------------------------------------------------------#
 #--------------------------------- main loop ---------------------------------#

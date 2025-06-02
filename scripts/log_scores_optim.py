@@ -146,12 +146,12 @@ def generate_latex_table(csv_file = 'logs/scores_parallel.csv', output_file='log
 
 if __name__ == "__main__":
     configs_and_datasets = [
-        ('config.maze2d', 'maze2d-medium-v1'),
+        # ('config.maze2d', 'maze2d-medium-v1'),
         # ('config.maze2d', 'maze2d-large-v1'),
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
-        # ('config.maze2d_cfm', 'maze2d-large-v1'),
+        ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
-    num_iterations = 50
+    num_iterations = 200
 
     # Evenly spaced sampling_steps from 1 to 256 (inclusive)
     num_intervals = 10

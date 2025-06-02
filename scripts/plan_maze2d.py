@@ -21,7 +21,7 @@ diffusion_experiment = utils.load_diffusion(
     args.logbase, 
     args.dataset, 
     args.diffusion_loadpath, 
-    epoch=490000 # 500000.pt, args.diffusion_epoch 480000
+    epoch=args.diffusion_epoch # Chooses the latest diffusion epoch, can be overwritten with for instance 480000.
     ) 
 sampling_steps = args.sampling_steps
 
@@ -103,14 +103,6 @@ for t in range(env.max_episode_steps):
         renderer.composite(join(args.savepath, f'rollout_{method_name}.png'), np.array(rollout)[None], ncol=1, plot_goal=True, goal=goal)
 
     observation = next_observation
-
-# print(f"Initial state: {initial_state}")
-# print(f"Final state: {state}")
-# print(f"Conditions: Initial {cond[0]} | Final {cond[diffusion.horizon - 1]}")
-# print(f"First position of samples.observations: {samples.observations[0][0]}") # First element in sequence
-# print(f"First position of rollout: {rollout[0]}")
-# print(f"Final position of samples.observations: {samples.observations[0][-1]}") # Last element in sequence
-# print(f"Final position of rollout: {rollout[-1]}")
 
 ## ---------------------------------- Save to JSON file ---------------------------------------------------------------------------------------#
 json_path = join(args.savepath, f'rollout_{method_name}.json')

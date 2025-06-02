@@ -82,8 +82,15 @@ def plot_positional_errors(csv_path, save_path):
     plt.close()
 
 def plot_epoch_progression(csv_path, savepath):
+    '''
+    Plots the progression of scores and rewards across training steps from a CSV file.
+    Training steps called 'Epoch' in the CSV.
+    '''
     df = pd.read_csv(csv_path)
 
+    df['Model'] = df['Model'].str.strip()
+    # Determine model name
+    model_name = df['Model'].iloc[0].lower()
     # Ensure 'Epoch' is treated as integer for sorting
     df['Epoch'] = df['Epoch'].astype(int)
 
@@ -96,14 +103,15 @@ def plot_epoch_progression(csv_path, savepath):
     plt.plot(df['Epoch'], df['Median Score'], label='Median Score', marker='o')
     plt.plot(df['Epoch'], df['Mean Reward'], label='Mean Reward', marker='o')
     plt.plot(df['Epoch'], df['Median Reward'], label='Median Reward', marker='o')
-    plt.xlabel('Epoch')
+    plt.xlabel('Steps')
     plt.ylabel('Value')
-    plt.title('Progression of Scores and Rewards Across Epochs')
+    plt.title(f'Progression of Scores and Rewards Across training steps for {model_name}')
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(savepath)
     plt.close()
+    print(f"Training step progression plot saved to {savepath}")
 
 def compute_score_reward_stats(log_path):
     scores = []
@@ -131,6 +139,123 @@ def compute_score_reward_stats(log_path):
         "reward_mean": rewards.mean(),
         "reward_median": np.median(rewards),
     }
+
+def plot_scores_for_tables(csv_path, save_dir):
+    df = pd.read_csv(csv_path)
+    df['Dataset'] = df['Dataset'].str.strip()
+    df['Model'] = df['Model'].str.strip()
+    # Determine model name
+    model_name = df['Model'].iloc[0].lower()
+    if 'diffusion' in model_name:
+        fname = 'diffusion_scores_datasets.png'
+    elif 'cfm' in model_name:
+        fname = 'cfm_scores_datasets.png'
+    else:
+        fname = f'{model_name}_scores_datasets.png'
+    os.makedirs(save_dir, exist_ok=True)
+    plt.figure(figsize=(10, 6))
+    # Create a grouped bar chart for each dataset, showing Mean Score and Mean Reward per experiment
+    bar_width = 0.20
+    experiments = df['Dataset']
+    x = np.arange(len(df))
+
+    plt.bar(x - bar_width/2, df['Mean Score'], width=bar_width, label='Mean Score', color='tab:blue')
+    plt.bar(x + bar_width/2, df['Mean Reward'], width=bar_width, label='Mean Reward', color='tab:orange')
+    # Write value on top of each bar
+    for i, (score, reward) in enumerate(zip(df['Mean Score'], df['Mean Reward'])):
+        plt.text(x[i] - bar_width/2, score, f"{score:.2f}", ha='center', va='bottom', fontsize=8)
+        plt.text(x[i] + bar_width/2, reward, f"{reward:.2f}", ha='center', va='bottom', fontsize=8)
+    plt.xticks(x, experiments, rotation=45, ha='right')
+    plt.xlabel('Dataset')
+    plt.ylabel('Value')
+    plt.title(f'Mean scores and rewards for all datasets with {model_name}')
+    plt.legend(loc='upper left')
+    plt.grid(True)
+    plt.tight_layout()
+    savepath = os.path.join(save_dir, fname)
+    plt.savefig(savepath)
+    plt.close()
+    print(f"Plot saved to {savepath}")
+    
+def plot_scores_vs_eachother(csv_path, save_dir): 
+    df = pd.read_csv(csv_path)
+    df = df.sort_values("Dataset")
+
+    width = 0.35  # wider bars for clarity
+    datasets = df["Dataset"].unique()
+    x = np.arange(len(datasets))
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    os.makedirs(save_dir, exist_ok=True)
+
+    # Get values for each model
+    values_diff = []
+    values_cfm = []
+    for dataset in datasets:
+        row_diff = df[(df["Model"].str.lower() == "diffusion") & (df["Dataset"] == dataset)]
+        row_cfm = df[(df["Model"].str.lower() == "cfm") & (df["Dataset"] == dataset)]
+        values_diff.append(row_diff["Mean Score"].iloc[0] if not row_diff.empty else 0)
+        values_cfm.append(row_cfm["Mean Score"].iloc[0] if not row_cfm.empty else 0)
+
+    # Plot bars side by side
+    bars1 = ax.bar(x - width/2, values_diff, width, label="Diffusion Mean Score", color="tab:blue")
+    bars2 = ax.bar(x + width/2, values_cfm, width, label="CFM Mean Score", color="tab:orange")
+
+    # Add value labels above each bar
+    for bar in bars1:
+        height = bar.get_height()
+        ax.annotate(f"{height:.2f}", xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3), textcoords="offset points", ha='center', va='bottom', fontsize=9)
+    for bar in bars2:
+        height = bar.get_height()
+        ax.annotate(f"{height:.2f}", xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3), textcoords="offset points", ha='center', va='bottom', fontsize=9)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(datasets)
+    ax.set_ylabel("Score")
+    ax.set_title("Model Scores by Dataset")
+    ax.legend()
+    plt.tight_layout()
+    savepath = os.path.join(save_dir, f'h2h_scores.png')
+    plt.savefig(savepath)
+    plt.close()
+    print(f"Plot saved to {savepath}")
+
+def plot_select_sampling_scores(csv_path, save_dir, model, dataset):
+    df = pd.read_csv(csv_path)
+    df['Dataset'] = df['Dataset'].str.strip()
+    df['Model'] = df['Model'].str.strip()
+    df['N'] = df['N'].astype(int)
+
+    # Filter for the selected model and dataset
+    sub = df[(df['Model'].str.lower() == model.lower()) & (df['Dataset'].str.lower() == dataset.lower())]
+    if sub.empty:
+        print(f"No data found for model '{model}' and dataset '{dataset}'.")
+        return
+
+    sub = sub.sort_values('N')
+    x = sub['N']
+    y_score = sub['Mean Score']
+    y_reward = sub['Mean Reward']
+
+    plt.figure(figsize=(8, 5))
+    plt.plot(x, y_score, marker='o', label='Mean Score', color='tab:blue')
+    plt.plot(x, y_reward, marker='s', label='Mean Reward', color='tab:orange')
+    plt.xlabel('Sampling steps [N]')
+    plt.ylabel('Value')
+    plt.title(f'Scores vs. Sampling Steps\nModel: {model}, Dataset: {dataset}')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+
+    os.makedirs(save_dir, exist_ok=True)
+    fname = f"{model.lower()}_{dataset.lower()}_scores_vs_n.png"
+    savepath = os.path.join(save_dir, fname)
+    plt.savefig(savepath)
+    plt.close()
+    print(f"Plot saved to {savepath}")
 
 def plot_all_scores_vs_n(csv_path, save_dir, plot_rewards=False):
     df = pd.read_csv(csv_path)
@@ -164,12 +289,14 @@ def plot_all_scores_vs_n(csv_path, save_dir, plot_rewards=False):
                 alpha=0.7,
                 label=f"{model} (Mean Score)"
             )
-            # Regression line
-            if len(x) > 1:
-                z = np.polyfit(x, y, 1)
+            # Regression line (skip the first datapoint)
+            if len(x) > 2:
+                x_reg = x.iloc[1:]
+                y_reg = y.iloc[1:]
+                z = np.polyfit(x_reg, y_reg, 1)
                 p = np.poly1d(z)
                 plt.plot(
-                    x, p(x),
+                    x_reg, p(x_reg),
                     color=color,
                     linestyle=linestyles.get(model, '-'),
                     linewidth=2,
@@ -185,11 +312,13 @@ def plot_all_scores_vs_n(csv_path, save_dir, plot_rewards=False):
                     alpha=0.5,
                     label=f"{model} (Mean Reward)"
                 )
-                if len(x) > 1:
-                    z_reward = np.polyfit(x, y_reward, 1)
+                if len(x) > 2:
+                    x_reg_r = x.iloc[1:]
+                    y_reg_r = y_reward.iloc[1:]
+                    z_reward = np.polyfit(x_reg_r, y_reg_r, 1)
                     p_reward = np.poly1d(z_reward)
                     plt.plot(
-                        x, p_reward(x),
+                        x_reg_r, p_reward(x_reg_r),
                         color=color,
                         linestyle=':',
                         linewidth=2,
@@ -207,8 +336,20 @@ def plot_all_scores_vs_n(csv_path, save_dir, plot_rewards=False):
         plt.close()
         print(f"Plot saved to {savepath}")
 
-
 if __name__ == "__main__":
+    '''
+    Functions to plot various metrics from CSV files.
+    Usage:
+        - plot_loss: Plots loss values from a CSV file.
+        - plot_positional_errors: Plots positional errors from a CSV file.
+        - plot_epoch_progression: Plots scores and rewards progression across training steps.
+        - compute_score_reward_stats: Computes and prints average scores and rewards from a log file.
+        - plot_scores_for_tables: Plots mean scores and rewards for datasets in a bar chart.
+        - plot_scores_vs_eachother: Plots scores of the different models against each other.
+        - plot_select_sampling_scores: Plots scores for a specific model and dataset against sampling steps.
+        - plot_all_scores_vs_n: Plots all scores vs. sampling steps for both models and all datasets.
+    '''
+
     # For loss values of model training:
     # savepath="logs/tests/loss_plot.png"
     # plot_loss("slurms/loss_log.csv", savepath=savepath)
@@ -220,15 +361,32 @@ if __name__ == "__main__":
     # plot_positional_errors(csv_path, savepath_positional)
     # print(f"Positional error plot generated successfully to {savepath_positional}")
 
-    # For epoch progression:
-    # plot_epoch_progression('logs/scores.csv', 'logs/tests/diff_scores_epoch_test.png')
+    # Plot scores over epochs:
+    # plot_epoch_progression('logs/epoch_evaluations/diff_scores_epoch.csv', 'logs/epoch_evaluations/diff_epoch_progression.png')
+    # plot_epoch_progression('logs/epoch_evaluations/cfm_scores_epoch.csv', 'logs/epoch_evaluations/cfm_epoch_progression.png')
 
-    # For scores from log file:
-    # stats = compute_score_reward_stats("logs/log_scores.log")
+    # Print average scores and rewards from log file:
+    # stats = compute_score_reward_stats("logs/logfiles/log_scores.log")
     # print(stats)
 
-    # plot_scores_vs_n('logs/scores_cfm.csv', 'logs/plots_from_tests/cfm_scores_vs_n.png')
-    # plot_scores_vs_n('logs/scores_diff.csv', 'logs/plots_from_tests/diff_scores_vs_n.png')
-    # plot_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests/samp_steps.png')
+    # Plot all sampling step scores:
+    plot_all_scores_vs_n('logs/score_files/sampling_step_scores.csv', 'logs/plots_from_tests')
 
-    plot_all_scores_vs_n('logs/sampling_step_scores.csv', 'logs/plots_from_tests')
+    # Plot select sampling step scores:
+    # model_and_dataset_pairs = [
+    #     ('diffusion', 'umaze'),
+    #     ('diffusion', 'medium'),
+    #     ('diffusion', 'large'),
+    #     ('cfm', 'umaze'),
+    #     ('cfm', 'medium'),
+    #     ('cfm', 'large')
+    # ]
+    # for model, dataset in model_and_dataset_pairs:
+    #     plot_select_sampling_scores('logs/score_files/sampling_step_scores.csv', 'logs/plots_from_tests', model, dataset)
+    
+    # plot_scores_vs_eachother('logs/score_files/table_scores_h2h.csv', 'logs/plots_from_tests')
+    
+    # Plot bar charts for table score values:
+    # plot_scores_for_tables('logs/score_files/tablescores_diff.csv', 'logs/plots_from_tests')
+    # plot_scores_for_tables('logs/score_files/tablescores_cfm.csv', 'logs/plots_from_tests')
+    

@@ -125,7 +125,10 @@ class CFM(nn.Module):
     #         raise ValueError(f"Unsupported model type: {self.model_type}")
 
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
-        # overwritten_timesteps = 128
+        '''
+            Function for sampling with CFM, utilizes ODE solver specified by changing the method variable.
+            Takes in the desired shape for t and the conditioning, here start and target points.
+        '''
         if self.model_type == 'ConditionalUnet1D':
             traj = torchdiffeq.odeint(
                 lambda t, x: self.model.forward(
@@ -135,7 +138,6 @@ class CFM(nn.Module):
                 ),
                 torch.randn(shape).to(self.device),
                 torch.linspace(0, 1, self.n_timesteps + 1).to(self.device),
-                # torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
                 atol=1e-4,
                 rtol=1e-4,
                 method="euler",
@@ -151,7 +153,7 @@ class CFM(nn.Module):
 
     def conditional_sample(self, cond, *args, horizon=None, **kwargs):
         '''
-            conditions : [ (time, state), ... ]
+            Defines the shape and batch size based on the conditioning information given, calls the ODE solver in p_sample_loop_cfm.
         '''
         device = self.device
         batch_size = len(cond[0]) # 1 for CFM
@@ -171,6 +173,14 @@ class CFM(nn.Module):
         return next(self.parameters()).device
 
     def loss(self, x, cond):
+        '''
+        Loss function for training the CFM model.
+        Args:
+            x: Tensor of shape (batch_size, horizon, transition_dim) representing the input data.
+            cond: Dictionary containing conditioning information for the model.
+        Returns:
+            loss: Tensor representing the computed loss.
+        '''
         x = x.to(self.device)
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()

@@ -97,7 +97,8 @@ def log_scores(configs_and_datasets, num_iterations, sampling_steps):
     os.makedirs('logs', exist_ok=True)
 
     # Write aggregated results to the CSV file
-    csv_path = 'logs/sampling_step_scores.csv'
+    # csv_path = 'logs/sampling_step_scores.csv'
+    csv_path = 'logs/score_files/scores_cfm.csv'
     file_exists = os.path.isfile(csv_path)
     with open(csv_path, mode='a', newline='') as file:
         writer = csv.writer(file)
@@ -153,7 +154,7 @@ if __name__ == "__main__":
         # ('config.maze2d_cfm', 'maze2d-medium-v1'),
         ('config.maze2d_cfm', 'maze2d-large-v1'),
     ]
-    num_iterations = 200
+    num_iterations = 1
 
     # Evenly spaced sampling_steps from 1 to 256 (inclusive)
     # num_intervals = 10
@@ -161,7 +162,7 @@ if __name__ == "__main__":
 
     #For just logging scores
     num_intervals = 1
-    sampling_steps_list = np.linspace(256, 256, num_intervals, dtype=int)
+    sampling_steps_list = np.linspace(1, 1, num_intervals, dtype=int)
 
     start_time = time.time()
     for sampling_steps in sampling_steps_list:

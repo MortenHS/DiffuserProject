@@ -161,15 +161,17 @@ class GaussianDiffusion(nn.Module):
     #         return x
 
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
+        '''
+        Sampling loop for Diffuser
+        '''
         device = self.betas.device
-        # Cond her er dict med 0 og 127 for umaze, med shape [10, 4]
-        batch_size = shape[0] # 10
+        batch_size = shape[0] 
         x = torch.randn(shape, device=device)
         x = apply_conditioning(x, cond, self.action_dim)
 
         if return_diffusion: diffusion = [x]
 
-        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent() # Progress bar
+        progress = utils.Progress(self.n_timesteps) if verbose else utils.Silent()
 
         for i in reversed(range(0, self.n_timesteps)):
             timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
@@ -241,9 +243,13 @@ class GaussianDiffusion(nn.Module):
         return loss, info
 
     def loss(self, x, cond):
+        '''
+        Computes the loss for a batch of data.
+        x: Tensor of shape (batch_size, horizon, transition_dim)
+        cond: Dictionary with conditioning information.
+        '''
         batch_size = len(x)
         t = torch.randint(0, self.n_timesteps, (batch_size,), device=x.device).long()   
-        # Cond her er start og sluttpunkt (e.g. 0 og 127 for umaze)
         return self.p_losses(x, cond, t)
 
     def forward(self, cond, *args, **kwargs):
