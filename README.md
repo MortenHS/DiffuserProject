@@ -1,5 +1,34 @@
 # Planning with Diffusion &nbsp;&nbsp; [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YajKhu-CUIGBJeQPehjVPJcK_b38a8Nc?usp=sharing)
 
+Adapted from original authors of Planning with Diffusion for Flexible Behavior Synthesis.
+
+Follow instructions for quickstart, installation and usage below, then run the following to recreate project results:
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Initialization
+```
+module load Anaconda3/2024.02-1
+conda activate diffuser
+```
+## Config alternatives
+```
+config.maze2d_cfm.py for T-CFM implementation
+config.maze2d.py for Diffuser
+```
+
+## Run planning
+```
+python scripts/plan_maze2d.py --config config.maze2d --dataset maze2d-large-v1
+```
+
+## Run score logging (planning over set amount of iterations)
+```
+python scripts/log_scores_optim.py --config config.maze2d --dataset maze2d-large-v1
+python scripts/log_scores_optim_parallel.py --config config.maze2d_cfm --dataset maze2d-large-v1
+```
+
+To see their original work see below line.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Training and visualizing of diffusion models from [Planning with Diffusion for Flexible Behavior Synthesis](https://diffusion-planning.github.io/).
 This branch has the Maze2D experiments and will be merged into main shortly.
