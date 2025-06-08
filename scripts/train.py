@@ -102,10 +102,7 @@ utils.report_parameters(model)
 #--------------------------------- main loop ---------------------------------#
 #-----------------------------------------------------------------------------#
 
-# trainer.render_reference(batch_size=10)
 n_epochs = int(args.n_train_steps // args.n_steps_per_epoch)
-
-# print("Sørg for å bruke conda env: diffuser")
 
 for i in range(n_epochs):
     print(f'Epoch {i} / {n_epochs} | {args.savepath}')
