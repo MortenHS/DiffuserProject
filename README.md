@@ -1,6 +1,7 @@
 # Planning with Diffusion &nbsp;&nbsp; [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YajKhu-CUIGBJeQPehjVPJcK_b38a8Nc?usp=sharing)
 
-Adapted from original authors of Planning with Diffusion for Flexible Behavior Synthesis.
+Adapted from original authors of Planning with Diffusion for Flexible Behavior Synthesis and Trajectory Forecasting and Generation with Conditional Flow Matching.
+TCFM: https://github.com/CORE-Robotics-Lab/TCFM/tree/master. Diffuser: https://github.com/jannerm/diffuser/tree/maze2d?tab=readme-ov-file.
 
 Follow instructions for quickstart, installation and usage below, then run the following to recreate project results:
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
