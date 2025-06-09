@@ -1,7 +1,6 @@
 import numpy as np
 import torch
 from torch import nn
-import pdb
 
 import diffuser.utils as utils
 from .helpers import (
@@ -135,31 +134,6 @@ class GaussianDiffusion(nn.Module):
         return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
 
     @torch.no_grad()
-    # def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
-    #     device = self.betas.device
-
-    #     batch_size = shape[0]
-    #     x = torch.randn(shape, device=device)
-    #     x = apply_conditioning(x, cond, self.action_dim)
-    #     overwritten_timesteps = 256
-    #     if return_diffusion: diffusion = [x]
-    #     progress = utils.Progress(overwritten_timesteps) if verbose else utils.Silent()
-    #     for i in reversed(range(0, overwritten_timesteps)):
-    #         timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
-    #         x = self.p_sample(x, cond, timesteps)
-    #         x = apply_conditioning(x, cond, self.action_dim) 
-    #         # Affects the start/target positions
-
-    #         progress.update({'t': i})
-
-    #         if return_diffusion: diffusion.append(x)
-
-    #     progress.close()
-    #     if return_diffusion:
-    #         return x, torch.stack(diffusion, dim=1)
-    #     else:
-    #         return x
-
     def p_sample_loop(self, shape, cond, verbose=True, return_diffusion=False):
         '''
         Sampling loop for Diffuser
@@ -222,20 +196,19 @@ class GaussianDiffusion(nn.Module):
         ''' 
         Core training step of diffusion:
         Part of the reverse process, trains model to reverse the noise from q_sample (x_noisy)
+        Simulates xt \sim q(x_t|x_0)
         '''
         noise = torch.randn_like(x_start)
 
-        x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) # Simulate xt \sim q(x_t|x_0)
+        x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise) 
         x_noisy = apply_conditioning(x_noisy, cond, self.action_dim)
 
-        # print(f"Her går den inn i self.model(x_noisy, cond, t)")
-        # self.model er TemporalUnet
         x_recon = self.model(x_noisy, cond, t)
         x_recon = apply_conditioning(x_recon, cond, self.action_dim)
 
         assert noise.shape == x_recon.shape
 
-        if self.predict_epsilon: # True by default, False i config.maze2d
+        if self.predict_epsilon:
             loss, info = self.loss_fn(x_recon, noise)
         else:
             loss, info = self.loss_fn(x_recon, x_start)

@@ -1,5 +1,3 @@
-import socket
-
 from diffuser.utils import watch
 
 #------------------------ base ------------------------#
@@ -31,8 +29,8 @@ base = {
 
     'diffusion': {
         ## model
-        'model': 'models.ConditionalUnet1D', # TemporalUnet or ConditionalUnet1D
-        'diffusion': 'models.CFM', # GaussianDiffusion or CFM
+        'model': 'models.ConditionalUnet1D',
+        'diffusion': 'models.CFM',
         'horizon': 256,
         'n_diffusion_steps': 256,
         'action_weight': 1,
@@ -59,7 +57,7 @@ base = {
         ## training
         'n_steps_per_epoch': 100000,
         'loss_type': 'l2',
-        'n_train_steps': 520000,
+        'n_train_steps': 480000,
         'batch_size': 32,
         'learning_rate': 4e-4,
         'gradient_accumulate_every': 2,

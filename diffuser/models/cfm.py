@@ -26,11 +26,11 @@ class CFM(nn.Module):
         self.action_dim = action_dim
         self.transition_dim = observation_dim + action_dim
         self.model = model
-        self.model_type = model.__class__.__name__ # TempUnet or Cu1D
+        self.model_type = model.__class__.__name__
 
         sigma = 0.0
         self.FM = ConditionalFlowMatcher(sigma=sigma)
-        self.node = NeuralODE(model, solver="dopri5", sensitivity="adjoint", atol=1e-4, rtol=1e-4)
+        self.node = NeuralODE(model, solver="Euler", sensitivity="adjoint", atol=1e-4, rtol=1e-4)
         
         betas = cosine_beta_schedule(n_timesteps)
         alphas = 1. - betas
@@ -38,7 +38,7 @@ class CFM(nn.Module):
         alphas_cumprod_prev = torch.cat([torch.ones(1), alphas_cumprod[:-1]])
         self.betas = betas
 
-        self.n_timesteps = int(n_timesteps) # For umaze = 64
+        self.n_timesteps = int(n_timesteps)
         self.clip_denoised = clip_denoised
         self.predict_epsilon = predict_epsilon
         self.loss_fn = Losses[loss_type](loss_weights, self.action_dim)
@@ -108,22 +108,6 @@ class CFM(nn.Module):
 
 
     @torch.no_grad()
-    # def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
-    #     # x shape here: [32, 128, 6] == [B, horizon, dim]
-    #     overwritten_timesteps = 256
-    #     if self.model_type == 'ConditionalUnet1D':
-    #         traj = torchdiffeq.odeint(
-    #             lambda t, x: (self.model.forward(t=t.expand(x.shape[0]), x=x, global_cond=cond)),
-    #             torch.randn(shape).to(self.device),
-    #             torch.linspace(0, 1, overwritten_timesteps + 1).to(self.device),
-    #             atol=1e-4,
-    #             rtol=1e-4,
-    #             method="euler",
-    #         )
-    #         return traj[-1]
-    #     else:
-    #         raise ValueError(f"Unsupported model type: {self.model_type}")
-
     def p_sample_loop_cfm(self, shape, cond, verbose=True, return_diffusion=False):
         '''
             Function for sampling with CFM, utilizes ODE solver specified by changing the method variable.

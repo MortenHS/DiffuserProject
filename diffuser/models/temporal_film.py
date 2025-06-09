@@ -34,8 +34,6 @@ class ConditionalResidualBlock1D(nn.Module):
         # FiLM modulation https://arxiv.org/abs/1709.07871
         # predicts per-channel scale and bias
         cond_channels = out_channels
-        # print(f"Cond channels: {cond_channels}") # varierer, men ender med 32 før feilmelding
-        # print(f"Cond dim: {cond_dim}") # 64 for tida
         if cond_predict_scale:
             cond_channels = out_channels * 2
         self.cond_predict_scale = cond_predict_scale
@@ -76,7 +74,6 @@ class ConditionalResidualBlock1D(nn.Module):
 
 class ConditionalUnet1D(nn.Module):
     def __init__(self, 
-        # input_dim,
         dim = 32,
         transition_dim = 32, 
         horizon = None,
@@ -112,12 +109,8 @@ class ConditionalUnet1D(nn.Module):
             nn.Linear(dsed * 4, dsed),
         )
         cond_dim = dsed
-        # print(f"Cond dim in Unet: {cond_dim}")
         if global_cond_dim is not None:
             cond_dim += global_cond_dim
-
-        # if lstm_out_dim is not None:
-        #     cond_dim += lstm_out_dim
         
         if encoder_type == 'lstm':
             self.film_encoder = EncoderRNN(input_dim=lstm_in_dim, hidden_dim = lstm_out_dim, num_layers = 1)
@@ -226,7 +219,6 @@ class ConditionalUnet1D(nn.Module):
         # 1. time
         timesteps = timestep
         if not torch.is_tensor(timesteps):
-            # TODO: this requires sync between CPU and GPU. So try to pass timesteps as tensors if you can
             timesteps = torch.tensor([timesteps], dtype=torch.long, device=sample.device)
         elif torch.is_tensor(timesteps) and len(timesteps.shape) == 0:
             timesteps = timesteps[None].to(sample.device)

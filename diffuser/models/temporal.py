@@ -107,8 +107,6 @@ class TemporalUnet(nn.Module):
             x : [ batch x horizon x transition ]
         '''
         x = einops.rearrange(x, 'b h t -> b t h')
-        # Shape of x becomes: [32, 6, 128]
-
         t = self.time_mlp(time)
         h = []
         
