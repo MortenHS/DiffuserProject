@@ -1,18 +1,17 @@
-# 🧠 Systematic Evaluation of Trajectory-Conditional Flow Matching for Long-Horizon Planning  
+# Systematic Evaluation of Trajectory-Conditional Flow Matching for Long-Horizon Planning - Master Thesis 2025
 ---
 
-## 📌 Project Attribution
+This repository contains the complete code developed as part of Morten H. Sande's master's thesis for the spring of 2025. The thesis compares trajectory-conditional flow matching and diffusion for long-horizon planning tasks.
 
-**Authors**  
-- *Morten Husby Sande*
-
-**Supervisors**  
-- *Olav Egeland*  
-- *Sigmund Hennum Høeg*
+## 📌 Project Overview
+- **Institution**: NTNU - Norwegian University of Science and Technology  
+- **Supervisor**: Olav Egeland  
+- **Co-Supervisor**: Sigmund Hennum Høeg  
+- **Thesis period**: January–June 2025
 
 **Built upon & adapted from:**
-- [TCFM (Conditional Flow Matching)](https://github.com/CORE-Robotics-Lab/TCFM/tree/master)   
 - [Diffuser (Planning with Diffusion)](https://github.com/jannerm/diffuser/tree/maze2d?tab=readme-ov-file) 
+- [TCFM (Conditional Flow Matching)](https://github.com/CORE-Robotics-Lab/TCFM/tree/master)   
 
 ---
 
